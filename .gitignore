@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# System / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

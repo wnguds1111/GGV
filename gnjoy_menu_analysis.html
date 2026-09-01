@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNJOY HK (www.gnjoy.hk) - 결제 모듈 및 거래내역 조회 분석 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-red: #C31919;
+            --brand-dark: #0F172A;
+            --brand-blue: #0284C7;
+            --bg-body: #F1F5F9;
+            --bg-surface: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', 'Outfit', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
+
+        .app-header {
+            background: linear-gradient(135deg, #18181B 0%, #09090B 100%);
+            color: white; padding: 18px 36px; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 3px solid var(--brand-red); display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .brand-badge { background: var(--brand-red); color: white; font-weight: 900; font-size: 14px; padding: 6px 12px; border-radius: var(--radius-sm); }
+        .brand-title { font-size: 18px; font-weight: 800; }
+        .brand-title span { color: #94A3B8; font-size: 12px; font-weight: 500; display: block; }
+
+        .container { max-width: 1440px; margin: 32px auto; padding: 0 24px; }
+        .card { background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 28px; margin-bottom: 28px; }
+        .card-title { font-size: 19px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 14px; }
+        .card-title i { color: var(--brand-red); }
+
+        .billing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 16px; }
+        @media(max-width: 900px) { .billing-grid { grid-template-columns: 1fr; } }
+        .billing-box { background: #F8FAFC; border: 2px solid var(--border); border-radius: 12px; padding: 24px; }
+        .billing-box.pay { border-color: #F59E0B; background: #FFFBEB; }
+        .billing-box.log { border-color: var(--brand-blue); background: #F0F9FF; }
+
+        .billing-box h4 { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+        .billing-box p { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px; }
+        .billing-list { list-style: none; padding: 0; font-size: 12px; }
+        .billing-list li { padding: 6px 0; border-top: 1px dashed var(--border); display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <div style="display:flex; align-items:center; gap:16px;">
+            <div class="brand-badge">GNJOY HK</div>
+            <div class="brand-title">
+                GNJOY HK (www.gnjoy.hk) 결제 메인 & 거래 내역 정밀 분석
+                <span>Billing Top-up Module (/Billing) & Transaction History Log (/Billing/BillingLog)</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="card">
+            <div class="card-title">
+                <i class="fa-solid fa-credit-card"></i> 💳 결제 및 거래 내역 2대 모듈 정밀 분석
+            </div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
+                GNJOY HK 온라인 캐시 충전 메인(`/Billing`)과 마이페이지 결제 거래 내역 조회(`/Billing/BillingLog`) 모듈 분석입니다.
+            </p>
+
+            <div class="billing-grid">
+                <!-- Module 1: Billing -->
+                <div class="billing-box pay">
+                    <h4><i class="fa-solid fa-wallet"></i> 1. 온라인 캐시/월카드 충전 메인 (/Billing)</h4>
+                    <p>게임, 서버, 캐릭터 선택 후 PG사 결제 수단을 통해 캐시 및 월카드를 구매하는 4단계 프로세스</p>
+                    <ul class="billing-list">
+                        <li><span>대상 게임 선택</span> <strong>RO Origin, 重生, 曙光, 世界之旅 등</strong></li>
+                        <li><span>서버/캐릭터 선택</span> <strong>GetServerListAndPaymentList ➔ GetRoleList</strong></li>
+                        <li><span>결제 수단 지원</span> <strong>MyCard, GASH, 신용카드, Apple Pay, SMS, 전화결제</strong></li>
+                        <li><span>월카드(月卡) 정책</span> <strong>30일(720시간) 연장, 잔여 10일 미만 시 재구매</strong></li>
+                        <li><span>보안 검증</span> <strong>CreateMyCardNewOrder + Turnstile 캡차</strong></li>
+                    </ul>
+                </div>
+
+                <!-- Module 2: BillingLog -->
+                <div class="billing-box log">
+                    <h4><i class="fa-solid fa-receipt"></i> 2. 거래 내역 조회 (/Billing/BillingLog)</h4>
+                    <p>유저의 과거 충전/구매 내역 및 주문 번호, 결제 상태를 조회하는 결제 로그 모듈</p>
+                    <ul class="billing-list">
+                        <li><span>필터 파라미터</span> <strong>SelGame (게임별) & SelBStatus (상태별)</strong></li>
+                        <li><span>비동기 데이터</span> <strong>../Billing/GetBillingLog AJAX 호출</strong></li>
+                        <li><span>표출 항목</span> <strong>주문번호, 결제일시, 대상캐릭터, 결제수단, 금액</strong></li>
+                        <li><span>환불 접수 프로세스</span> <strong>postbill2 반품 단호 처리 기능 연동</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

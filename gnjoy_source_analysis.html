@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNJOY.HK 소스코드 로직 분석 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #1e1e35;
+            --bg-code: #0d1117;
+            --text-primary: #e8e8f0;
+            --text-secondary: #9898b0;
+            --text-muted: #6868808a;
+            --accent-red: #ff3366;
+            --accent-orange: #ff8c42;
+            --accent-yellow: #ffd166;
+            --accent-green: #06d6a0;
+            --accent-blue: #4361ee;
+            --accent-purple: #7b2ff7;
+            --accent-cyan: #17c3b2;
+            --accent-pink: #ff006e;
+            --border: #2a2a40;
+            --glow-red: rgba(255, 51, 102, 0.15);
+            --glow-blue: rgba(67, 97, 238, 0.15);
+            --glow-green: rgba(6, 214, 160, 0.15);
+            --glow-purple: rgba(123, 47, 247, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(123, 47, 247, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 51, 102, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(67, 97, 238, 0.04) 0%, transparent 60%);
+            z-index: -1;
+            animation: bgPulse 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgPulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        /* Hero */
+        .hero {
+            padding: 60px 40px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #ff3366 50%, #7b2ff7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+        }
+
+        .nav-scroll {
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            padding: 12px 0;
+            scrollbar-width: none;
+        }
+
+        .nav-scroll::-webkit-scrollbar { display: none; }
+
+        .nav-item {
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.25s;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: white;
+            background: var(--bg-card);
+            border-color: var(--border);
+        }
+
+        .nav-item.active {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 12px var(--glow-purple);
+        }
+
+        /* Main content */
+        .main-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 50px;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .section-header h2 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header .subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(123, 47, 247, 0.3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 14px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .code-block code, .code-block pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #c9d1d9;
+            white-space: pre;
+        }
+
+        .code-block .keyword { color: #ff7b72; }
+        .code-block .string { color: #a5d6ff; }
+        .code-block .comment { color: #8b949e; font-style: italic; }
+        .code-block .func { color: #d2a8ff; }
+        .code-block .var { color: #ffa657; }
+        .code-block .num { color: #79c0ff; }
+        .code-block .op { color: #ff7b72; }
+
+        /* Flow diagrams */
+        .flow-diagram {
+            background: linear-gradient(135deg, rgba(26,26,46,0.8), rgba(18,18,26,0.9));
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flow-step {
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 140px;
+            border: 1px solid;
+        }
+
+        .flow-arrow {
+            font-size: 20px;
+            color: var(--text-secondary);
+        }
+
+        .flow-step.start { background: var(--glow-blue); border-color: var(--accent-blue); color: var(--accent-blue); }
+        .flow-step.process { background: var(--glow-purple); border-color: var(--accent-purple); color: #c9a0ff; }
+        .flow-step.decision { background: var(--glow-red); border-color: var(--accent-red); color: #ff8099; border-radius: 10px; transform: rotate(0deg); }
+        .flow-step.end { background: var(--glow-green); border-color: var(--accent-green); color: var(--accent-green); }
+        .flow-step.error { background: rgba(255,140,66,0.12); border-color: var(--accent-orange); color: var(--accent-orange); }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        .data-table th {
+            background: rgba(123, 47, 247, 0.1);
+            color: var(--accent-purple);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid var(--accent-purple);
+        }
+
+        .data-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .data-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-post { background: rgba(255,51,102,0.15); color: var(--accent-red); }
+        .tag-get { background: rgba(6,214,160,0.15); color: var(--accent-green); }
+        .tag-ajax { background: rgba(67,97,238,0.15); color: var(--accent-blue); }
+        .tag-redirect { background: rgba(255,140,66,0.15); color: var(--accent-orange); }
+        .tag-security { background: rgba(123,47,247,0.15); color: #c9a0ff; }
+        .tag-critical { background: rgba(255,0,110,0.15); color: var(--accent-pink); }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Stat boxes */
+        .stat-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-box .stat-value {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .stat-box .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            padding: 18px 22px;
+            border-radius: 10px;
+            margin: 14px 0;
+            border-left: 4px solid;
+            font-size: 14px;
+        }
+
+        .highlight-box.warning {
+            background: rgba(255,140,66,0.08);
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+
+        .highlight-box.info {
+            background: rgba(67,97,238,0.08);
+            border-color: var(--accent-blue);
+            color: #8eb4ff;
+        }
+
+        .highlight-box.danger {
+            background: rgba(255,51,102,0.08);
+            border-color: var(--accent-red);
+            color: #ff8099;
+        }
+
+        .highlight-box.success {
+            background: rgba(6,214,160,0.08);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* Security meter */
+        .security-meter {
+            display: flex;
+            gap: 4px;
+            margin: 8px 0;
+        }
+
+        .security-meter .bar {
+            height: 6px;
+            flex: 1;
+            border-radius: 3px;
+            background: var(--border);
+        }
+
+        .security-meter .bar.filled { background: var(--accent-green); }
+        .security-meter .bar.warn { background: var(--accent-orange); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 32px; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .main-content { padding: 20px; }
+            .flow-steps { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-purple); }
+
+        .inline-code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(123, 47, 247, 0.12);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #c9a0ff;
+        }
+
+        .endpoint-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .endpoint-row:last-child { border-bottom: none; }
+
+        .endpoint-method {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .method-post { background: rgba(255,51,102,0.2); color: var(--accent-red); }
+        .method-get { background: rgba(6,214,160,0.2); color: var(--accent-green); }
+
+        .endpoint-path {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--accent-cyan);
+        }
+
+        .endpoint-desc {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-left: auto;
+        }
+
+        /* Collapsible */
+        details {
+            margin: 10px 0;
+        }
+
+        details summary {
+            cursor: pointer;
+            padding: 12px 16px;
+            background: rgba(123, 47, 247, 0.06);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        details summary:hover {
+            background: rgba(123, 47, 247, 0.12);
+            border-color: var(--accent-purple);
+        }
+
+        details[open] summary {
+            border-radius: 8px 8px 0 0;
+            border-color: var(--accent-purple);
+        }
+
+        details .details-content {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            background: rgba(26,26,46,0.5);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+    <div class="hero-badge">🔬 Source Code Deep Dive</div>
+    <h1>GNJOY.HK 소스코드 로직 분석</h1>
+    <p>5개 핵심 페이지(Home, Game, Cs, Billing, Member/Signin)의 프론트엔드 소스코드에서 추출한 인증 플로우, API 엔드포인트, 보안 메커니즘, 결제 로직 상세 분석</p>
+</div>
+
+<!-- Navigation -->
+<div class="nav-container">
+    <div class="nav-scroll">
+        <div class="nav-item active" onclick="scrollTo_('#overview')">📊 개요</div>
+        <div class="nav-item" onclick="scrollTo_('#auth')">🔐 인증 시스템</div>
+        <div class="nav-item" onclick="scrollTo_('#session')">🔄 세션 관리</div>
+        <div class="nav-item" onclick="scrollTo_('#api')">📡 API 엔드포인트</div>
+        <div class="nav-item" onclick="scrollTo_('#security')">🛡️ 보안 메커니즘</div>
+        <div class="nav-item" onclick="scrollTo_('#billing')">💳 결제 시스템</div>
+        <div class="nav-item" onclick="scrollTo_('#acl')">🚦 접근 제어</div>
+        <div class="nav-item" onclick="scrollTo_('#browser')">🌐 브라우저 감지</div>
+        <div class="nav-item" onclick="scrollTo_('#arch')">🏗️ 아키텍처</div>
+    </div>
+</div>
+
+<div class="main-content">
+
+    <!-- ===== OVERVIEW ===== -->
+    <div class="section" id="overview">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--glow-blue);">📊</div>
+            <div>
+                <h2>기술 스택 & 아키텍처 개요</h2>
+                <div class="subtitle">소스코드에서 확인된 기술 구성</div>
+            </div>
+        </div>
+
+        <div class="grid-3">
+            <div class="stat-box">
+                <div class="stat-value" style="color: var(--accent-red);">5</div>
+                <div class="stat-label">분석된 핵심 페이지</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" style="color: var(--accent-blue);">12+</div>
+                <div class="stat-label">발견된 AJAX API</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" style="color: var(--accent-green);">3</div>
+                <div class="stat-label">보안 레이어</div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-title"><div class="dot" style="background: var(--accent-purple);"></div>프레임워크 & 라이브러리</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>기술</th>
+                        <th>버전/경로</th>
+                        <th>용도</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tag tag-post">서버</span></td>
+                        <td>ASP.NET Core MVC</td>
+                        <td>서버사이드 렌더링</td>
+                        <td>MVC 패턴 기반 웹 앱 (Controller/Action 구조)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-ajax">프론트</span></td>
+                        <td>jQuery</td>
+                        <td><code>jquery-3.5.1.min.js</code></td>
+                        <td>DOM 조작, AJAX 통신, 이벤트 핸들링</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-get">UI</span></td>
+                        <td>Swiper.js</td>
+                        <td><code>swiper-container</code></td>
+                        <td>홈 배너 슬라이더</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-security">보안</span></td>
+                        <td>Cloudflare Turnstile</td>
+                        <td>sitekey: <code>0x4AAAAAAAFp_K8DQyiDrB6P</code></td>
+                        <td>봇 차단 (1차 CAPTCHA)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-security">보안</span></td>
+                        <td>Google reCAPTCHA v2</td>
+                        <td>sitekey: <code>6Ldv9yETAAAAA...</code></td>
+                        <td>폼 인증 (2차 CAPTCHA)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-redirect">알림</span></td>
+                        <td>SweetAlert2</td>
+                        <td><code>sweetalert2.min.js</code></td>
+                        <td>모달 다이얼로그</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-get">분석</span></td>
+                        <td>Google Analytics</td>
+                        <td><code>G-K3T8YPSMJ1</code></td>
+                        <td>사용자 행동 트래킹</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-get">CDN</span></td>
+                        <td>Cloudflare</td>
+                        <td>beacon.min.js</td>
+                        <td>성능 모니터링, WAF</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-cyan);"></div>정적 리소스 구조</div>
+            <div class="code-block" data-lang="tree">
+<pre><span class="comment">/* CDN 호스팅: static.gnjoy.com.tw (대만 본서버 공유) */</span>
+
+static.gnjoy.com.tw/
+├── css/
+│   ├── sweetalert2.min.css
+│   └── CodeBox.css
+├── GNJOY/css/
+│   ├── inner.css          <span class="comment">/* 기본 내부 페이지 스타일 */</span>
+│   ├── inner_hk.css       <span class="comment">/* HK 전용 (Member/Signin만 사용) */</span>
+│   ├── inc_hk.css         <span class="comment">/* HK 전용 footer 로고 */</span>
+│   ├── common.css
+│   └── login.css          <span class="comment">/* 로그인 팝업 전용 */</span>
+├── js/
+│   ├── jquery-3.5.1.min.js
+│   ├── sweetalert2.min.js
+│   ├── promise.min.js
+│   └── index.js           <span class="comment">/* 홈 전용 스크립트 */</span>
+└── img/
+    ├── fav.ico
+    └── gnjoy_share.jpg    <span class="comment">/* OG Image */</span>
+
+<span class="comment">/* 로컬 JS (www.gnjoy.hk 서버) */</span>
+/js/
+├── common.js?202607271416  <span class="comment">/* 공통 함수 */</span>
+├── links.js?202607271416   <span class="comment">/* URL 링크 관리 */</span>
+├── game.js?202607271416    <span class="comment">/* 게임 목록 로직 */</span>
+└── helper/
+    └── tool.js             <span class="comment">/* MsgBox 등 유틸리티 */</span></pre>
+            </div>
+            <div class="highlight-box info">
+                <strong>📌 발견:</strong> HK 사이트는 <code>inner.css</code> (대만 공통)를 사용하는 반면, Member/Signin 페이지만 <code>inner_hk.css</code> (HK 전용)를 사용. CSS 분기 처리가 일관적이지 않음.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== AUTH SYSTEM ===== -->
+    <div class="section" id="auth">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--glow-red);">🔐</div>
+            <div>
+                <h2>인증 시스템 상세 분석</h2>
+                <div class="subtitle">로그인, OAuth, 세션 관리의 전체 플로우</div>
+            </div>
+        </div>
+
+        <!-- Login Methods -->
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-red);"></div>로그인 방법 (소스에서 확인)</div>
+            
+            <div class="grid-2">
+                <div>
+                    <h4 style="margin-bottom: 12px; color: var(--accent-yellow);">🔑 직접 로그인 (GNJOY ID)</h4>
+                    <div class="code-block" data-lang="js">
+<pre><span class="comment">// BtnLogin 클릭 이벤트</span>
+$(<span class="string">'#BtnLogin'</span>).click(<span class="keyword">function</span>() {
+  <span class="func">js_Login</span>(
+    $(<span class="string">'#Lgameid'</span>).val(),       <span class="comment">// 평台帳號 (최대 16자)</span>
+    $(<span class="string">'#Lgamepw'</span>).val(),       <span class="comment">// 평台密碼 (최대 16자)</span>
+    $(<span class="string">'input[name="cf-turnstile-response"]'</span>)
+      .first().val()             <span class="comment">// Cloudflare Turnstile 토큰</span>
+  );
+});</pre>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 12px; color: var(--accent-yellow);">🌐 OAuth 로그인 (서드파티)</h4>
+                    <div class="code-block" data-lang="js">
+<pre><span class="comment">// ThirdParty OAuth Redirect 패턴</span>
+<span class="comment">// 모든 OAuth는 동일한 엔드포인트 구조 사용</span>
+
+$(<span class="string">'#BtnFBLogin'</span>).on(<span class="string">'click'</span>, () => {
+  window.parent.location.href = 
+    <span class="string">'/ThirdParty/TPLogin'</span>
+    + <span class="string">'?FB'</span>
+    + <span class="string">'&GameId=GNJOY'</span>
+    + <span class="string">'&returnurl='</span> + encodeURIComponent(this_url);
+});
+
+<span class="comment">// 지원되는 Provider:</span>
+<span class="comment">// ?FB      → Facebook</span>
+<span class="comment">// ?GOOGLE  → Google</span>
+<span class="comment">// ?APPLE   → Apple ID</span>
+<span class="comment">// ?BAHAL   → 巴哈姆特 (비활성화 상태)</span></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box warning">
+                <strong>⚠️ 주의:</strong> <code>returnurl</code> 파라미터는 페이지별로 다르게 설정됨.
+                Home → <code>Home</code>, Billing → <code>Billing</code>, Member/Signin → <code>Member/Logined</code>.
+                이 값은 서버 렌더링 시 각 페이지의 Controller/Action에서 주입됨.
+            </div>
+        </div>
+
+        <!-- js_Login Function -->
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-purple);"></div>js_Login() 함수 — 핵심 로그인 로직</div>
+            <div class="code-block" data-lang="js">
+<pre><span class="keyword">function</span> <span class="func">js_Login</span>(game, pw, recapaStr) {
+    <span class="keyword">var</span> inputData = {
+        gnId: game,                          <span class="comment">// GNJOY 계정 ID</span>
+        password: pw,                        <span class="comment">// 비밀번호</span>
+        recaptcha: recapaStr,                <span class="comment">// Cloudflare Turnstile 토큰</span>
+        __RequestVerificationToken:          <span class="comment">// ASP.NET AntiForgery 토큰</span>
+            $(<span class="string">'input[name="__RequestVerificationToken"]'</span>).val()
+    };
+    
+    $.ajax({
+        cache: <span class="keyword">false</span>,
+        type: <span class="string">'POST'</span>,
+        dataType: <span class="string">'json'</span>,
+        url: <span class="string">"../Login/Login"</span>,              <span class="comment">// POST /Login/Login</span>
+        data: inputData,
+        success: <span class="keyword">function</span>(result) {
+            <span class="func">turnstile_reset</span>(<span class="string">'#cf_recapa0'</span>);  <span class="comment">// Turnstile 위젯 리셋</span>
+            
+            <span class="keyword">let</span> go_url = window.parent.location.href;
+            
+            <span class="comment">// ✅ 성공: statusCode == "1"</span>
+            <span class="keyword">if</span> (result.statusCode == <span class="string">"1"</span>) {
+                <span class="comment">// Member, RO, LoginFail 페이지에서 로그인하면 → Member/Logined로</span>
+                <span class="keyword">if</span> (go_url.indexOf(<span class="string">'/Member/'</span>) > -<span class="num">1</span> ||
+                    go_url.indexOf(<span class="string">'/RO/'</span>) > -<span class="num">1</span> ||
+                    go_url.indexOf(<span class="string">'/LoginFail'</span>) > -<span class="num">1</span>) {
+                    window.parent.location.href = <span class="string">"../Member/Logined"</span>;
+                    <span class="keyword">return</span>;
+                }
+                window.parent.location.reload();  <span class="comment">// 다른 페이지에서는 새로고침</span>
+                <span class="keyword">return</span>;
+            }
+            
+            <span class="comment">// ❌ 정지 계정</span>
+            <span class="keyword">if</span> (result.responseText == <span class="string">'帳號已被停權'</span>) {
+                window.parent.location.href = <span class="string">"../Login/StopStates"</span>;
+                <span class="keyword">return</span>;
+            }
+            
+            <span class="comment">// ❌ 기타 에러 → SweetAlert 표시</span>
+            <span class="func">MsgBox</span>(result.responseText);
+        },
+        error: <span class="keyword">function</span>(xhr) {
+            <span class="keyword">if</span> (xhr.status == <span class="num">400</span>) {
+                <span class="func">swal</span>(<span class="string">'請刷新頁面'</span>);  <span class="comment">// "페이지 새로고침" (CSRF 토큰 만료)</span>
+            }
+            <span class="func">turnstile_reset</span>(<span class="string">'#cf_recapa0'</span>);
+        }
+    });
+};</pre>
+            </div>
+
+            <h4 style="margin: 20px 0 12px; color: var(--accent-cyan);">📐 로그인 결과 분기 플로우</h4>
+            <div class="flow-diagram">
+                <div class="flow-steps">
+                    <div class="flow-step start">POST /Login/Login<br><small>gnId + password + recaptcha</small></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step decision">statusCode?</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step end">"1" → 성공<br><small>reload() 또는 Member/Logined</small></div>
+                </div>
+                <div class="flow-steps" style="margin-top: 12px;">
+                    <div class="flow-step error" style="margin-left: 200px;">"帳號已被停權"<br><small>→ /Login/StopStates</small></div>
+                    <div class="flow-arrow">|</div>
+                    <div class="flow-step error">기타 에러<br><small>→ MsgBox(msg)</small></div>
+                    <div class="flow-arrow">|</div>
+                    <div class="flow-step error">HTTP 400<br><small>→ "請刷新頁面" (토큰 만료)</small></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HK Special Login Behavior -->
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-green);"></div>HK 사이트 전용 로그인 동작</div>
+            <div class="code-block" data-lang="js">
+<pre><span class="comment">// HK 사이트는 팝업 로그인 대신 직접 리다이렉트</span>
+$(<span class="string">'#loginID'</span>).on(<span class="string">'click'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">if</span> (location.host.toLowerCase().indexOf(<span class="string">'.hk'</span>) > -<span class="num">1</span> || <span class="num">1</span> == <span class="num">2</span>) {
+        <span class="comment">// HK → 로그인 페이지로 직접 이동</span>
+        window.location.href = <span class="string">"../Member/Signin"</span>;
+    }
+    <span class="keyword">else</span> {
+        <span class="comment">// TW → 팝업 오버레이 열기</span>
+        $(<span class="string">'#headerLogin'</span>).fadeIn(<span class="num">100</span>);
+        $(<span class="string">'.l-overlay_wrap'</span>).addClass(<span class="string">'active'</span>);
+    }
+});</pre>
+            </div>
+            <div class="highlight-box info">
+                <strong>💡 분석:</strong> <code>1 == 2</code>는 항상 false인 조건으로, 디버그/테스트용 코드 잔재. HK에서는 오버레이 팝업 로그인이 비활성화되고, <code>/Member/Signin</code> 페이지로 직접 리다이렉트됨. 이는 Signin 페이지에 별도의 로그인 폼 + OAuth 버튼이 있기 때문.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SESSION MANAGEMENT ===== -->
+    <div class="section" id="session">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--glow-green);">🔄</div>
+            <div>
+                <h2>세션 관리 & 상태 체크</h2>
+                <div class="subtitle">서버사이드 렌더링 변수로 관리되는 세션 시스템</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-yellow);"></div>서버 렌더링 세션 변수</div>
+            <p style="margin-bottom: 16px; color: var(--text-secondary);">
+                세션 상태는 서버에서 Razor 뷰 렌더링 시 JavaScript 변수에 주입됩니다. 프론트엔드에서 읽기만 가능합니다.
+            </p>
+            <div class="code-block" data-lang="js">
+<pre><span class="comment">// 서버 렌더링 시 주입되는 변수 (빈 문자열 = 미로그인/해당없음)</span>
+<span class="keyword">let</span> CurrentUser = <span class="string">''</span>;              <span class="comment">// 현재 로그인 GNJOY ID</span>
+<span class="keyword">let</span> uName = <span class="string">''</span>;                     <span class="comment">// 사용자 닉네임</span>
+<span class="keyword">let</span> controller = <span class="string">'Home'</span>.toLowerCase(); <span class="comment">// 현재 Controller 이름</span>
+<span class="keyword">let</span> action = <span class="string">'Index'</span>.toLowerCase();    <span class="comment">// 현재 Action 이름</span>
+
+<span class="comment">// 계정 상태 플래그 (서버에서 주입)</span>
+<span class="keyword">let</span> CompanyChangeIAgree = <span class="string">''</span>;       <span class="comment">// 약관 동의 필요 여부</span>
+<span class="keyword">let</span> StopStates = <span class="string">''</span>;                <span class="comment">// 'Y' = 정지, 'H' = 보관(제한)</span>
+<span class="keyword">let</span> EmailApproveAlert = <span class="string">''</span>;         <span class="comment">// 이메일 인증 팝업</span>
+<span class="keyword">let</span> EmailApproveFlag = <span class="string">''</span>;          <span class="comment">// 이메일 미인증 시 기능 제한</span>
+<span class="keyword">let</span> PhoneApproveFlag2022 = <span class="string">''</span>;      <span class="comment">// 전화 인증 미완료 시 기능 제한</span>
+<span class="keyword">let</span> SamePassIdQt = <span class="string">''</span>;              <span class="comment">// 동일 비밀번호 경고</span>
+<span class="keyword">let</span> MainFg = <span class="string">''</span>;                    <span class="comment">// 메인 플래그</span></pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-orange);"></div>헤더 로그인 상태 UI 분기</div>
+            <div class="code-block" data-lang="js">
+<pre><span class="comment">// 3가지 로그인 상태 UI 분기</span>
+$(<span class="string">'#hlogin1'</span>).hide();  <span class="comment">// 닉네임 있는 로그인 사용자</span>
+$(<span class="string">'#hlogin2'</span>).hide();  <span class="comment">// 닉네임 없는 로그인 사용자</span>
+$(<span class="string">'#hlogin3'</span>).hide();  <span class="comment">// 비로그인</span>
+
+<span class="keyword">if</span> (CurrentUser) {
+    <span class="keyword">if</span> (uName) {
+        $(<span class="string">'#hlogin1'</span>).show();
+        $(<span class="string">'#account1'</span>).text(<span class="string">'你好, '</span> + uName);
+        <span class="comment">// "你好, 닉네임" + 로그아웃 버튼</span>
+    } <span class="keyword">else</span> {
+        $(<span class="string">'#hlogin2'</span>).show();
+        $(<span class="string">'#account2'</span>).text(<span class="string">'你好, '</span> + CurrentUser);
+        <span class="comment">// "你好, GN아이디" + 로그아웃 버튼</span>
+    }
+} <span class="keyword">else</span> {
+    $(<span class="string">'#hlogin3'</span>).show();
+    <span class="comment">// "登入" + "註冊" 버튼</span>
+}</pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-red);"></div>자동 세션 갱신</div>
+            <div class="code-block" data-lang="js">
+<pre><span class="comment">// 8시간 자동 새로고침 — 모든 페이지에 적용</span>
+<span class="keyword">var</span> TimeoutID = window.setTimeout(
+    (() => location.reload()), 
+    (<span class="num">1000</span> * <span class="num">60</span> * <span class="num">60</span> * <span class="num">8</span>)  <span class="comment">// = 28,800,000ms = 8시간</span>
+);
+<span class="comment">// 목적: "避免前端版本過舊" (프론트엔드 버전 갱신)</span>
+<span class="comment">// 부수 효과: CSRF 토큰 갱신, 세션 쿠키 갱신</span></pre>
+            </div>
+
+            <div class="highlight-box warning">
+                <strong>⏰ 세션 타임아웃 팝업:</strong> 세션 만료 시 <code>#CurrentChk</code> 오버레이가 표시됨.
+                메시지: "<em style="color: #ff3366;">GNJOY</em>操作已於逾時，請重新登入" (작업 시간 초과, 다시 로그인해주세요)
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-cyan);"></div>로그아웃 함수</div>
+            <div class="code-block" data-lang="js">
+<pre><span class="comment">// 헤더의 "登出" 클릭 시 실행</span>
+$(<span class="string">'.signout'</span>).click(<span class="keyword">function</span>() {
+    event.preventDefault();
+    <span class="keyword">var</span> inputData = {
+        gnId: $(<span class="string">'#Lgameid'</span>).val(),
+        __RequestVerificationToken: $(<span class="string">'input[name="__RequestVerificationToken"]'</span>).val()
+    }
+    $.ajax({
+        cache: <span class="keyword">false</span>,
+        type: <span class="string">'POST'</span>,
+        url: <span class="string">'/Login/Logout'</span>,       <span class="comment">// POST /Login/Logout</span>
+        dataType: <span class="string">'json'</span>,
+        data: inputData,
+        success: <span class="keyword">function</span>(result) {
+            <span class="keyword">if</span> (result.statusCode == <span class="string">"0"</span>) {
+                <span class="func">MsgBox</span>(result.responseText);
+                <span class="keyword">return</span>;
+            }
+            <span class="comment">// Login/Member/RO 페이지 → Signin으로</span>
+            <span class="comment">// 기타 페이지 → 현재 페이지 reload</span>
+            <span class="keyword">if</span> (controller == <span class="string">'login'</span> || controller == <span class="string">'member'</span> || controller == <span class="string">'ro'</span>) {
+                window.parent.location.href = <span class="string">"../Member/Signin"</span>;
+            } <span class="keyword">else</span> {
+                window.parent.location.reload();
+            }
+        }
+    });
+});</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== API ENDPOINTS ===== -->
+    <div class="section" id="api">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--glow-purple);">📡</div>
+            <div>
+                <h2>API 엔드포인트 맵</h2>
+                <div class="subtitle">소스코드에서 발견된 모든 AJAX 호출</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-red);"></div>인증 & 회원 API</div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-post">POST</span>
+                <span class="endpoint-path">/Login/Login</span>
+                <span class="endpoint-desc">로그인 인증 (gnId, password, recaptcha, __RequestVerificationToken)</span>
+            </div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-post">POST</span>
+                <span class="endpoint-path">/Login/Logout</span>
+                <span class="endpoint-desc">로그아웃 (gnId, __RequestVerificationToken)</span>
+            </div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-get">GET</span>
+                <span class="endpoint-path">/ThirdParty/TPLogin?{PROVIDER}</span>
+                <span class="endpoint-desc">OAuth 리다이렉트 (FB, GOOGLE, APPLE, BAHAL)</span>
+            </div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-get">GET</span>
+                <span class="endpoint-path">/Login/StopStates</span>
+                <span class="endpoint-desc">정지 계정 안내 페이지</span>
+            </div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-get">GET</span>
+                <span class="endpoint-path">/Login/iAgree</span>
+                <span class="endpoint-desc">약관 동의 페이지</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-blue);"></div>컨텐츠 API (AJAX)</div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-post">POST</span>
+                <span class="endpoint-path">Home/forAjax_getBannerList</span>
+                <span class="endpoint-desc">홈 배너 목록 조회 (빈 JSON body)</span>
+            </div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-post">POST</span>
+                <span class="endpoint-path">News/forAjax_getNewsList</span>
+                <span class="endpoint-desc">뉴스 목록 조회 (news_catalog_id, keyword, row_start)</span>
+            </div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-post">POST</span>
+                <span class="endpoint-path">Cs/forAjax_getGameList_ret</span>
+                <span class="endpoint-desc">CS 게임 목록 (추정)</span>
+            </div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-post">POST</span>
+                <span class="endpoint-path">Question/forAjax_getFaqCatalogsByGame</span>
+                <span class="endpoint-desc">FAQ 카테고리 목록 (게임별)</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-green);"></div>결제 API</div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-post">POST</span>
+                <span class="endpoint-path">/Billing/forAjax_Check_Nd_Go_Mid</span>
+                <span class="endpoint-desc">MID 본인인증 필요 여부 확인</span>
+            </div>
+            <div class="endpoint-row">
+                <span class="endpoint-method method-get">GET</span>
+                <span class="endpoint-path">/Mid</span>
+                <span class="endpoint-desc">MID 전화번호 본인인증 페이지</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-orange);"></div>AJAX 공통 설정</div>
+            <div class="code-block" data-lang="js">
+<pre><span class="comment">// 모든 AJAX 요청에 CSRF 토큰 자동 삽입</span>
+$.ajaxSetup({
+    headers: {
+        <span class="string">'RequestVerificationToken'</span>: 
+            $(<span class="string">'input[name="__RequestVerificationToken"]'</span>).val()
+    }
+});
+
+<span class="comment">// 토큰 예시 (매 요청마다 변경):</span>
+<span class="comment">// CfDJ8Kk3eyuN9QBPmmE7U6Bv_vhgfRpJTgJJEKf...</span></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SECURITY ===== -->
+    <div class="section" id="security">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--glow-red);">🛡️</div>
+            <div>
+                <h2>보안 메커니즘</h2>
+                <div class="subtitle">3중 보안 레이어 분석</div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-title"><div class="dot" style="background: var(--accent-green);"></div>Layer 1: Cloudflare Turnstile</div>
+                <div class="code-block" data-lang="html">
+<pre><span class="comment">&lt;!-- 로그인 폼에 삽입 --&gt;</span>
+&lt;span class="<span class="string">cf-turnstile</span>" 
+  data-sitekey="<span class="var">0x4AAAAAAAFp_K8DQyiDrB6P</span>"
+  id="<span class="string">cf_recapa0</span>"&gt;
+&lt;/span&gt;
+
+<span class="comment">&lt;!-- 결제 폼에도 삽입 --&gt;</span>
+&lt;span class="<span class="string">cf-turnstile</span>"
+  data-sitekey="<span class="var">0x4AAAAAAAFp_K8DQyiDrB6P</span>"
+  id="<span class="string">cf_recapa</span>"&gt;
+&lt;/span&gt;</pre>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">
+                    ✅ 동일 sitekey 사용<br>
+                    ✅ 리셋 함수: <code>turnstile_reset(cfWidgetId)</code><br>
+                    ✅ 로그인 실패/에러 시 자동 리셋
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><div class="dot" style="background: var(--accent-blue);"></div>Layer 2: Google reCAPTCHA</div>
+                <div class="code-block" data-lang="js">
+<pre><span class="comment">// CaptchaCallback — 복수 위젯 대응</span>
+<span class="keyword">var</span> CaptchaCallback = <span class="keyword">function</span>() {
+  <span class="comment">// 15개 이상의 위젯 ID를 검사하며 렌더링</span>
+  <span class="keyword">if</span> ($(<span class="string">'#header_recap'</span>).length) {
+    grecaptcha.render(<span class="string">'header_recap'</span>, {
+      <span class="string">'sitekey'</span>: <span class="string">'6Ldv9yETAAAAA...'</span> <span class="comment">// v2</span>
+    });
+  }
+  
+  <span class="comment">// FAQ 제출용 Invisible reCAPTCHA v2</span>
+  <span class="keyword">if</span> ($(<span class="string">'#faq_recapa_v2_hid'</span>).length) {
+    grecaptcha.render(<span class="string">"faq_recapa_v2hid"</span>, {
+      <span class="string">"sitekey"</span>: <span class="string">"6Lf6hXImAAAAA..."</span>, <span class="comment">// v2 invisible</span>
+      <span class="string">"size"</span>: <span class="string">"invisible"</span>,
+      <span class="string">"callback"</span>: form_submit2
+    });
+  }
+};</pre>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">
+                    📝 v2 일반 sitekey: <code>6Ldv9yETAAAAA...</code><br>
+                    📝 v2 Invisible sitekey: <code>6Lf6hXImAAAAA...</code><br>
+                    ⚠️ v3 sitekey 코드가 주석에 존재하나 비활성화 상태
+                </p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-purple);"></div>Layer 3: ASP.NET AntiForgery Token (CSRF 방어)</div>
+            <div class="code-block" data-lang="html">
+<pre><span class="comment">&lt;!-- 매 페이지 렌더링 시 서버에서 생성 --&gt;</span>
+&lt;input name="<span class="string">__RequestVerificationToken</span>" 
+       type="<span class="string">hidden</span>" 
+       value="<span class="var">CfDJ8Kk3eyuN9QBPmmE7U6Bv_vhgf...</span>" /&gt;
+
+<span class="comment">&lt;!-- 모든 POST AJAX에 자동 첨부 --&gt;</span>
+<span class="comment">&lt;!-- 1) ajaxSetup headers로 (RequestVerificationToken) --&gt;</span>
+<span class="comment">&lt;!-- 2) POST data body로 (__RequestVerificationToken) --&gt;</span></pre>
+                </div>
+            <div class="highlight-box danger">
+                <strong>🔍 발견:</strong> 토큰이 <strong>두 곳</strong>에 전송됨 — HTTP 헤더 (<code>RequestVerificationToken</code>) + POST body (<code>__RequestVerificationToken</code>). 이는 이중 검증 방식이 아닌, 백엔드에서 둘 중 하나를 사용하는 ASP.NET Core의 기본 동작.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-cyan);"></div>보안 등급 평가</div>
+            <div class="security-meter">
+                <div class="bar filled"></div>
+                <div class="bar filled"></div>
+                <div class="bar filled"></div>
+                <div class="bar filled"></div>
+                <div class="bar warn"></div>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-top: 6px;">4/5 — HTTPS + CSRF + Turnstile + reCAPTCHA. 비밀번호 maxlength=16 제한이 보안 약점.</p>
+            
+            <table class="data-table" style="margin-top: 14px;">
+                <thead>
+                    <tr><th>보안 항목</th><th>구현 상태</th><th>비고</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>HTTPS</td><td><span class="tag tag-get">✅ 적용</span></td><td>Cloudflare SSL/TLS</td></tr>
+                    <tr><td>CSRF 방어</td><td><span class="tag tag-get">✅ 적용</span></td><td>ASP.NET AntiForgeryToken</td></tr>
+                    <tr><td>봇 차단</td><td><span class="tag tag-get">✅ 이중</span></td><td>Turnstile + reCAPTCHA</td></tr>
+                    <tr><td>비밀번호 길이</td><td><span class="tag tag-post">⚠️ 16자 제한</span></td><td>maxlength="16"으로 짧음</td></tr>
+                    <tr><td>세션 갱신</td><td><span class="tag tag-get">✅ 적용</span></td><td>8시간 자동 리프레시</td></tr>
+                    <tr><td>WAF</td><td><span class="tag tag-get">✅ 적용</span></td><td>Cloudflare Web App Firewall</td></tr>
+                    <tr><td>CSP</td><td><span class="tag tag-redirect">미확인</span></td><td>HTTP 헤더 분석 필요</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== BILLING ===== -->
+    <div class="section" id="billing">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(255,209,102,0.15);">💳</div>
+            <div>
+                <h2>결제 시스템 (Billing)</h2>
+                <div class="subtitle">3단계 결제 프로세스 & 결제 수단 분석</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-yellow);"></div>결제 3단계 플로우</div>
+            <div class="flow-diagram">
+                <div class="flow-steps">
+                    <div class="flow-step start">STEP 1<br>填寫資料<br><small>(게임/서버/캐릭터/결제수단 선택)</small></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step process">STEP 2<br>確認資料<br><small>(주문 정보 확인)</small></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step end">STEP 3<br>交易結果<br><small>(결제 결과 표시)</small></div>
+                </div>
+            </div>
+
+            <h4 style="margin: 20px 0 12px; color: var(--accent-cyan);">🎮 결제 가능 게임 (소스에서 확인)</h4>
+            <table class="data-table">
+                <thead>
+                    <tr><th>게임 ID</th><th>게임명</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>ROBA</code></td><td>RO仙境傳說：初心之戰</td></tr>
+                    <tr><td><code>ROO</code></td><td>RO仙境傳說：愛如初見</td></tr>
+                    <tr><td><code>RORB</code></td><td>RO仙境傳說：重生</td></tr>
+                    <tr><td><code>ROTL</code></td><td>RO仙境傳說：曙光</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-orange);"></div>결제 수단 (소스코드 DOM 구조)</div>
+            <table class="data-table">
+                <thead>
+                    <tr><th>카테고리</th><th>DOM ID</th><th>포함 결제사</th><th>지역 선택</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>점수카드</strong></td>
+                        <td><code>#payPath_01</code></td>
+                        <td>MyCard 점수카드, GASH 점수카드</td>
+                        <td>대만 / 홍콩마카오</td>
+                    </tr>
+                    <tr>
+                        <td><strong>신용카드</strong></td>
+                        <td><code>#payPath_02</code></td>
+                        <td>GASH 신용카드, SoNet 신용카드</td>
+                        <td>대만 / 홍콩마카오</td>
+                    </tr>
+                    <tr>
+                        <td><strong>회원 전환포인트</strong></td>
+                        <td><code>#payPath_03</code></td>
+                        <td>eWallet 회원 포인트</td>
+                        <td>대만 / 홍콩마카오</td>
+                    </tr>
+                    <tr>
+                        <td><strong>통신사 소액결제</strong></td>
+                        <td><code>#payPath_04</code></td>
+                        <td>통신사 소액결제</td>
+                        <td>전화번호 입력 + MID 인증</td>
+                    </tr>
+                    <tr>
+                        <td><strong>시내전화 HiNet</strong></td>
+                        <td><code>#payPath_07</code></td>
+                        <td>HiNet 시내전화</td>
+                        <td>시내전화 번호 입력</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WebATM</strong></td>
+                        <td><code>#payPath_05</code></td>
+                        <td>WebATM</td>
+                        <td>없음</td>
+                    </tr>
+                    <tr>
+                        <td><strong>홍콩마카오 기타</strong></td>
+                        <td><code>#payPath_06</code></td>
+                        <td>기타 결제 (HK/MO)</td>
+                        <td>없음</td>
+                    </tr>
+                    <tr>
+                        <td><strong>모바일 결제</strong></td>
+                        <td><code>#payPath_08</code></td>
+                        <td>Apple Pay 등</td>
+                        <td>없음</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box warning">
+                <strong>📱 MID 본인인증 규칙:</strong> 소액결제 시 3,000원 이상 단건 또는 30일 누적 5,000원 이상이면 MID 본인인증(門號身分識別) 필수. <code>/Billing/forAjax_Check_Nd_Go_Mid</code>로 서버에 확인 후 <code>/Mid</code> 페이지로 이동.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-green);"></div>GASH 지역 선택 로직</div>
+            <div class="code-block" data-lang="html">
+<pre><span class="comment">&lt;!-- GASH 결제 시 지역 선택 라디오 버튼 --&gt;</span>
+&lt;input type="radio" name="<span class="string">GashUserArea</span>" 
+  id="<span class="var">GASH_card_TW</span>" value="<span class="string">card_TW</span>"&gt;  <span class="comment">&lt;!-- 대만 --&gt;</span>
+&lt;input type="radio" name="<span class="string">GashUserArea</span>" 
+  id="<span class="var">GASH_card_Global</span>" value="<span class="string">card_Global</span>"&gt;  <span class="comment">&lt;!-- 홍콩마카오 --&gt;</span>
+
+<span class="comment">&lt;!-- 결제 유형별 value 패턴: --&gt;</span>
+<span class="comment">&lt;!-- card_TW / card_Global       — 점수카드 --&gt;</span>
+<span class="comment">&lt;!-- creditcard_TW / creditcard_Global — 신용카드 --&gt;</span>
+<span class="comment">&lt;!-- ewallet_TW / ewallet_Global — 회원포인트 --&gt;</span></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ACCESS CONTROL ===== -->
+    <div class="section" id="acl">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(255,0,110,0.15);">🚦</div>
+            <div>
+                <h2>접근 제어 로직 (ACL)</h2>
+                <div class="subtitle">계정 상태별 페이지 접근 정책</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-red);"></div>StopStates 분기 — 계정 정지/보관 처리</div>
+
+            <details>
+                <summary>🔴 StopStates == 'Y' (정지 계정) — 접근 가능 페이지</summary>
+                <div class="details-content">
+                    <p style="margin-bottom: 12px; color: var(--text-secondary);">정지 계정은 아래 페이지만 접근 가능. 나머지는 <code>/Login/StopStates</code>로 리다이렉트.</p>
+                    <div class="grid-2">
+                        <div>
+                            <h5 style="color: var(--accent-green); margin-bottom: 8px;">✅ 접근 허용</h5>
+                            <ul style="color: var(--text-secondary); font-size: 13px; padding-left: 20px;">
+                                <li>Login</li>
+                                <li>Cs (고객센터 메인)</li>
+                                <li>QuestionGuest (비회원 문의)</li>
+                                <li>Feedback, FormDownload</li>
+                                <li>Bot, Guard, Regulation</li>
+                                <li>Terms, Policies</li>
+                                <li>Game, Home, News, NewsDetail</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 style="color: var(--accent-red); margin-bottom: 8px;">❌ 접근 차단</h5>
+                            <ul style="color: var(--text-secondary); font-size: 13px; padding-left: 20px;">
+                                <li>Member (회원 페이지)</li>
+                                <li>Billing (결제)</li>
+                                <li>Question (회원 문의) — 주석: "cs 2021/09/27 停權不可用會員建單"</li>
+                                <li>Coupon</li>
+                                <li>RO 관련 페이지</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>🟡 StopStates == 'H' (보관 계정) — 접근 가능 페이지</summary>
+                <div class="details-content">
+                    <p style="margin-bottom: 12px; color: var(--text-secondary);">보관 상태는 Member 페이지 접근 시 SweetAlert 경고 표시. <code>GAuthLocker</code> 액션만 예외.</p>
+                    <div class="code-block" data-lang="js">
+<pre><span class="keyword">if</span> (StopStates == <span class="string">'H'</span>) {
+    <span class="keyword">if</span> (action == <span class="string">'logined'</span>) {
+        <span class="func">swal</span>({ 
+            text: <span class="string">"目前此帳號遭保管，無法使用其他功能，請&lt;a href=../../Question&gt;聯繫客服&lt;/a&gt;"</span>
+        });
+    }
+    <span class="comment">// Member(GAuthLocker 제외), Cs, Question... 접근 허용</span>
+    <span class="comment">// 나머지 → /Member/Logined 리다이렉트</span>
+}</pre>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>📧 EmailApproveFlag == 'go' — 이메일 미인증</summary>
+                <div class="details-content">
+                    <p style="color: var(--text-secondary); margin-bottom: 12px;">이메일 미인증 시 StopStates='H'와 동일한 페이지 제한 적용. 추가 예외: <code>GNIdBind24Login</code></p>
+                    <div class="highlight-box info">
+                        <strong>🇭🇰 HK 특수 처리:</strong> HK 사이트에서는 EmailApproveAlert 팝업이 비활성화됨!
+                        <code>if (location.host.indexOf('.hk') > -1) { /* skip */ }</code>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>📱 PhoneApproveFlag2022 == 'go' — 전화 미인증</summary>
+                <div class="details-content">
+                    <p style="color: var(--text-secondary);">2022년 추가된 전화 인증 제한. EmailApproveFlag와 동일한 페이지 접근 정책 적용.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-blue);"></div>LoginChk & MemberLoginedChk — 네비게이션 함수</div>
+            <div class="code-block" data-lang="js">
+<pre><span class="comment">// 서버에서 CurrentUser 값을 함수 인자로 주입</span>
+<span class="comment">// 비로그인 시 빈 문자열 → 리다이렉트 트리거</span>
+
+<span class="keyword">function</span> <span class="func">LoginChk</span>(input) {
+    <span class="keyword">if</span> (input == <span class="string">''</span>) {
+        <span class="func">MsgBox</span>(<span class="string">"請先登入平台帳號才能使用本功能"</span>);
+        setTimeout(() => window.location.href = <span class="string">'../Billing'</span>, <span class="num">1500</span>);
+        <span class="comment">// 비로그인 → 1.5초 후 Billing (로그인 유도)</span>
+    } <span class="keyword">else</span> {
+        window.location.href = <span class="string">'../Billing'</span>;
+        <span class="comment">// 로그인 → 바로 Billing 이동</span>
+    }
+}
+
+<span class="keyword">function</span> <span class="func">MemberLoginedChk</span>(input) {
+    <span class="keyword">if</span> (input == <span class="string">''</span>) {
+        window.location.href = <span class="string">'../Member/Signin'</span>;
+        <span class="comment">// 비로그인 → 로그인 페이지</span>
+    } <span class="keyword">else</span> {
+        window.location.href = <span class="string">'../Member/Logined'</span>;
+        <span class="comment">// 로그인 → 회원 정보 페이지</span>
+    }
+}
+
+<span class="comment">// 네비게이션에서의 호출:</span>
+<span class="comment">// onclick="MemberLoginedChk('')"  ← 비로그인 시 빈 문자열</span>
+<span class="comment">// onclick="LoginChk('')"          ← 비로그인 시 빈 문자열</span></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BROWSER DETECTION ===== -->
+    <div class="section" id="browser">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(23,195,178,0.15);">🌐</div>
+            <div>
+                <h2>브라우저 감지 & 호환성</h2>
+                <div class="subtitle">LINE 앱 내 브라우저 차단 로직</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-cyan);"></div>LINE In-App Browser 차단</div>
+            <div class="code-block" data-lang="js">
+<pre>(<span class="keyword">function</span>() {
+    <span class="keyword">var</span> ua = navigator.userAgent || navigator.vendor || window.opera;
+    
+    <span class="keyword">if</span> (ua.toLowerCase().indexOf(<span class="string">"line"</span>) !== -<span class="num">1</span> || <span class="num">1</span> == <span class="num">2</span>) {
+        <span class="comment">// LINE 앱 내 브라우저 감지 시:</span>
+        <span class="comment">// 1. 전체 HTML 제거</span>
+        document.documentElement.innerHTML = <span class="string">""</span>;
+        
+        <span class="comment">// 2. 전체 화면 오버레이 생성</span>
+        <span class="keyword">var</span> overlay = document.createElement(<span class="string">"div"</span>);
+        <span class="comment">// ... 풀스크린 흰색 배경 ...</span>
+        
+        <span class="comment">// 3. 안내 메시지 표시</span>
+        message.innerText = <span class="string">"為確保您的連線安全與瀏覽體驗，"</span>
+            + <span class="string">"請改用 Google Chrome 或 Safari 瀏覽器開啟此頁面，"</span>
+            + <span class="string">"以獲得更完整的服務功能。"</span>;
+        <span class="comment">// "연결 보안과 브라우징 경험을 위해</span>
+        <span class="comment">//  Chrome 또는 Safari로 열어주세요"</span>
+        
+        <span class="comment">// 4. URL 복사 버튼 제공</span>
+        copyBtn.innerText = <span class="string">"複製網址"</span>;
+        copyBtn.onclick = <span class="keyword">function</span>() {
+            <span class="comment">// Clipboard API 우선, fallback으로 execCommand</span>
+            <span class="keyword">if</span> (navigator.clipboard) {
+                navigator.clipboard.writeText(url)
+                    .then(setCopiedState)
+                    .catch(fallbackCopy);
+            } <span class="keyword">else</span> {
+                fallbackCopy();
+            }
+        };
+    }
+})();</pre>
+            </div>
+            <div class="highlight-box info">
+                <strong>💡 분석:</strong> 이 IIFE(즉시 실행 함수)는 모든 페이지에서 네비게이션 메뉴 렌더링 전에 실행됨. LINE 앱의 WebView가 감지되면 전체 DOM을 파괴하고 안내 오버레이만 표시. Clipboard API + execCommand 이중 폴백 패턴 사용.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ARCHITECTURE ===== -->
+    <div class="section" id="arch">
+        <div class="section-header">
+            <div class="section-icon" style="background: var(--glow-purple);">🏗️</div>
+            <div>
+                <h2>전체 아키텍처 & 라우팅</h2>
+                <div class="subtitle">ASP.NET Core MVC 기반 Controller/Action 매핑</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-purple);"></div>확인된 Controller 목록</div>
+            <table class="data-table">
+                <thead>
+                    <tr><th>Controller</th><th>주요 Action</th><th>인증 필요</th><th>기능</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Home</code></td>
+                        <td>Index</td>
+                        <td><span class="tag tag-get">No</span></td>
+                        <td>메인 페이지, 배너, 뉴스 Top5</td>
+                    </tr>
+                    <tr>
+                        <td><code>Game</code></td>
+                        <td>Index</td>
+                        <td><span class="tag tag-get">No</span></td>
+                        <td>게임 센터 (카테고리별 목록)</td>
+                    </tr>
+                    <tr>
+                        <td><code>Member</code></td>
+                        <td>Signin, Logined, AppleBind, FbBind, GAuthLocker, GNIdBind24Login</td>
+                        <td><span class="tag tag-post">Yes*</span></td>
+                        <td>회원가입, 계정 관리, 바인딩</td>
+                    </tr>
+                    <tr>
+                        <td><code>Login</code></td>
+                        <td>Login, Logout, StopStates, iAgree, LoginFail</td>
+                        <td><span class="tag tag-redirect">Mixed</span></td>
+                        <td>인증 처리</td>
+                    </tr>
+                    <tr>
+                        <td><code>ThirdParty</code></td>
+                        <td>TPLogin</td>
+                        <td><span class="tag tag-get">No</span></td>
+                        <td>OAuth 리다이렉트</td>
+                    </tr>
+                    <tr>
+                        <td><code>Billing</code></td>
+                        <td>Index</td>
+                        <td><span class="tag tag-post">Yes</span></td>
+                        <td>결제, 충전 (3단계)</td>
+                    </tr>
+                    <tr>
+                        <td><code>Cs</code></td>
+                        <td>Index</td>
+                        <td><span class="tag tag-get">No</span></td>
+                        <td>고객센터 FAQ</td>
+                    </tr>
+                    <tr>
+                        <td><code>Question</code></td>
+                        <td>Index</td>
+                        <td><span class="tag tag-post">Yes</span></td>
+                        <td>1:1 문의 (회원)</td>
+                    </tr>
+                    <tr>
+                        <td><code>QuestionGuest</code></td>
+                        <td>Index</td>
+                        <td><span class="tag tag-get">No</span></td>
+                        <td>비회원 문의</td>
+                    </tr>
+                    <tr>
+                        <td><code>News</code></td>
+                        <td>Index</td>
+                        <td><span class="tag tag-get">No</span></td>
+                        <td>공지사항 목록</td>
+                    </tr>
+                    <tr>
+                        <td><code>NewsDetail</code></td>
+                        <td>?rq_id={id}</td>
+                        <td><span class="tag tag-get">No</span></td>
+                        <td>공지 상세</td>
+                    </tr>
+                    <tr>
+                        <td><code>Mid</code></td>
+                        <td>Index</td>
+                        <td><span class="tag tag-post">Yes</span></td>
+                        <td>MID 전화번호 본인인증</td>
+                    </tr>
+                    <tr>
+                        <td><code>Coupon</code></td>
+                        <td>-</td>
+                        <td><span class="tag tag-post">Yes</span></td>
+                        <td>쿠폰 (메뉴에서 비활성화)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-yellow);"></div>CS 센터 좌측 메뉴 구조</div>
+            <div class="code-block" data-lang="html">
+<pre><span class="comment">&lt;!-- 좌측 사이드바 메뉴 --&gt;</span>
+&lt;aside class="aside"&gt;
+  &lt;h2&gt;客服中心&lt;/h2&gt;
+  &lt;ul class="aside-menu"&gt;
+    &lt;li id="<span class="var">LeftMenuCs_faq</span>"&gt;        <span class="comment">&lt;!-- 常見問題 FAQ --&gt;</span>
+    &lt;li id="<span class="var">LeftMenuCs_faqForm</span>"&gt;    <span class="comment">&lt;!-- 建立工單 (문의 작성) --&gt;</span>
+    &lt;li id="<span class="var">LeftMenuCs_faqFeedback</span>"&gt;<span class="comment">&lt;!-- 意見回饋 --&gt;</span>
+    &lt;li id="<span class="var">LeftMenuCs_faqTerms</span>"&gt;   <span class="comment">&lt;!-- 服務條款 --&gt;</span>
+    &lt;li id="<span class="var">LeftMenuCs_faqPolicies</span>"&gt;<span class="comment">&lt;!-- 隱私權政策 --&gt;</span>
+    &lt;li id="<span class="var">LeftMenuCs_faqTermsofUseKR</span>"&gt;        <span class="comment">&lt;!-- 韓國服務條款 --&gt;</span>
+    &lt;li id="<span class="var">LeftMenuCs_faqPrivacyPolicyKR</span>"&gt;    <span class="comment">&lt;!-- 韓國隱私權政策 --&gt;</span>
+    &lt;li id="<span class="var">LeftMenuCs_faqMobileOperationPolicyKR</span>"&gt; <span class="comment">&lt;!-- 韓國行動作業政策 --&gt;</span>
+  &lt;/ul&gt;
+&lt;/aside&gt;
+
+<span class="comment">&lt;!-- FAQ 게임 선택 드롭다운 --&gt;</span>
+&lt;select id="<span class="var">ContentPlaceHolder1_SelGame</span>"&gt;
+  &lt;option value=""&gt;請選擇&lt;/option&gt;
+  &lt;option value="<span class="string">GN</span>"&gt;GNJOY平台&lt;/option&gt;
+  &lt;option value="<span class="string">ROD</span>"&gt;RO仙境傳說：我的戰術&lt;/option&gt;
+  &lt;option value="<span class="string">ROM</span>"&gt;RO仙境傳說：守護永恆的愛&lt;/option&gt;
+  &lt;option value="<span class="string">RO1</span>"&gt;RO仙境傳說Online&lt;/option&gt;
+  &lt;option value="<span class="string">ROWEB2</span>"&gt;RO仙境傳說Web：重逢&lt;/option&gt;
+&lt;/select&gt;</pre>
+            </div>
+            <div class="highlight-box info">
+                <strong>📌 발견:</strong> CS FAQ에서 사용하는 게임 코드(ROD, ROM, RO1, ROWEB2)는 Billing에서 사용하는 코드(ROBA, ROO, RORB, ROTL)와 <strong>완전히 다름</strong>. 이는 CS와 Billing이 별도의 게임 마스터 데이터를 참조하고 있음을 의미.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><div class="dot" style="background: var(--accent-cyan);"></div>메뉴 하이라이트 로직</div>
+            <div class="code-block" data-lang="js">
+<pre><span class="comment">// URL path에서 Controller 이름 추출</span>
+<span class="keyword">var</span> url_key = location.pathname.split(<span class="string">'/'</span>)[<span class="num">1</span>].toLowerCase();
+
+<span class="comment">// Controller 이름으로 상단 메뉴 활성화</span>
+<span class="keyword">function</span> <span class="func">MenuAddClassSelect</span>(url_key) {
+    <span class="keyword">switch</span> (url_key) {
+        <span class="keyword">case</span> <span class="string">'home'</span>:     $(<span class="string">'.top_menu1'</span>).addClass(<span class="string">'select'</span>); <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">'member'</span>:   $(<span class="string">'.top_menu2'</span>).addClass(<span class="string">'select'</span>); <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">'game'</span>:     $(<span class="string">'.top_menu3'</span>).addClass(<span class="string">'select'</span>); <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">'billing'</span>:  $(<span class="string">'.top_menu4'</span>).addClass(<span class="string">'select'</span>); <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">'coupon'</span>:   $(<span class="string">'.top_menu7'</span>).addClass(<span class="string">'select'</span>); <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">'ro'</span>:       $(<span class="string">'.top_menu2'</span>).addClass(<span class="string">'select'</span>); <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">'cs'</span>: <span class="keyword">case</span> <span class="string">'question'</span>: <span class="keyword">case</span> <span class="string">'feedback'</span>: <span class="comment">/* ... */</span>
+            $(<span class="string">'.top_menu5'</span>).addClass(<span class="string">'select'</span>); <span class="keyword">break</span>;
+    }
+}
+<span class="comment">// 주의: top_menu6이 없음 (RO 전용 메뉴가 삭제된 것으로 추정)</span></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); margin-top: 40px;">
+        <p style="color: var(--text-muted); font-size: 13px;">
+            GNJOY.HK 소스코드 분석 보고서 — 분석일: 2026-07-27<br>
+            대상: Home, Game, Cs, Billing, Member/Signin 페이지 프론트엔드 소스코드<br>
+            분석 범위: 클라이언트 사이드 JavaScript + HTML DOM 구조
+        </p>
+    </div>
+
+</div>
+
+<script>
+    // Smooth scroll navigation
+    function scrollTo_(id) {
+        document.querySelector(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    // Intersection Observer for nav highlighting
+    const sections = document.querySelectorAll('.section');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('onclick')?.includes(id)) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, { rootMargin: '-100px 0px -60% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+
+    // Animate sections on scroll
+    const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => {
+        section.style.animationPlayState = 'paused';
+        fadeObserver.observe(section);
+    });
+</script>
+
+</body>
+</html>

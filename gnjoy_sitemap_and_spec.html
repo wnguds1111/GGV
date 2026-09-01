@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNJOY HK (www.gnjoy.hk) 결제/충전 및 거래내역 정밀 분석 명세서</title>
+    <!-- Modern Typography & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-red: #C31919;
+            --brand-dark: #0F172A;
+            --brand-blue: #0284C7;
+            --brand-indigo: #4F46E5;
+            --brand-emerald: #10B981;
+            
+            --bg-body: #F8FAFC;
+            --bg-surface: #FFFFFF;
+            --text-main: #0F172A;
+            --text-sub: #334155;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', 'Outfit', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #0F172A 0%, #18181B 100%);
+            color: white; padding: 20px 40px; position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15); border-bottom: 3px solid var(--brand-red);
+            display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+        }
+
+        .header-brand { display: flex; align-items: center; gap: 16px; }
+        .logo-badge { background: var(--brand-red); color: white; font-weight: 900; font-size: 15px; padding: 6px 14px; border-radius: var(--radius-sm); }
+        .header-title h1 { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .header-title p { color: #94A3B8; font-size: 13px; }
+
+        .nav-tabs { display: flex; background: rgba(255, 255, 255, 0.08); padding: 4px; border-radius: var(--radius-md); gap: 4px; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 8px 16px; border: none; background: transparent; color: rgba(255, 255, 255, 0.75);
+            font-size: 13px; font-weight: 700; cursor: pointer; border-radius: 8px; transition: all 0.2s;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .tab-btn:hover { color: white; background: rgba(255, 255, 255, 0.12); }
+        .tab-btn.active { background: var(--brand-red); color: white; box-shadow: 0 4px 14px rgba(195, 25, 25, 0.4); }
+
+        .container { max-width: 1440px; margin: 32px auto; padding: 0 32px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.25s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* KPI STATS BAR */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 32px; }
+        @media(max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .stat-card { background: var(--bg-surface); border-radius: var(--radius-md); padding: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 16px; }
+        .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .stat-icon.red { background: #FEF2F2; color: var(--brand-red); }
+        .stat-icon.blue { background: #F0F9FF; color: var(--brand-blue); }
+        .stat-icon.indigo { background: #EEF2FF; color: var(--brand-indigo); }
+        .stat-icon.emerald { background: #ECFDF5; color: var(--brand-emerald); }
+
+        .stat-info h4 { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+        .stat-info .number { font-size: 20px; font-weight: 800; color: var(--text-main); font-family: 'Outfit', sans-serif; }
+
+        /* SPEC TABLE STYLING */
+        .spec-card { background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 32px; }
+        .spec-header { padding: 20px 28px; background: #0F172A; color: white; display: flex; align-items: center; justify-content: space-between; }
+        .spec-header h2 { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+        .table-responsive { overflow-x: auto; }
+        .spec-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+        .spec-table th { background: #F1F5F9; color: var(--text-main); font-weight: 800; padding: 14px 18px; border-bottom: 2px solid var(--border); white-space: nowrap; }
+        .spec-table td { padding: 14px 18px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-sub); }
+        .spec-table tr:hover td { background: #F8FAFC; }
+
+        /* BILLING CARDS */
+        .billing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; padding: 24px; }
+        @media(max-width: 900px) { .billing-grid { grid-template-columns: 1fr; } }
+        .billing-card { background: #FFFFFF; border-radius: 12px; border: 2px solid var(--border); padding: 24px; }
+        .billing-card.pay { border-color: #F59E0B; background: #FFFBEB; }
+        .billing-card.log { border-color: var(--brand-blue); background: #F0F9FF; }
+
+        .billing-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+        .billing-card p { font-size: 13px; color: var(--text-sub); line-height: 1.5; margin-bottom: 14px; }
+        .billing-list { list-style: none; padding: 0; font-size: 12px; }
+        .billing-list li { padding: 6px 0; border-top: 1px dashed var(--border); display: flex; justify-content: space-between; }
+
+        .footer { text-align: center; padding: 32px 0; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border); margin-top: 60px; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-brand">
+            <div class="logo-badge">GNJOY HK</div>
+            <div class="header-title">
+                <h1>GNJOY 홍콩 (www.gnjoy.hk) 결제 모듈 & 거래 내역 정밀 분석</h1>
+                <p>Billing Top-up Module (/Billing) & Transaction History Log (/Billing/BillingLog)</p>
+            </div>
+        </div>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('billingModuleTab')">
+                <i class="fa-solid fa-credit-card"></i> 💳 결제 & 내역 모듈 (Billing)
+            </button>
+            <button class="tab-btn" onclick="switchTab('memberCenterTab')">
+                <i class="fa-solid fa-user-gear"></i> 👤 마이페이지 서브메뉴
+            </button>
+            <button class="tab-btn" onclick="switchTab('realNameTab')">
+                <i class="fa-solid fa-address-card"></i> 🪪 실명 인증 시스템
+            </button>
+            <button class="tab-btn" onclick="switchTab('dataSchemaTab')">
+                <i class="fa-solid fa-database"></i> 📋 가입 수집 데이터
+            </button>
+            <button class="tab-btn" onclick="switchTab('btnAnalysisTab')">
+                <i class="fa-solid fa-download"></i> 🔍 공식 6대 버튼
+            </button>
+            <button class="tab-btn" onclick="switchTab('gameCenterTab')">
+                <i class="fa-solid fa-gamepad"></i> 🎮 게임 라인업
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- KPI STATS BAR -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon red"><i class="fa-solid fa-credit-card"></i></div>
+                <div class="stat-info">
+                    <h4>결제 지원 수단</h4>
+                    <div class="number">MyCard / GASH / 신용카드 / SMS</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fa-solid fa-clock-history"></i></div>
+                <div class="stat-info">
+                    <h4>거래 내역 페이징</h4>
+                    <div class="number">GetBillingLog AJAX 연동</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon indigo"><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="stat-info">
+                    <h4>월카드 유효 기간</h4>
+                    <div class="number">30일 (720시간) / 잔여 10일 재구매</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon emerald"><i class="fa-solid fa-shield-check"></i></div>
+                <div class="stat-info">
+                    <h4>결제 보안 토큰</h4>
+                    <div class="number">Turnstile + CSRF Verification</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 0: BILLING MODULE ANALYSIS (NEW) -->
+        <div id="billingModuleTab" class="tab-content active">
+            <div class="spec-card">
+                <div class="spec-header">
+                    <h2><i class="fa-solid fa-credit-card"></i> GNJOY HK 결제/충전 메인 및 거래 내역 분석</h2>
+                    <span style="font-size:12px; color:#94A3B8;">Target URL: /Billing & /Billing/BillingLog</span>
+                </div>
+
+                <div class="billing-grid">
+                    <!-- Billing Main -->
+                    <div class="billing-card pay">
+                        <h3><i class="fa-solid fa-wallet"></i> 1. 온라인 캐시/월카드 충전 메인 (/Billing)</h3>
+                        <p>게임, 서버, 캐릭터 선택 후 다양한 결제 수단을 통해 마이캐시, 루비 및 월카드(月卡)를 결제하는 센터</p>
+                        <ul class="billing-list">
+                            <li><span>Step 1. 게임 선택</span> <strong>RO Origin, 初心之戰, 重生, 曙光, 世界之旅 등</strong></li>
+                            <li><span>Step 2. 캐릭터 연동</span> <strong>GetServerList ➔ GetRoleList (xPlayer선택)</strong></li>
+                            <li><span>Step 3. 결제 수단</span> <strong>MyCard, GASH, 신용카드, Apple Pay, 모바일 SMS, 전화결제</strong></li>
+                            <li><span>Step 4. 월카드 정책</span> <strong>30일(720시간) 연장, 잔여 10일 미만 시 재구매 가능</strong></li>
+                            <li><span>보안 연동</span> <strong>CreateMyCardNewOrder + Turnstile 캡차 검증</strong></li>
+                        </ul>
+                    </div>
+
+                    <!-- Billing Log -->
+                    <div class="billing-card log">
+                        <h3><i class="fa-solid fa-receipt"></i> 2. 거래 내역 조회 (/Billing/BillingLog)</h3>
+                        <p>유저가 진행한 과거 결제 건에 대한 성공/대기/취소 내역 및 주문 번호를 조회하는 마이페이지 로그</p>
+                        <ul class="billing-list">
+                            <li><span>조회 조건 (Filter)</span> <strong>SelGame (게임별) & SelBStatus (상태별)</strong></li>
+                            <li><span>데이터 표출</span> <strong>주문번호(Order ID), 결제일시, 대상캐릭터, 결제수단, 금액</strong></li>
+                            <li><span>비동기 페이징</span> <strong>../Billing/GetBillingLog AJAX 요청</strong></li>
+                            <li><span>취소/환불 기능</span> <strong>postbill2 반품 단호 접수 프로세스 연동</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OTHER TABS -->
+        <div id="memberCenterTab" class="tab-content">
+            <div class="spec-card">
+                <div class="spec-header"><h2><i class="fa-solid fa-user-gear"></i> 마이페이지 서브메뉴</h2></div>
+                <div style="padding:20px;">회원 정보, 개인 알림, Apple ID 연동, FB 계정 연동</div>
+            </div>
+        </div>
+
+        <div id="realNameTab" class="tab-content">
+            <div class="spec-card">
+                <div class="spec-header"><h2><i class="fa-solid fa-address-card"></i> 실명 본인 인증 시스템</h2></div>
+                <div style="padding:20px;">대만 국민신분증(트랙 A) vs 서류 사진 업로드(트랙 B)</div>
+            </div>
+        </div>
+
+        <div id="dataSchemaTab" class="tab-content">
+            <div class="spec-card">
+                <div class="spec-header"><h2><i class="fa-solid fa-database"></i> 가입 수집 데이터</h2></div>
+                <div style="padding:20px;">15개 회원 데이터 항목 명세</div>
+            </div>
+        </div>
+
+        <div id="btnAnalysisTab" class="tab-content">
+            <div class="spec-card">
+                <div class="spec-header"><h2><i class="fa-solid fa-download"></i> 공식 6대 버튼</h2></div>
+                <div style="padding:20px;">Google Play / App Store / Windows / APK / AppGallery / Web Pay</div>
+            </div>
+        </div>
+
+        <div id="gameCenterTab" class="tab-content">
+            <div class="spec-card">
+                <div class="spec-header"><h2><i class="fa-solid fa-gamepad"></i> 게임 라인업</h2></div>
+                <div style="padding:20px;">12종 게임 및 서비스 OS 표</div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p><strong>GNJOY HK (www.gnjoy.hk)</strong> - Billing Architecture & Transaction Log Specifications</p>
+            <p style="margin-top: 4px;">Powered by Gravity HK Technical Engine &copy; 2026</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            
+            const btnMap = {
+                'billingModuleTab': 0,
+                'memberCenterTab': 1,
+                'realNameTab': 2,
+                'dataSchemaTab': 3,
+                'btnAnalysisTab': 4,
+                'gameCenterTab': 5
+            };
+            if (btnMap[tabId] !== undefined) {
+                document.querySelectorAll('.tab-btn')[btnMap[tabId]].classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

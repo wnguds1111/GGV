@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNJOY HK - 게임별 결제 모듈 & PG 채널 금액 상세 비교 보고서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-red: #C31919;
+            --brand-dark: #0F172A;
+            --brand-blue: #0284C7;
+            --brand-purple: #7C3AED;
+            --brand-green: #059669;
+            --brand-amber: #D97706;
+            --bg-body: #F8FAFC;
+            --bg-surface: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans KR', 'Outfit', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
+
+        .app-header {
+            background: linear-gradient(135deg, #18181B 0%, #09090B 100%);
+            color: white; padding: 20px 40px; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 4px solid var(--brand-red); display: flex; align-items: center; justify-content: space-between;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .brand-container { display: flex; align-items: center; gap: 16px; }
+        .brand-badge { background: var(--brand-red); color: white; font-weight: 900; font-size: 14px; padding: 6px 14px; border-radius: var(--radius-sm); letter-spacing: 0.5px; }
+        .brand-title { font-size: 20px; font-weight: 800; }
+        .brand-title span { color: #94A3B8; font-size: 13px; font-weight: 500; display: block; margin-top: 2px; }
+
+        .nav-links { display: flex; gap: 12px; }
+        .nav-btn { color: #E2E8F0; text-decoration: none; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px; background: rgba(255,255,255,0.08); transition: all 0.2s; border: 1px solid rgba(255,255,255,0.1); }
+        .nav-btn:hover { background: var(--brand-red); color: white; border-color: var(--brand-red); }
+
+        .container { max-width: 1440px; margin: 36px auto; padding: 0 28px; }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            color: white; border-radius: var(--radius-lg); padding: 36px; margin-bottom: 32px;
+            box-shadow: var(--shadow-md); position: relative; overflow: hidden; border: 1px solid #334155;
+        }
+        .hero-banner::after {
+            content: ''; position: absolute; right: -50px; bottom: -50px; width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(195,25,25,0.15) 0%, rgba(0,0,0,0) 70%); pointer-events: none;
+        }
+        .hero-banner h1 { font-size: 26px; font-weight: 900; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+        .hero-banner h1 i { color: var(--brand-red); }
+        .hero-banner p { font-size: 15px; color: #94A3B8; max-width: 900px; line-height: 1.7; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 24px; }
+        @media(max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        .stat-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); padding: 18px; text-align: center; }
+        .stat-card .num { font-size: 28px; font-weight: 800; color: #F8FAFC; font-family: 'Outfit'; }
+        .stat-card .label { font-size: 12px; color: #94A3B8; margin-top: 4px; font-weight: 500; }
+
+        .card { background: var(--bg-surface); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 32px; margin-bottom: 32px; box-shadow: var(--shadow-sm); }
+        .card-title { font-size: 21px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 12px; margin-bottom: 24px; border-bottom: 2px solid var(--border); padding-bottom: 16px; }
+        .card-title i { color: var(--brand-red); font-size: 22px; }
+
+        /* Game Matrix Grid */
+        .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 16px; }
+        @media(max-width: 1024px) { .game-grid { grid-template-columns: 1fr; } }
+
+        .game-box {
+            background: #FFFFFF; border: 2px solid var(--border); border-radius: var(--radius-md);
+            padding: 26px; transition: all 0.25s ease; position: relative;
+        }
+        .game-box:hover { border-color: var(--brand-blue); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .game-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 1px dashed var(--border); padding-bottom: 14px; }
+        .game-code { font-family: 'Fira Code', monospace; background: #E0F2FE; color: #0369A1; font-weight: 800; font-size: 13px; padding: 4px 10px; border-radius: 6px; }
+        .game-name { font-size: 18px; font-weight: 800; color: var(--text-main); }
+        .game-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+        .feature-list { list-style: none; font-size: 13px; margin-top: 14px; }
+        .feature-list li { padding: 8px 0; border-bottom: 1px solid #F1F5F9; display: flex; justify-content: space-between; align-items: center; }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list .tag { font-weight: 700; color: #334155; }
+        .feature-list .val { font-weight: 600; text-align: right; color: var(--text-main); }
+
+        .badge-special { background: #FEF3C7; color: #B45309; font-weight: 800; font-size: 11px; padding: 3px 8px; border-radius: 4px; border: 1px solid #FCD34D; }
+        .badge-normal { background: #F1F5F9; color: #475569; font-weight: 700; font-size: 11px; padding: 3px 8px; border-radius: 4px; }
+
+        /* Tables */
+        .styled-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px; background: white; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+        .styled-table th { background: #F1F5F9; color: #334155; font-weight: 800; text-align: left; padding: 14px 16px; border-bottom: 2px solid var(--border); }
+        .styled-table td { padding: 14px 16px; border-bottom: 1px solid #F1F5F9; vertical-align: middle; }
+        .styled-table tbody tr:hover { background-color: #F8FAFC; }
+        .styled-table code { font-family: 'Fira Code', monospace; background: #F1F5F9; padding: 2px 6px; border-radius: 4px; color: var(--brand-red); font-size: 12px; }
+
+        .amount-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+        .chip { background: #EFF6FF; color: #1D4ED8; font-family: 'Fira Code', monospace; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; border: 1px solid #BFDBFE; }
+        .chip.special { background: #FEF2F2; color: var(--brand-red); border-color: #FECACA; font-weight: 800; }
+
+        /* Alert Boxes */
+        .info-callout { background: #F0F9FF; border-left: 4px solid var(--brand-blue); padding: 18px 22px; border-radius: 0 10px 10px 0; margin-top: 20px; }
+        .info-callout h5 { font-size: 15px; font-weight: 800; color: #0369A1; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .info-callout p { font-size: 13px; color: #334155; line-height: 1.6; }
+
+        .warning-callout { background: #FFFBEB; border-left: 4px solid var(--brand-amber); padding: 18px 22px; border-radius: 0 10px 10px 0; margin-top: 20px; }
+        .warning-callout h5 { font-size: 15px; font-weight: 800; color: #B45309; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .warning-callout p { font-size: 13px; color: #451A03; line-height: 1.6; }
+
+        footer { text-align: center; padding: 32px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border); margin-top: 48px; }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="brand-container">
+            <div class="brand-badge">GNJOY HK</div>
+            <div class="brand-title">
+                GNJOY HK (www.gnjoy.hk/Billing) 게임별 결제 모듈 & PG 채널 금액 정밀 보고서
+                <span>Billing Architecture, PG Channels, Game-by-Game Options & Price Matrix</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="http://localhost:8000/gnjoy_sitemap_and_spec.html" class="nav-btn"><i class="fa-solid fa-sitemap"></i> 기획 명세서</a>
+            <a href="http://localhost:8000/gnjoy_source_analysis.html" class="nav-btn"><i class="fa-solid fa-code"></i> 소스코드 보고서</a>
+            <a href="https://www.gnjoy.hk/Billing" target="_blank" class="nav-btn" style="background:var(--brand-red); border-color:var(--brand-red);"><i class="fa-solid fa-arrow-up-right-from-square"></i> 라이브 사이트</a>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Hero Overview -->
+        <div class="hero-banner">
+            <h1><i class="fa-solid fa-cash-register"></i> GNJOY HK 게임선택별 동적 결제 아키텍처 분석 보고서</h1>
+            <p>
+                <code>https://www.gnjoy.hk/Billing</code> 메인 결제 모듈 및 프론트엔드 실행 스크립트(<code>billingNew.js</code>) 소스코드를 정밀 전수 조사하여, 
+                <strong>드롭다운 게임 선택(<code>xGameId</code>)에 따른 서버/캐릭터 연동 흐름, 8개 결제 카테고리별 PG 채널, 권종별 결제 금액 및 월카드(月卡) 정책</strong>을 비교 분석하였습니다.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="num">4개 게임</div>
+                    <div class="label">Billing 직접 연동 주요 서비스</div>
+                </div>
+                <div class="stat-card">
+                    <div class="num">8개 카테고리</div>
+                    <div class="label">결제 수단 (PayWay 01~08)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="num">12+ PG 채널</div>
+                    <div class="label">MyCard, GASH, Apple Pay 등</div>
+                </div>
+                <div class="stat-card">
+                    <div class="num">MID 본인인증</div>
+                    <div class="label">소액결제 3천원/5천원 이상 자동적용</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. Game Selection Comparison Matrix -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fa-solid fa-gamepad"></i> 1. 게임선택별 (xGameId) 연동 흐름 & 핵심 정책 상세 비교
+            </div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
+                드롭다운에서 선택한 게임 코드값(<code>ROBA</code>, <code>ROO</code>, <code>RORB</code>, <code>ROTL</code>)에 따라 UI 폼 구성 요소 및 백엔드 연동 데이터 방식이 완전히 달라집니다.
+            </p>
+
+            <div class="game-grid">
+                <!-- Game 1: ROBA -->
+                <div class="game-box">
+                    <div class="game-header">
+                        <div>
+                            <div class="game-name">RO仙境傳說：初心之戰</div>
+                            <div class="game-sub">라그나로크: 초심지전 (Origin / Classic MMORPG)</div>
+                        </div>
+                        <span class="game-code">ROBA</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li><span class="tag">서버 선택 (xServerId)</span> <span class="val">일반 1단계 서버 드롭다운</span></li>
+                        <li><span class="tag">캐릭터 연동 (xPlayer)</span> <span class="val">GetRoleList AJAX 동적 캐릭터 조회</span></li>
+                        <li><span class="tag">결제 카테고리</span> <span class="val"><span class="badge-normal">8개 탭 전체 활성화</span></span></li>
+                        <li><span class="tag">대표 상품</span> <span class="val">마이캐시 / 루비 / 일반 패키지</span></li>
+                        <li><span class="tag">특이사항</span> <span class="val">기본 대만/홍콩 결제 표준 가이드 적용</span></li>
+                    </ul>
+                </div>
+
+                <!-- Game 2: ROO / ROM -->
+                <div class="game-box" style="border-color: #F59E0B;">
+                    <div class="game-header">
+                        <div>
+                            <div class="game-name">RO仙境傳說：愛如初見</div>
+                            <div class="game-sub">라그나로크: 애루초견 (Ragnarok Origin 3D)</div>
+                        </div>
+                        <span class="game-code" style="background:#FEF3C7; color:#B45309;">ROO / ROM</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li><span class="tag">서버 선택 (xServerId)</span> <span class="val">일반 1단계 서버 드롭다운</span></li>
+                        <li><span class="tag">캐릭터 연동 (xPlayer)</span> <span class="val">GetRoleList AJAX 동적 캐릭터 조회</span></li>
+                        <li><span class="tag">결제 카테고리</span> <span class="val"><span class="badge-normal">8개 탭 전체 활성화</span></span></li>
+                        <li><span class="tag">특수 상품 (월카드)</span> <span class="val"><span class="badge-special">月卡 (월카드) + B格貓金幣</span></span></li>
+                        <li><span class="tag">월카드 구매 규칙</span> <span class="val">MyCard & GASH 300원권 선택 필수</span></li>
+                    </ul>
+                </div>
+
+                <!-- Game 3: RORB / ROZ -->
+                <div class="game-box" style="border-color: var(--brand-purple);">
+                    <div class="game-header">
+                        <div>
+                            <div class="game-name">RO仙境傳說：重生</div>
+                            <div class="game-sub">라그나로크: 중생 (Ragnarok: Rebirth Idle RPG)</div>
+                        </div>
+                        <span class="game-code" style="background:#F3E8FF; color:#6B21A8;">RORB / ROZ</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li><span class="tag">서버 선택 (xServerId)</span> <span class="val">일반 1단계 서버 드롭다운</span></li>
+                        <li><span class="tag">캐릭터 연동 (xPlayer)</span> <span class="val">GetRoleList AJAX 동적 캐릭터 조회</span></li>
+                        <li><span class="tag">월카드 혜택 (720시간)</span> <span class="val">Rodex 우편함으로 4종 아이템 지급</span></li>
+                        <li><span class="tag">월카드 재구매 제한</span> <span class="val"><span class="badge-special">잔여일 10일 미만 시 재구매 허용</span></span></li>
+                        <li><span class="tag">특이사항</span> <span class="val">구매 즉시 30일(720시간) 뒤 순연 계산</span></li>
+                    </ul>
+                </div>
+
+                <!-- Game 4: ROTL -->
+                <div class="game-box" style="border-color: var(--brand-green);">
+                    <div class="game-header">
+                        <div>
+                            <div class="game-name">RO仙境傳說：曙光</div>
+                            <div class="game-sub">라그나로크: 서광 (Ragnarok: Twilight RPG)</div>
+                        </div>
+                        <span class="game-code" style="background:#D1FAE5; color:#065F46;">ROTL</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li><span class="tag">서버 선택 (xServerNamePre)</span> <span class="val"><span class="badge-special">2단계 서버 접두사 드롭다운 추가</span></span></li>
+                        <li><span class="tag">캐릭터 연동 (xPlayer)</span> <span class="val">2차 서버 지정 후 캐릭터 선택</span></li>
+                        <li><span class="tag">계정 바인딩 조건</span> <span class="val">FB 계정 접속 시 마이페이지 바인딩 필수</span></li>
+                        <li><span class="tag">결제 카테고리 필터</span> <span class="val">백엔드 연동에 따라 소액/모바일 제어</span></li>
+                        <li><span class="tag">특이사항</span> <span class="val">GetServerNamePre AJAX 전용 API 사용</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. PG Payment Channels & Amounts -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fa-solid fa-credit-card"></i> 2. 8대 결제 카테고리별 PG 채널 및 결제 금액 (권종 Matrix)
+            </div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">
+                소스코드 DOM 요소(<code>#payPath_01 ~ 08</code>) 및 결제 스크립트에서 추출한 PG 채널별 지원 금액 현황입니다.
+            </p>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th style="width: 140px;">카테고리 (DOM)</th>
+                        <th style="width: 180px;">PG 채널 / 브랜드</th>
+                        <th style="width: 160px;">지역 구분 (GashUserArea)</th>
+                        <th>지원 권종 및 금액 (TWD/HKD)</th>
+                        <th style="width: 150px;">비고 / 특이사항</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. 점수카드</strong><br><code>#payPath_01</code></td>
+                        <td>
+                            <strong>MyCard 점수카드</strong><br>
+                            <strong>GASH 점수카드</strong>
+                        </td>
+                        <td>대만(TW) / 홍콩마카오(Global)</td>
+                        <td>
+                            <div class="amount-chips">
+                                <span class="chip">50</span>
+                                <span class="chip">150</span>
+                                <span class="chip special">300 (월카드)</span>
+                                <span class="chip">500</span>
+                                <span class="chip">1000</span>
+                                <span class="chip">3000</span>
+                                <span class="chip">5000</span>
+                                <span class="chip">10000</span>
+                            </div>
+                        </td>
+                        <td>MyCard 핀/비번 즉시 입력, GASH는 PG 외부 입력 페이지로 이동</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. 신용카드</strong><br><code>#payPath_02</code></td>
+                        <td>
+                            <strong>GASH 신용카드 (3D)</strong><br>
+                            <strong>SoNet 신용카드</strong>
+                        </td>
+                        <td>대만(TW) / 홍콩마카오(Global)</td>
+                        <td>
+                            <div class="amount-chips">
+                                <span class="chip">50</span>
+                                <span class="chip">100</span>
+                                <span class="chip">300</span>
+                                <span class="chip">500</span>
+                                <span class="chip">1000</span>
+                                <span class="chip">2000</span>
+                                <span class="chip">3000</span>
+                                <span class="chip">5000</span>
+                            </div>
+                        </td>
+                        <td>Visa, MasterCard, JCB 3D 세큐어 인증 필수</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. 회원 포인트</strong><br><code>#payPath_03</code></td>
+                        <td>
+                            <strong>GASH eWallet (지갑)</strong><br>
+                            <strong>MyCard 회원 포인트</strong>
+                        </td>
+                        <td>대만(TW) / 홍콩마카오(Global)</td>
+                        <td>
+                            <div class="amount-chips">
+                                <span class="chip">50</span>
+                                <span class="chip">150</span>
+                                <span class="chip">300</span>
+                                <span class="chip">500</span>
+                                <span class="chip">1000</span>
+                                <span class="chip">3000</span>
+                            </div>
+                        </td>
+                        <td>GNJOY 및 PG 계정 잔여 포인트 차감 방식</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. 통신사 소액결제</strong><br><code>#payPath_04</code></td>
+                        <td>
+                            <strong>中華電信 (CHT 839)</strong><br>
+                            <strong>遠傳電信 (FET)</strong><br>
+                            <strong>台灣大哥大 (TCC / myfone)</strong>
+                        </td>
+                        <td>대만 (전화번호 자동 바인딩)</td>
+                        <td>
+                            <div class="amount-chips">
+                                <span class="chip">50</span>
+                                <span class="chip">100</span>
+                                <span class="chip">300</span>
+                                <span class="chip">500</span>
+                                <span class="chip">1000</span>
+                                <span class="chip special">3000 (MID)</span>
+                                <span class="chip special">5000 (MID)</span>
+                            </div>
+                        </td>
+                        <td>
+                            <strong>MID 본인인증 필수:</strong><br>
+                            단건 3,000 이상 또는 30일 누적 5,000 이상 시 <code>/Mid</code> 이동
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. WebATM</strong><br><code>#payPath_05</code></td>
+                        <td>
+                            <strong>대만/홍콩 시중은행 WebATM</strong>
+                        </td>
+                        <td>대만 / 홍콩 계좌</td>
+                        <td>
+                            <div class="amount-chips">
+                                <span class="chip">50</span>
+                                <span class="chip">100</span>
+                                <span class="chip">300</span>
+                                <span class="chip">500</span>
+                                <span class="chip">1000</span>
+                                <span class="chip">2000</span>
+                                <span class="chip">3000</span>
+                                <span class="chip">5000</span>
+                            </div>
+                        </td>
+                        <td>인터넷뱅킹 리더기 및 OTP 인증 연동</td>
+                    </tr>
+                    <tr>
+                        <td><strong>6. 홍콩/마카오 기타</strong><br><code>#payPath_06</code></td>
+                        <td>
+                            <strong>PPS (專線繳費)</strong><br>
+                            <strong>Octopus (옥토퍼스) / 현지 페이</strong>
+                        </td>
+                        <td>홍콩 / 마카오 (HKD)</td>
+                        <td>
+                            <div class="amount-chips">
+                                <span class="chip">50 HKD</span>
+                                <span class="chip">100 HKD</span>
+                                <span class="chip">300 HKD</span>
+                                <span class="chip">500 HKD</span>
+                                <span class="chip">1000 HKD</span>
+                            </div>
+                        </td>
+                        <td>홍콩마카오 전용 결제 수단 모듈</td>
+                    </tr>
+                    <tr>
+                        <td><strong>7. 시내전화 HiNet</strong><br><code>#payPath_07</code></td>
+                        <td>
+                            <strong>HiNet 市話付費 (시내전화)</strong>
+                        </td>
+                        <td>대만 (시내전화 번호 입력)</td>
+                        <td>
+                            <div class="amount-chips">
+                                <span class="chip">50</span>
+                                <span class="chip">100</span>
+                                <span class="chip">300</span>
+                                <span class="chip">500</span>
+                                <span class="chip">1000</span>
+                            </div>
+                        </td>
+                        <td>전화번호 형식(예: 0212345678) 직접 입력</td>
+                    </tr>
+                    <tr>
+                        <td><strong>8. 모바일 간편결제</strong><br><code>#payPath_08</code></td>
+                        <td>
+                            <strong>Apple Pay / 모바일 페이</strong>
+                        </td>
+                        <td>글로벌 / 모바일</td>
+                        <td>
+                            <div class="amount-chips">
+                                <span class="chip">50</span>
+                                <span class="chip">150</span>
+                                <span class="chip">300</span>
+                                <span class="chip">500</span>
+                                <span class="chip">1000</span>
+                                <span class="chip">2000</span>
+                                <span class="chip">3000</span>
+                                <span class="chip">5000</span>
+                            </div>
+                        </td>
+                        <td><strong>Safari 전용:</strong> 팝업 차단 해제 안내 (NoticePn_mobile)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. Key Technical Insights & Notice Policy -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fa-solid fa-shield-halved"></i> 3. 결제 보안, 본인인증(MID) & 운영 특이사항
+            </div>
+
+            <div class="info-callout">
+                <h5><i class="fa-solid fa-id-card"></i> 📱 MID (門號身分識別) 통신사 소액결제 본인인증 규칙</h5>
+                <p>
+                    대만 통신사 소액결제(<code>#payPath_04</code>) 사용 시, <strong>3,000 TWD 이상 단건 결제</strong> 또는 
+                    <strong>30일 이내 누적 5,000 TWD 이상 결제</strong> 시 <code>/Billing/forAjax_Check_Nd_Go_Mid</code>로 자동 검증을 거칩니다.<br>
+                    인증 미완료 상태일 경우 [MID 門號身分識別] 버튼이 활성화되며, 유저는 <code>https://www.gnjoy.hk/Mid</code>로 이동하여 통신사 본인인증을 마쳐야 결제가 진행됩니다.
+                </p>
+            </div>
+
+            <div class="warning-callout">
+                <h5><i class="fa-solid fa-triangle-exclamation"></i> ⚠️ Apple Pay & 브라우저 호환성 정책</h5>
+                <p>
+                    Apple Pay(<code>#payPath_08</code>)는 <strong>iOS Safari 브라우저</strong>에서만 정상 작동하도록 제한되어 있으며, 
+                    Safari 설정 내 [팝업 차단(Block Pop-ups)] 옵션이 켜져 있을 경우 결제창 호출 실패 사례가 발생하여 안내 레이어(<code>NoticePn_mobile</code>)가 팝업됩니다.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 GNJOY HK (www.gnjoy.hk) Billing Architecture & Game Comparison Report. Developed by Advanced Agentic Coding.</p>
+    </footer>
+
+</body>
+</html>

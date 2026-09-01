@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNJOY.ASIA 사이트 통합 분석 보고서</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --accent-red: #ef4444;
+            --accent-pink: #ec4899;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #31121d 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(239,68,68,0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-logo {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-pink));
+            color: white;
+            font-weight: 800;
+            font-size: 24px;
+            padding: 10px 18px;
+            border-radius: 12px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .title-text h1 {
+            font-size: 26px;
+            font-weight: 700;
+            background: linear-gradient(to right, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title-text p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-emerald);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Navigation Tabs */
+        .tab-nav-container {
+            max-width: 1280px;
+            margin: -25px auto 30px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tab-nav {
+            display: flex;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            gap: 6px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent-red), #be123c);
+            color: white;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+        }
+
+        /* Content Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .report-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        .report-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Card Styles */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #475569;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title i {
+            color: var(--accent-pink);
+        }
+
+        /* Information Architecture Tree */
+        .ia-tree {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .ia-node {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            transition: all 0.2s ease;
+        }
+
+        .ia-node:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .ia-node-header {
+            font-weight: 700;
+            color: #ec4899;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ia-sublist {
+            list-style: none;
+            padding-left: 10px;
+        }
+
+        .ia-sublist li {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            position: relative;
+            padding-left: 14px;
+        }
+
+        .ia-sublist li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-red);
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #0f172a;
+            color: #cbd5e1;
+            font-weight: 600;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        tr:hover {
+            background-color: rgba(51, 65, 85, 0.4);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .badge-info {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .badge-purple {
+            background: rgba(139, 92, 246, 0.15);
+            color: #c084fc;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        /* Flow Process Cards */
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .flow-step {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            position: relative;
+        }
+
+        .step-num {
+            display: inline-block;
+            width: 26px;
+            height: 26px;
+            background: var(--accent-pink);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .step-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Links */
+        a.table-link {
+            color: #60a5fa;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a.table-link:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+
+        /* Search Filter Input */
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 14px;
+            width: 260px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+            font-size: 13px;
+            width: 100%;
+            margin-left: 8px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .tab-nav {
+                flex-direction: column;
+            }
+            .card {
+                padding: 18px;
+            }
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="brand-title">
+                <div class="brand-logo">GNJOY</div>
+                <div class="title-text">
+                    <h1>GNJOY.ASIA 포털 사이트 통합 분석 보고서</h1>
+                    <p>Gravity Game Hub (GGH) 동남아시아 포털 사이트 전면 구조 및 메뉴별 심층 분석</p>
+                </div>
+            </div>
+            <div class="header-meta">
+                <div class="status-dot"></div>
+                <span>로그인 세션 실시간 탐색 완료 | 2026.08.04</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tab-nav-container">
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('report1')">
+                <i class="fa-solid fa-file-contract"></i>
+                [양식 1] Dooray 템플릿 기반 분석 보고서
+            </button>
+            <button class="tab-btn" onclick="switchTab('report2')">
+                <i class="fa-solid fa-layer-group"></i>
+                [양식 2] 메뉴별 세부 기능 & 심층 기술 분석
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="container">
+
+        <!-- ================= REPORT 1 ================= -->
+        <div id="report1" class="report-section active">
+
+            <!-- Information Architecture -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-sitemap"></i>
+                        Information Architecture (IA)
+                    </div>
+                    <span class="badge badge-info">8대 메인 카테고리</span>
+                </div>
+                <div class="ia-tree">
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-house"></i> 메인 (Home)</div>
+                        <ul class="ia-sublist">
+                            <li>Visual Hero Carousel Banner</li>
+                            <li>News & Announcement Widget</li>
+                            <li>Games Feature by Platform</li>
+                            <li>Floating Social Media Links</li>
+                            <li>Quick Login Box / User Card</li>
+                        </ul>
+                    </div>
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-gamepad"></i> 게임 (Product)</div>
+                        <ul class="ia-sublist">
+                            <li>All Platform (8개 라인업)</li>
+                            <li>Mobile Game (7개)</li>
+                            <li>PC Game (1개)</li>
+                            <li>Web Game (0개)</li>
+                        </ul>
+                    </div>
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-newspaper"></i> 소식 (Information)</div>
+                        <ul class="ia-sublist">
+                            <li>All News / Events</li>
+                            <li>Announcements</li>
+                            <li>Updates</li>
+                            <li>Social Share Feature</li>
+                        </ul>
+                    </div>
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-user-gear"></i> 회원 (Membership)</div>
+                        <ul class="ia-sublist">
+                            <li>Profile Summary Card</li>
+                            <li>Edit Profile (이름, 생년월일, 성별)</li>
+                            <li>Change Password</li>
+                            <li>RO PC Coupon Code</li>
+                            <li>Purchase History (결제내역)</li>
+                        </ul>
+                    </div>
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-credit-card"></i> 캐시 충전 (Topup)</div>
+                        <ul class="ia-sublist">
+                            <li>ROIA GNJOY 통합 충전 (/topup/roia/)</li>
+                            <li>Ragnarok Origin 웹스토어</li>
+                            <li>Ragnarok Landverse Maxion Web3</li>
+                            <li>Ragnarok Crush In-App</li>
+                        </ul>
+                    </div>
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-circle-question"></i> 지원 (FAQ & CS)</div>
+                        <ul class="ia-sublist">
+                            <li>게임별 아코디언 FAQ</li>
+                            <li>키워드 검색 (Search Topic)</li>
+                            <li>Game & Technical Support</li>
+                            <li>게임별 1:1 CS 창구 연결</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game List Matrix -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-list-check"></i>
+                        게임 목록 및 GNJOY 결제 연동 현황
+                    </div>
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+                        <input type="text" id="gameSearch" onkeyup="filterTable('gameTable', 'gameSearch')" placeholder="게임명 검색...">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="gameTable">
+                        <thead>
+                            <tr>
+                                <th>게임명</th>
+                                <th>플랫폼</th>
+                                <th>공식 웹사이트</th>
+                                <th>GNJOY 결제 지원</th>
+                                <th>비고 / 결제 연동 방식</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Ragnarok Origin</strong></td>
+                                <td><span class="badge badge-purple">Mobile</span></td>
+                                <td><a href="https://roglobal.com/home" target="_blank" class="table-link">roglobal.com/home</a></td>
+                                <td><span class="badge badge-danger"><i class="fa-solid fa-xmark"></i> 미지원(X)</span></td>
+                                <td>전용 웹스토어 (<a href="https://roglobal.com/shopStore/selectOrder" target="_blank" class="table-link">roglobal.com/shopStore</a>)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ragnarok Landverse</strong></td>
+                                <td><span class="badge badge-info">PC</span></td>
+                                <td><a href="https://landverse.maxion.gg/" target="_blank" class="table-link">landverse.maxion.gg</a></td>
+                                <td><span class="badge badge-danger"><i class="fa-solid fa-xmark"></i> 미지원(X)</span></td>
+                                <td>Maxion Web3 결제 (<a href="https://rolth.maxion.gg/TopUp" target="_blank" class="table-link">rolth.maxion.gg</a>) / Richman Shop</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RO Idle Adventure Plus</strong></td>
+                                <td><span class="badge badge-purple">Mobile</span></td>
+                                <td><a href="https://roidle.gnjoy.asia/" target="_blank" class="table-link">roidle.gnjoy.asia</a></td>
+                                <td><span class="badge badge-success"><i class="fa-solid fa-check"></i> 지원(O)</span></td>
+                                <td>GNJOY ASIA 포털 내 직접 충전 (<a href="https://www.gnjoy.asia/topup/roia/" target="_blank" class="table-link">gnjoy.asia/topup/roia/</a>)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ragnarok Crush</strong></td>
+                                <td><span class="badge badge-purple">Mobile</span></td>
+                                <td><a href="https://roc.gnjoy.asia/" target="_blank" class="table-link">roc.gnjoy.asia</a></td>
+                                <td><span class="badge badge-danger"><i class="fa-solid fa-xmark"></i> 미지원(X)</span></td>
+                                <td>In-App 결제 전용 (Google Play Store / Apple App Store)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ragnarok X: Next Gen</strong></td>
+                                <td><span class="badge badge-purple">Mobile</span></td>
+                                <td><a href="https://www.ragnarokx.net/" target="_blank" class="table-link">ragnarokx.net</a></td>
+                                <td><span class="badge badge-danger"><i class="fa-solid fa-xmark"></i> 미지원(X)</span></td>
+                                <td>ROX 전용 결제 웹스토어 (<a href="https://pay.ragnarokx.net/" target="_blank" class="table-link">pay.ragnarokx.net</a>)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ragnarok X: Next Gen (EU)</strong></td>
+                                <td><span class="badge badge-purple">Mobile</span></td>
+                                <td><a href="https://eu-me.ragnarokx.net/" target="_blank" class="table-link">eu-me.ragnarokx.net</a></td>
+                                <td><span class="badge badge-danger"><i class="fa-solid fa-xmark"></i> 미지원(X)</span></td>
+                                <td>ROX EU 전용 결제 스토어</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الجيل التالي Ragnarok X (아랍어)</strong></td>
+                                <td><span class="badge badge-purple">Mobile</span></td>
+                                <td><a href="https://eu-me.ragnarokx.net/" target="_blank" class="table-link">eu-me.ragnarokx.net</a></td>
+                                <td><span class="badge badge-danger"><i class="fa-solid fa-xmark"></i> 미지원(X)</span></td>
+                                <td>ROX Middle East 전용 결제 스토어</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ragnarok: Go</strong></td>
+                                <td><span class="badge badge-purple">Mobile</span></td>
+                                <td><a href="https://rogo.gnjoy.asia/NoviceTest" target="_blank" class="table-link">rogo.gnjoy.asia</a></td>
+                                <td><span class="badge badge-warning"><i class="fa-solid fa-clock"></i> 테스트중</span></td>
+                                <td>Novice Test 진행 중 (결제 미오픈)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Member & Verification Spec -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-id-card"></i>
+                        1. 가입 / 로그인 / 본인인증 / 마이페이지 명세
+                    </div>
+                    <span class="badge badge-info">수집 항목 명세</span>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>수집 항목명</th>
+                                <th>필수/선택</th>
+                                <th>수집 목적 및 세부 규칙</th>
+                                <th>수정/검증 특이사항</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>GNJOY Account</strong></td>
+                                <td><span class="badge badge-danger">필수</span></td>
+                                <td>플랫폼 접속 로그인 ID (4~12자 소문자 영문+숫자)</td>
+                                <td>첫 글자 `0` 사용 불가, 실시간 중복검사 (`isGnjoyActive`)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Password</strong></td>
+                                <td><span class="badge badge-danger">필수</span></td>
+                                <td>계정 보안 인증 (6~12자)</td>
+                                <td>대문자, 소문자, 숫자, 특수문자(`!@#$%^&*`) 각 1개 이상 포함 필수</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Confirm Password</strong></td>
+                                <td><span class="badge badge-danger">필수</span></td>
+                                <td>비밀번호 입력 오류 방지 재확인</td>
+                                <td>Password 필드와 100% 동일 검증 (`equalTo`)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email</strong></td>
+                                <td><span class="badge badge-danger">필수</span></td>
+                                <td>계정 본인 인증, ID/비밀번호 찾기 수단</td>
+                                <td>주요 메인 도메인(`gmail`, `yahoo`, `naver` 등) 중복검사 (`isEmailActive`)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone Number</strong></td>
+                                <td><span class="badge badge-warning">필수/선택</span></td>
+                                <td>SMS OTP 본인 인증 수단</td>
+                                <td>국가코드 선택 + OTP 6자리 수신 검증 (`isActiveNumber`)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>First / Last Name</strong></td>
+                                <td><span class="badge badge-info">선택</span></td>
+                                <td>본인 확인 실명 정보</td>
+                                <td>마이페이지 Edit Profile에서 입력 및 수정 가능</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DOB / Gender</strong></td>
+                                <td><span class="badge badge-info">선택</span></td>
+                                <td>생년월일 및 성별 정보</td>
+                                <td>마이페이지 Edit Profile에서 달력/라디오버튼 수정 가능</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Regional Payment Channels -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-earth-asia"></i>
+                        2. 동남아/글로벌 지역별 결제 PG 채널 지원 현황
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>국가 / 지역</th>
+                                <th>지원 결제 PG 및 수단 (Webstore)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Singapore (싱가포르)</strong></td>
+                                <td><span class="badge badge-info">Razer Gold Wallet</span> <span class="badge badge-info">Razer Gold PIN</span> <span class="badge badge-purple">PayPal</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Malaysia (말레이시아)</strong></td>
+                                <td><span class="badge badge-info">Razer Gold Wallet</span> <span class="badge badge-info">Razer Gold PIN</span> <span class="badge badge-success">Credit Card</span> <span class="badge badge-warning">FPX Direct Banking</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Thailand (태국)</strong></td>
+                                <td><span class="badge badge-info">Razer Gold</span> <span class="badge badge-purple">TrueMoney Wallet</span> <span class="badge badge-purple">PromptPay</span> <span class="badge badge-purple">Rabbit Line Pay</span> <span class="badge badge-purple">ShopeePay</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Indonesia (인도네시아)</strong></td>
+                                <td><span class="badge badge-info">Razer Gold</span> <span class="badge badge-success">Credit Card</span> <span class="badge badge-purple">ShopeePay</span> <span class="badge badge-purple">DANA</span> <span class="badge badge-purple">OVO</span> <span class="badge badge-purple">QRIS</span> <span class="badge badge-warning">통신사 소액결제 (Telkomsel/XL)</span> <span class="badge badge-info">Indomaret/Alfamart 편의점</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Philippines (필리핀)</strong></td>
+                                <td><span class="badge badge-info">Razer Gold</span> <span class="badge badge-purple">GCash</span> <span class="badge badge-purple">PayMaya</span> <span class="badge badge-purple">GrabPay</span> <span class="badge badge-purple">ShopeePay</span> <span class="badge badge-warning">Globe / Smart 통신사 소액결제</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Brazil (브라질)</strong></td>
+                                <td><span class="badge badge-info">Razer Gold</span> <span class="badge badge-purple">Pix</span> <span class="badge badge-warning">Boleto</span> <span class="badge badge-success">Credit Card</span> <span class="badge badge-purple">PicPay</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= REPORT 2 ================= -->
+        <div id="report2" class="report-section">
+
+            <!-- Menu 1: Home -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-house-chimney"></i>
+                        Menu 1: Home (메인 포털 - `/`)
+                    </div>
+                    <span class="badge badge-success">탐색 완료</span>
+                </div>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+                    포털 메인 화면으로, 브랜드 아이덴티티 전달, 최신 뉴스 브리핑, 플랫폼별 게임 라인업, 소셜 미디어 채널 연결 및 퀵 로그인/프로필 카드를 제공합니다.
+                </p>
+                <div class="ia-tree">
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-images"></i> Visual Hero Carousel</div>
+                        <p style="font-size: 13px; color: var(--text-muted);">
+                            1920x647 (데스크톱) 및 1080x1080 (모바일) 최신 이벤트/신작 배너 순환 슬라이더
+                        </p>
+                    </div>
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-bullhorn"></i> News Announcement</div>
+                        <p style="font-size: 13px; color: var(--text-muted);">
+                            최신 공지사항/이벤트 5개 리스트 노출 (작성일 + 제목, 클릭 시 상세 이동)
+                        </p>
+                    </div>
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-user"></i> Dynamic Profile / Login Card</div>
+                        <p style="font-size: 13px; color: var(--text-muted);">
+                            비로그인 시: Username/Password 로그인 폼<br>로그인 시: 계정 ID, 마스킹 이메일, Kafra Points, 프로필 이동 버튼
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu 2: Product -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-border-all"></i>
+                        Menu 2: Product (게임 라인업 - `/product`)
+                    </div>
+                </div>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+                    Gravity Game Hub(GGH) 퍼블리싱 전체 8개 라인업의 상세 카탈로그 페이지입니다.
+                </p>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>플랫폼 탭</th>
+                                <th>등록 게임수</th>
+                                <th>해당 게임 라인업</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>All Platform</strong></td>
+                                <td><span class="badge badge-info">8개</span></td>
+                                <td>Ragnarok Origin, Landverse, ROIA, Ragnarok Crush, ROX, ROX EU, ROX ME, Ragnarok: Go</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mobile Game</strong></td>
+                                <td><span class="badge badge-purple">7개</span></td>
+                                <td>Ragnarok Origin, ROIA, Ragnarok Crush, ROX, ROX EU, ROX ME, Ragnarok: Go</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PC Game</strong></td>
+                                <td><span class="badge badge-success">1개</span></td>
+                                <td>Ragnarok Landverse</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Web Game</strong></td>
+                                <td><span class="badge badge-warning">0개</span></td>
+                                <td>등록된 웹게임 없음</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Menu 3: Information -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-newspaper"></i>
+                        Menu 3: Information / News (`/news`)
+                    </div>
+                </div>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+                    업데이트, 이벤트, 정기점검 및 퍼블리싱 소식을 전달하는 종합 뉴스 센터입니다.
+                </p>
+                <div class="process-flow">
+                    <div class="flow-step">
+                        <div class="step-num">1</div>
+                        <div class="step-title">Category Tabs</div>
+                        <div class="step-desc">All, Events, Announcements, Updates 필터링</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-num">2</div>
+                        <div class="step-title">Article Cards</div>
+                        <div class="step-desc">게시일, 카테고리 태그, 제목, 요약 텍스트</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-num">3</div>
+                        <div class="step-title">Detail Page</div>
+                        <div class="step-desc">`detail.php?id=XXX` 상세 본문 및 이미지</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-num">4</div>
+                        <div class="step-title">Social Sharing</div>
+                        <div class="step-desc">X (Twitter), WhatsApp, Facebook 공유 연동</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu 4: Membership / My Page -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-address-card"></i>
+                        Menu 4: Membership / My Page (`/member/sign-up.php`)
+                    </div>
+                    <span class="badge badge-pink">로그인 시 5대 서브탭 전면 활성화</span>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>마이페이지 서브 탭</th>
+                                <th>주요 기능 및 노출 데이터</th>
+                                <th>수정 및 조작 가능 항목</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. Profile</strong></td>
+                                <td>Gravity ID, First/Last Name, Email(마스킹), Gender, DOB, Country, Last Login Web/Game, Kafra Points Balance</td>
+                                <td>조회 전용 (`Go To Profile` 버튼)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. Edit Profile</strong></td>
+                                <td>회원 기본 정보 수정 폼 (Name, DOB, Gender, Email 변경 요청)</td>
+                                <td>이름/성, 생년월일 달력 선택, 성별 라디오 버튼 수정 후 제출</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. Change Password</strong></td>
+                                <td>비밀번호 변경 폼 (Current Password, New Password, Confirm New Password)</td>
+                                <td>대/소문자+숫자+특수문자 6~12자 조합 신규 비밀번호 변경</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. RO PC Coupon Code</strong></td>
+                                <td>라그나로크 PC 전용 아이템/쿠폰 코드 입력 폼</td>
+                                <td>쿠폰 핀코드 입력 및 아이템 수령 처리</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. Purchase History</strong></td>
+                                <td>충전 및 결제 거래 내역 테이블 (날짜, 거래번호, 충전 금액, 결제 수단, 거래 상태)</td>
+                                <td>기간별/게임별 거래 내역 조회 및 영수증 확인</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Menu 5: Topup Center -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Menu 5: Topup Center (`/topup` & `/topup/roia/`)
+                    </div>
+                    <span class="badge badge-danger">미인증 사용자 자동 리다이렉트</span>
+                </div>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">
+                    <strong>RO Idle Adventure Plus (ROIA) GNJOY 웹스토어 6단계 충전 프로세스:</strong>
+                </p>
+                <div class="process-flow">
+                    <div class="flow-step">
+                        <div class="step-num">1</div>
+                        <div class="step-title">Region Select</div>
+                        <div class="step-desc">Singapore, Malaysia, Thailand, Indonesia, Philippines, Brazil</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-num">2</div>
+                        <div class="step-title">Game Select</div>
+                        <div class="step-desc">RO Idle Adventure Plus 선택</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-num">3</div>
+                        <div class="step-title">Denomination</div>
+                        <div class="step-desc">Voucher 패키지 (99+3 ~ 4999+600 Voucher)</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-num">4</div>
+                        <div class="step-title">Server Select</div>
+                        <div class="step-desc">US (Prontera 등) / ASIA (Angeling 등) 서버 선택</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-num">5</div>
+                        <div class="step-title">Secret Code</div>
+                        <div class="step-desc">인게임 8자리 Secret Code 입력 (캐릭터명 자동 매핑)</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-num">6</div>
+                        <div class="step-title">PG Checkout</div>
+                        <div class="step-desc">Razer Gold, Credit Card, E-Wallet 선택 후 결제 완료</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu 6: FAQ -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-headset"></i>
+                        Menu 6: FAQ (자주 묻는 질문 - `/faq`)
+                    </div>
+                </div>
+                <div class="ia-tree">
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-magnifying-glass"></i> Search Topic Engine</div>
+                        <p style="font-size: 13px; color: var(--text-muted);">
+                            키워드 검색창을 통해 게임별/분류별 FAQ 키워드 빠른 검색
+                        </p>
+                    </div>
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-gamepad"></i> Game Icon Tabs</div>
+                        <p style="font-size: 13px; color: var(--text-muted);">
+                            Ragnarok Origin, Landverse, ROIA, Ragnarok Crush, ROX 아이콘 선택 시 아코디언 열림
+                        </p>
+                    </div>
+                    <div class="ia-node">
+                        <div class="ia-node-header"><i class="fa-solid fa-wrench"></i> Technical & Game Specs</div>
+                        <p style="font-size: 13px; color: var(--text-muted);">
+                            최소 사양 (AOS Android 9 / iOS 12 이상, 2GB+ RAM), 접속 오류/서버 튕김, 랙(Lag) 조치법, Top Up Voucher 정책
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu 7 & 8: Support & Others -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Menu 7 & 8: Customer Support & Others/Footer
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>메뉴 및 URL</th>
+                                <th>세부 조항 및 서비스 내용</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>CS Support</strong></td>
+                                <td>Customer Support (`/support`)</td>
+                                <td>Origin CS, Landverse Atlassian Service Desk, ROIA Contact Us, Crush Facebook CS 1:1 창구 분원화</td>
+                            </tr>
+                            <tr>
+                                <td><strong>About Us</strong></td>
+                                <td>About Us (`/about`)</td>
+                                <td>2021년 싱가포르 설립 Gravity Game Hub (GGH Pte Ltd) 법인 소개 및 한국 GRAVITY Co., Ltd. (GRVY) 자회사 안내</td>
+                            </tr>
+                            <tr>
+                                <td><strong>약관 및 방침</strong></td>
+                                <td>Terms of Service (`/termofservice`)</td>
+                                <td>글로벌 및 한국어 이용약관 (`/termofservice_kr`), 개인정보 처리방침, 라그나로크 크러쉬 방침, 결제 주의사항</td>
+                            </tr>
+                            <tr>
+                                <td><strong>다국어 지원</strong></td>
+                                <td>Global Legal Terms</td>
+                                <td>독일어(`_de`), 프랑스어(`_fr`), 스페인어(`_es`), 아랍어(`_ar`) 약관 조항 제공</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            // Remove active class from all buttons and sections
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.report-section').forEach(sec => sec.classList.remove('active'));
+
+            // Activate target button and section
+            if (tabId === 'report1') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('report1').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('report2').classList.add('active');
+            }
+        }
+
+        function filterTable(tableId, searchInputId) {
+            const input = document.getElementById(searchInputId);
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById(tableId);
+            const tr = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < tr.length; i++) {
+                let show = false;
+                const tdList = tr[i].getElementsByTagName('td');
+                for (let j = 0; j < tdList.length; j++) {
+                    if (tdList[j]) {
+                        if (tdList[j].textContent.toLowerCase().indexOf(filter) > -1) {
+                            show = true;
+                            break;
+                        }
+                    }
+                }
+                tr[i].style.display = show ? '' : 'none';
+            }
+        }
+    </script>
+</body>
+</html>
