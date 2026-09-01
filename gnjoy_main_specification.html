@@ -12,7 +12,7 @@
     
     <style>
         :root {
-            /* Balanced Professional Storyboard Tokens (적절한 포인트 컬러 적용) */
+            /* Balanced Storyboard Tokens */
             --sidebar-width: 280px;
             --topbar-height: 60px;
             
@@ -302,7 +302,7 @@
             color: var(--text-muted);
         }
 
-        /* Pin Callout Badge (Figma Storyboard Purple Pin) */
+        /* Pin Callout Badge */
         .pin {
             display: inline-flex;
             align-items: center;
@@ -324,7 +324,7 @@
         .pin:hover { transform: scale(1.2); }
         .pin-abs { position: absolute; }
 
-        /* Wireframe Styling with Clean Subtle Tints */
+        /* Wireframe Canvas */
         .wf-pc-canvas {
             background: #FFFFFF;
             position: relative;
@@ -711,18 +711,13 @@
                 <div class="nav-group-title">Document Info</div>
                 <ul class="nav-list">
                     <li>
-                        <button class="nav-item-btn" onclick="switchNav('cover')">
+                        <button class="nav-item-btn" id="btn-nav-cover" onclick="switchNav('cover')">
                             <div class="nav-item-left"><i class="fa-regular fa-file-lines"></i> <span>00. 표지 &amp; 개정이력</span></div>
                         </button>
                     </li>
                     <li>
-                        <button class="nav-item-btn" onclick="switchNav('sitemap')">
+                        <button class="nav-item-btn" id="btn-nav-sitemap" onclick="switchNav('sitemap')">
                             <div class="nav-item-left"><i class="fa-solid fa-sitemap"></i> <span>01. 사이트맵 &amp; 인덱스</span></div>
-                        </button>
-                    </li>
-                    <li>
-                        <button class="nav-item-btn" onclick="switchNav('component')">
-                            <div class="nav-item-left"><i class="fa-solid fa-cubes"></i> <span>02. 디자인 시스템 사전</span></div>
                         </button>
                     </li>
                 </ul>
@@ -733,7 +728,7 @@
                 <div class="nav-group-title">Screen Storyboard</div>
                 <ul class="nav-list">
                     <li>
-                        <button class="nav-item-btn active" onclick="switchNav('main-screen')">
+                        <button class="nav-item-btn active" id="btn-nav-main" onclick="switchNav('main-screen')">
                             <div class="nav-item-left"><i class="fa-solid fa-desktop"></i> <span>메인 페이지</span></div>
                             <span class="nav-item-badge">001</span>
                         </button>
@@ -806,7 +801,7 @@
                 <!-- 1-A. PC VIEW (WIREFRAME + DESCRIPTION) -->
                 <div id="pc-spec-view" class="screen-spec-grid">
                     
-                    <!-- Left: Wireframe Canvas with Clean Color Accents -->
+                    <!-- Left: Wireframe Canvas -->
                     <div class="canvas-card">
                         <div class="canvas-header">
                             <span><i class="fa-solid fa-desktop"></i> PC Wireframe (1920px Standard Layout)</span>
@@ -1460,38 +1455,6 @@
                 </div>
             </section>
 
-            <!-- ================= VIEW 4: COMPONENT ================= -->
-            <section id="view-component" class="view-section">
-                <div class="doc-section-card">
-                    <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 20px;"><i class="fa-solid fa-cubes" style="color: var(--brand-primary);"></i> 공통 컴포넌트 및 디자인 토큰</h3>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-                        <div style="background: #F8FAFC; border: 1px solid var(--border-main); border-radius: 10px; padding: 20px;">
-                            <div style="font-size: 13px; font-weight: 800; margin-bottom: 8px;">Primary Button</div>
-                            <button style="background: var(--brand-primary); color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: 800; font-size: 12px;"><i class="fa-solid fa-bolt"></i> Top-up</button>
-                            <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">주요 결제 액션 버튼 (<code>#E11D48</code>)</p>
-                        </div>
-                        <div style="background: #F8FAFC; border: 1px solid var(--border-main); border-radius: 10px; padding: 20px;">
-                            <div style="font-size: 13px; font-weight: 800; margin-bottom: 8px;">Pin Callout</div>
-                            <div style="display: flex; gap: 8px;">
-                                <span class="pin">1</span>
-                                <span class="pin" style="background: var(--accent-blue);">2</span>
-                                <span class="pin" style="background: var(--brand-primary);">3</span>
-                            </div>
-                            <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">와이어프레임 1:1 매핑 핀 심볼</p>
-                        </div>
-                        <div style="background: #F8FAFC; border: 1px solid var(--border-main); border-radius: 10px; padding: 20px;">
-                            <div style="font-size: 13px; font-weight: 800; margin-bottom: 8px;">Platform Badges</div>
-                            <div style="display: flex; gap: 6px;">
-                                <span style="background: #0F172A; color: white; font-size: 10px; padding: 3px 6px; border-radius: 4px;"><i class="fa-brands fa-apple"></i> iOS</span>
-                                <span style="background: #0F172A; color: white; font-size: 10px; padding: 3px 6px; border-radius: 4px;"><i class="fa-brands fa-google-play"></i> Android</span>
-                                <span style="background: #0F172A; color: white; font-size: 10px; padding: 3px 6px; border-radius: 4px;"><i class="fa-brands fa-windows"></i> PC</span>
-                            </div>
-                            <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">플랫폼 지원 상태 아이콘</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
         </div>
     </main>
 
@@ -1520,12 +1483,13 @@
             const target = document.getElementById('view-' + viewId);
             if (target) target.classList.add('active');
 
-            // Find clicked button
-            const buttons = document.querySelectorAll('.nav-item-btn');
-            if (viewId === 'cover') buttons[0]?.classList.add('active');
-            if (viewId === 'sitemap') buttons[1]?.classList.add('active');
-            if (viewId === 'component') buttons[2]?.classList.add('active');
-            if (viewId === 'main-screen') buttons[3]?.classList.add('active');
+            const btnCover = document.getElementById('btn-nav-cover');
+            const btnSitemap = document.getElementById('btn-nav-sitemap');
+            const btnMain = document.getElementById('btn-nav-main');
+
+            if (viewId === 'cover') btnCover?.classList.add('active');
+            if (viewId === 'sitemap') btnSitemap?.classList.add('active');
+            if (viewId === 'main-screen') btnMain?.classList.add('active');
 
             // Topbar Info Updates
             const badge = document.getElementById('topbar-badge');
@@ -1543,10 +1507,6 @@
             } else if (viewId === 'sitemap') {
                 badge.innerText = 'DOC-01';
                 title.innerText = '사이트맵 & 전체 화면 목록';
-                toggleArea.style.display = 'none';
-            } else if (viewId === 'component') {
-                badge.innerText = 'DOC-02';
-                title.innerText = '디자인 시스템 사전';
                 toggleArea.style.display = 'none';
             }
         }
