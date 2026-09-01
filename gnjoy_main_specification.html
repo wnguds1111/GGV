@@ -114,7 +114,7 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 22px;
         }
 
         .nav-group-title {
@@ -123,7 +123,7 @@
             color: #64748B;
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 0 10px;
+            padding: 0 8px;
             margin-bottom: 6px;
         }
 
@@ -133,12 +133,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 12px;
-            border-radius: 8px;
+            padding: 9px 12px;
+            border-radius: 7px;
             background: transparent;
             border: none;
             color: #94A3B8;
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 600;
             cursor: pointer;
             text-align: left;
@@ -152,8 +152,7 @@
             font-weight: 700;
             box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
         }
-        .nav-item-left { display: flex; align-items: center; gap: 10px; }
-        .nav-item-btn i { font-size: 14px; width: 16px; text-align: center; }
+        .nav-item-left { display: flex; align-items: center; gap: 8px; }
         .nav-item-badge {
             font-size: 10px;
             font-family: 'JetBrains Mono', monospace;
@@ -685,6 +684,7 @@
         .standard-table tr:hover td { background: #F8FAFC; }
 
         .badge-draft { background: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; font-size: 11px; font-weight: 800; padding: 2px 9px; border-radius: 10px; display: inline-block; }
+        .badge-done { background: #DCFCE7; color: #16A34A; border: 1px solid #BBF7D0; font-size: 11px; font-weight: 800; padding: 2px 9px; border-radius: 10px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -723,38 +723,68 @@
                 </ul>
             </div>
 
-            <!-- Group 2: Screens -->
+            <!-- Group 2: Screens (Sitemap Structure) -->
             <div>
                 <div class="nav-group-title">Screen Storyboard</div>
                 <ul class="nav-list">
                     <li>
                         <button class="nav-item-btn active" id="btn-nav-main" onclick="switchNav('main-screen')">
-                            <div class="nav-item-left"><span>메인 페이지</span></div>
-                            <span class="nav-item-badge">001</span>
+                            <div class="nav-item-left"><span>메인</span></div>
+                            <span class="nav-item-badge">main01(L)</span>
                         </button>
                     </li>
                     <li>
                         <button class="nav-item-btn" style="opacity: 0.5; cursor: not-allowed;">
-                            <div class="nav-item-left"><span>소셜 로그인 팝업</span></div>
-                            <span class="nav-item-badge">030</span>
+                            <div class="nav-item-left"><span>회원 &gt; 본인인증</span></div>
+                            <span class="nav-item-badge">member01(P)</span>
                         </button>
                     </li>
                     <li>
                         <button class="nav-item-btn" style="opacity: 0.5; cursor: not-allowed;">
-                            <div class="nav-item-left"><span>3단계 필수 본인인증</span></div>
-                            <span class="nav-item-badge">031</span>
+                            <div class="nav-item-left"><span>게임 &gt; 라인업</span></div>
+                            <span class="nav-item-badge">game01(L)</span>
                         </button>
                     </li>
                     <li>
                         <button class="nav-item-btn" style="opacity: 0.5; cursor: not-allowed;">
-                            <div class="nav-item-left"><span>캐시 충전소 (/Billing)</span></div>
-                            <span class="nav-item-badge">020</span>
+                            <div class="nav-item-left"><span>캐시 충전 &gt; 결제</span></div>
+                            <span class="nav-item-badge">billing01(L)</span>
                         </button>
                     </li>
                     <li>
                         <button class="nav-item-btn" style="opacity: 0.5; cursor: not-allowed;">
-                            <div class="nav-item-left"><span>마이페이지</span></div>
-                            <span class="nav-item-badge">032</span>
+                            <div class="nav-item-left"><span>캐시 충전 &gt; 결제 내역</span></div>
+                            <span class="nav-item-badge">billing02(L)</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-item-btn" style="opacity: 0.5; cursor: not-allowed;">
+                            <div class="nav-item-left"><span>고객 지원 센터</span></div>
+                            <span class="nav-item-badge">support01(L)</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-item-btn" style="opacity: 0.5; cursor: not-allowed;">
+                            <div class="nav-item-left"><span>로그인 &gt; 소셜 로그인</span></div>
+                            <span class="nav-item-badge">login01(P)</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-item-btn" style="opacity: 0.5; cursor: not-allowed;">
+                            <div class="nav-item-left"><span>마이페이지 &gt; 회원정보</span></div>
+                            <span class="nav-item-badge">mypage01(L)</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-item-btn" style="opacity: 0.5; cursor: not-allowed;">
+                            <div class="nav-item-left"><span>마이페이지 &gt; 개인정보</span></div>
+                            <span class="nav-item-badge">mypage02(L)</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-item-btn" style="opacity: 0.5; cursor: not-allowed;">
+                            <div class="nav-item-left"><span>푸터 &gt; 약관 및 정책</span></div>
+                            <span class="nav-item-badge">footer01(L)</span>
                         </button>
                     </li>
                 </ul>
@@ -777,7 +807,7 @@
                 <button class="sidebar-toggle-trigger" id="sidebar-toggle-btn" title="메뉴 열기" onclick="toggleSidebar()">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <span class="page-badge" id="topbar-badge">SCR-GNJ-001</span>
+                <span class="page-badge" id="topbar-badge">main01(L)</span>
                 <span class="page-heading" id="topbar-title">메인 페이지 (Home Portal)</span>
             </div>
 
@@ -1065,10 +1095,10 @@
                                     <li><strong>메뉴 링크</strong>: <code>GAMES</code>, <code>NEWS</code>, <code>TOP-UP</code>, <code>SUPPORT</code> 섹션/페이지 라우팅.</li>
                                     <li><strong>다국어</strong>: EN, 繁體中文, 한국어 실시간 전환.</li>
                                     <li><strong>유저 상태</strong>:
-                                        <br>• 비로그인: <code>Sign In</code> ➔ 소셜 로그인 팝업.
-                                        <br>• 로그인: 닉네임/아바타 ➔ 마이페이지 드롭다운.
+                                        <br>• 비로그인: <code>Sign In</code> ➔ 소셜 로그인 팝업 (<code>login01(P)</code>).
+                                        <br>• 로그인: 닉네임/아바타 ➔ 마이페이지 드롭다운 (<code>mypage01(L)</code>).
                                     </li>
-                                    <li><strong>Top-up</strong>: 브랜드 레드 버튼 고정 노출 ➔ 통합 결제(<code>/Billing</code>) 다이렉트 이동.</li>
+                                    <li><strong>Top-up</strong>: 브랜드 레드 버튼 고정 노출 ➔ 통합 결제(<code>billing01(L)</code>) 다이렉트 이동.</li>
                                 </ul>
                             </div>
                         </div>
@@ -1114,7 +1144,7 @@
                                     <li><strong>12종 라인업</strong>: Origin, Rebirth, 初心之戰, Twilight, Landverse, Crush 등.</li>
                                     <li><strong>플랫폼</strong>: iOS, Android, PC, Steam 아이콘 표출.</li>
                                     <li><strong>결제 라우팅 분기</strong>:
-                                        <br>• GNJOY 결제 4종: <code>/Billing</code> 연결.
+                                        <br>• GNJOY 결제 4종: <code>billing01(L)</code> 연결.
                                         <br>• 전용 스토어 8종: 해당 게임 웹스토어로 분기.
                                     </li>
                                 </ul>
@@ -1144,7 +1174,7 @@
                             <div class="spec-content">
                                 <ul class="spec-bullet-list">
                                     <li><strong>표출 항목</strong>: 태그, 타이틀, 일자, 썸네일.</li>
-                                    <li><strong>Read More</strong>: 공지 상세(<code>/News/Detail</code>) 이동.</li>
+                                    <li><strong>Read More</strong>: 공지 상세 페이지 이동.</li>
                                 </ul>
                             </div>
                         </div>
@@ -1157,7 +1187,7 @@
                             </div>
                             <div class="spec-content">
                                 <ul class="spec-bullet-list">
-                                    <li><strong>Contact Support</strong>: 통합 고객센터(FAQ 및 1:1 티켓) 이동.</li>
+                                    <li><strong>Contact Support</strong>: 고객지원 센터(<code>support01(L)</code>) 이동.</li>
                                 </ul>
                             </div>
                         </div>
@@ -1170,7 +1200,7 @@
                             </div>
                             <div class="spec-content">
                                 <ul class="spec-bullet-list">
-                                    <li><strong>정책 링크</strong>: Privacy, Terms, Payment Policy 모달/페이지.</li>
+                                    <li><strong>정책 링크</strong>: 개인정보처리방침(<code>footer01(L)</code>), 서비스 약관(<code>footer02(L)</code>) 연결.</li>
                                     <li><strong>카피라이트</strong>: GGH 권리 표기.</li>
                                 </ul>
                             </div>
@@ -1393,7 +1423,7 @@
                             <tr>
                                 <td><strong>v1.0.0</strong></td>
                                 <td>2026-09-01</td>
-                                <td>• 초안 작성</td>
+                                <td>• 초안 작성<br>• GGV 포털 사이트맵 8대 메뉴 인덱스 및 메인 페이지 [main01(L)] 화면설계</td>
                                 <td><strong>이주형</strong></td>
                             </tr>
                         </tbody>
@@ -1401,7 +1431,7 @@
                 </div>
             </section>
 
-            <!-- ================= VIEW 3: SITEMAP & INDEX ================= -->
+            <!-- ================= VIEW 3: SITEMAP & INDEX (NEW SITEMAP STRUCTURE) ================= -->
             <section id="view-sitemap" class="view-section">
                 <div class="doc-section-card">
                     <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 16px;"><i class="fa-solid fa-sitemap" style="color: var(--brand-primary);"></i> 전체 화면 목록 인덱스 (Screen Index)</h3>
@@ -1409,46 +1439,128 @@
                     <table class="standard-table">
                         <thead>
                             <tr>
-                                <th style="width: 140px;">화면 ID</th>
-                                <th style="width: 180px;">1 Depth / 2 Depth</th>
-                                <th>화면명 (Screen Name)</th>
-                                <th style="width: 180px;">URL / 경로</th>
-                                <th style="width: 120px;">디바이스</th>
-                                <th style="width: 100px;">작성상태</th>
+                                <th style="width: 120px;">1 Depth</th>
+                                <th style="width: 150px;">2 Depth</th>
+                                <th style="width: 120px;">화면 ID</th>
+                                <th style="width: 200px;">화면명 (Screen Name)</th>
+                                <th>화면 설명 (Description)</th>
+                                <th style="width: 95px; text-align: center;">작성상태</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- 메인 -->
                             <tr style="background: #FFF1F2;">
-                                <td><strong style="color: var(--brand-primary); font-family: 'JetBrains Mono';">SCR-GNJ-001</strong></td>
-                                <td>메인 &gt; 홈</td>
-                                <td><strong>메인 페이지 (Home Portal)</strong></td>
-                                <td><code>/</code> 또는 <code>/index.html</code></td>
-                                <td>PC / Tablet / MO</td>
-                                <td><span class="badge-draft">작성 중</span></td>
+                                <td><strong>메인</strong></td>
+                                <td>-</td>
+                                <td><strong style="color: var(--brand-primary); font-family: 'JetBrains Mono';">main01(L)</strong></td>
+                                <td><strong>메인 홈 (Portal Home)</strong></td>
+                                <td>GNJOY 통합 포털 메인 (비주얼 배너, 그라비티 12종 게임, 인디/콘솔, 뉴스, 고객센터)</td>
+                                <td style="text-align: center;"><span class="badge-done">작성 완료</span></td>
+                            </tr>
+
+                            <!-- 회원 -->
+                            <tr>
+                                <td><strong>회원</strong></td>
+                                <td>본인인증</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">member01(P)</strong></td>
+                                <td>3단계 필수 본인인증 팝업</td>
+                                <td>신분증 사진 업로드 및 마스킹, 이메일 링크 인증, SMS 6자리 OTP 인증 절차</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                            </tr>
+
+                            <!-- 게임 -->
+                            <tr>
+                                <td><strong>게임</strong></td>
+                                <td>-</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">game01(L)</strong></td>
+                                <td>게임 소개 &amp; 목록</td>
+                                <td>그라비티 게임 라인업 전체 소개 및 공식 웹사이트/다운로드 링크 허브</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                            </tr>
+
+                            <!-- 캐시 충전 (Rowspan 2) -->
+                            <tr>
+                                <td rowspan="2" style="background: #FAF5FF; font-weight: 800;">캐시 충전</td>
+                                <td>결제</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">billing01(L)</strong></td>
+                                <td>온라인 캐시 충전 (/Billing)</td>
+                                <td>4종 게임 캐시 선택, 서버/캐릭터 연동 및 13개 PG/은행 결제 수단 선택</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
                             </tr>
                             <tr>
-                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">SCR-GNJ-030</strong></td>
-                                <td>회원 &gt; 로그인</td>
-                                <td>소셜 간편가입 / 로그인 팝업</td>
-                                <td><code>/auth/login</code></td>
-                                <td>PC / Tablet / MO</td>
-                                <td><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                                <td>결제 내역</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">billing02(L)</strong></td>
+                                <td>충전 및 결제 내역 조회</td>
+                                <td>기간별/게임별 결제 내역 조회, 거래 번호 및 영수증 확인</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                            </tr>
+
+                            <!-- 고객 지원 센터 -->
+                            <tr>
+                                <td><strong>고객 지원 센터</strong></td>
+                                <td>-</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">support01(L)</strong></td>
+                                <td>통합 고객 지원 센터</td>
+                                <td>자주 묻는 질문(FAQ) 검색 및 1:1 고객 문의 티켓 접수/조회</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                            </tr>
+
+                            <!-- 로그인/회원가입 -->
+                            <tr>
+                                <td><strong>로그인/회원가입</strong></td>
+                                <td>소셜 로그인</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">login01(P)</strong></td>
+                                <td>소셜 간편 로그인 / 가입</td>
+                                <td>Google, Apple, Facebook, X(트위터) 소셜 간편 로그인 및 계정 연동 팝업</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                            </tr>
+
+                            <!-- 마이페이지 (Rowspan 4) -->
+                            <tr>
+                                <td rowspan="4" style="background: #F0FDF4; font-weight: 800;">마이페이지</td>
+                                <td>회원정보</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">mypage01(L)</strong></td>
+                                <td>마이페이지 홈 (회원정보)</td>
+                                <td>기본 계정 정보 확인, 닉네임 수정 및 비밀번호/보안 설정 관리</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
                             </tr>
                             <tr>
-                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">SCR-GNJ-031</strong></td>
-                                <td>회원 &gt; 본인인증</td>
-                                <td>3단계 필수 본인인증 모달</td>
-                                <td><code>/auth/verification</code></td>
-                                <td>PC / Tablet / MO</td>
-                                <td><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                                <td>개인정보</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">mypage02(L)</strong></td>
+                                <td>개인정보 관리 &amp; 알림함</td>
+                                <td>본인인증 정보 관리, 마케팅 수신동의 및 90일 알림 메시지 센터</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
                             </tr>
                             <tr>
-                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">SCR-GNJ-020</strong></td>
-                                <td>충전 &gt; 캐시충전</td>
-                                <td>온라인 캐시 충전 메인 (/Billing)</td>
-                                <td><code>/Billing</code></td>
-                                <td>PC / Tablet / MO</td>
-                                <td><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                                <td>애플 계정 연동</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">mypage03(P)</strong></td>
+                                <td>Apple ID 계정 연동 모달</td>
+                                <td>GNJOY 계정에 Apple ID 신규 연동 및 연동 해제 처리 모달</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                            </tr>
+                            <tr>
+                                <td>페이스북 계정 연동</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">mypage04(P)</strong></td>
+                                <td>Facebook 계정 연동 모달</td>
+                                <td>GNJOY 계정에 Facebook ID 신규 연동 및 연동 해제 처리 모달</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                            </tr>
+
+                            <!-- 푸터 (Rowspan 2) -->
+                            <tr>
+                                <td rowspan="2" style="background: #F8FAFC; font-weight: 800;">푸터</td>
+                                <td>개인정보처리방침</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">footer01(L)</strong></td>
+                                <td>개인정보처리방침 (Privacy Policy)</td>
+                                <td>법정 필수 개인정보 수집, 이용, 보관 및 제3자 제공 정책 전문</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                            </tr>
+                            <tr>
+                                <td>서비스 약관</td>
+                                <td><strong style="color: #64748B; font-family: 'JetBrains Mono';">footer02(L)</strong></td>
+                                <td>서비스 이용약관 (Terms of Service)</td>
+                                <td>포털 및 게임 서비스 이용에 관한 통합 표준 이용약관 전문</td>
+                                <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1497,7 +1609,7 @@
             const toggleArea = document.getElementById('device-toggle-area');
 
             if (viewId === 'main-screen') {
-                badge.innerText = 'SCR-GNJ-001';
+                badge.innerText = 'main01(L)';
                 title.innerText = '메인 페이지 (Home Portal)';
                 toggleArea.style.display = 'flex';
             } else if (viewId === 'cover') {
