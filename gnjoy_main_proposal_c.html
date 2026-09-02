@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 제안안 [안 C - 비주얼 큐레이션형] | GGV 기획서</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --topbar-height: 60px;
+            --canvas-bg: #F1F5F9;
+            --panel-bg: #FFFFFF;
+            --border-main: #CBD5E1;
+            --border-subtle: #F1F5F9;
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --brand-primary: #E11D48;
+            --brand-subtle: #FFF1F2;
+            --pin-color: #7C3AED;
+            --accent-blue: #2563EB;
+            --accent-purple: #9333EA;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--canvas-bg);
+            color: var(--text-body);
+            line-height: 1.5;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .app-sidebar {
+            width: var(--sidebar-width);
+            background: #0F172A;
+            color: #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid #1E293B;
+            user-select: none;
+            z-index: 100;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .app-sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-width)); opacity: 0; pointer-events: none; }
+        .sidebar-brand {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1E293B;
+            height: var(--topbar-height);
+        }
+        .brand-content { display: flex; align-items: center; gap: 12px; }
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--brand-primary), #BE123C);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+        }
+        .brand-text h1 { font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; }
+        .brand-text p { font-size: 11px; color: #94A3B8; }
+        .sidebar-collapse-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94A3B8;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .sidebar-collapse-btn:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 18px 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .nav-group-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 8px;
+            margin-bottom: 6px;
+        }
+        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        .nav-item-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 12px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            color: #F1F5F9;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: left;
+            text-decoration: none;
+            font-family: inherit;
+        }
+        .nav-item-btn:hover { background: #1E293B; }
+        .nav-item-btn.active { background: var(--brand-primary); color: white; box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35); }
+        .nav-item-left { display: flex; align-items: center; gap: 8px; }
+
+        .nav-sub-tree {
+            list-style: none;
+            padding-left: 12px;
+            margin-left: 14px;
+            border-left: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 2px;
+            margin-bottom: 4px;
+        }
+        .nav-sub-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-radius: 5px;
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            text-decoration: none;
+        }
+        .nav-sub-btn:hover { background: #1E293B; color: white; }
+        .nav-sub-btn.active { background: rgba(225, 29, 72, 0.2); color: #FDA4AF; font-weight: 700; }
+
+        /* Main Workspace */
+        .app-main { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .app-topbar {
+            height: var(--topbar-height);
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border-main);
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 90;
+        }
+        .topbar-left-zone { display: flex; align-items: center; gap: 14px; }
+        .sidebar-toggle-trigger {
+            background: #F8FAFC;
+            border: 1px solid var(--border-main);
+            color: var(--text-heading);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .page-badge {
+            background: #F3E8FF;
+            color: #7E22CE;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #E9D5FF;
+        }
+        .page-heading { font-size: 15px; font-weight: 800; color: var(--text-heading); }
+
+        .device-toggle-group {
+            display: flex;
+            background: #F1F5F9;
+            padding: 4px;
+            border-radius: 8px;
+            gap: 4px;
+            border: 1px solid var(--border-main);
+        }
+        .device-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        .device-btn.active { background: white; color: var(--brand-primary); font-weight: 800; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+
+        .app-content-body { flex: 1; overflow-y: auto; padding: 24px 32px 60px; display: flex; justify-content: center; }
+        .screen-spec-grid { display: grid; grid-template-columns: 1fr 370px; gap: 28px; width: 100%; align-items: start; }
+        .canvas-card { background: white; border-radius: 12px; border: 1px solid var(--border-main); box-shadow: 0 4px 20px rgba(0,0,0,0.04); overflow: hidden; }
+        .canvas-header { padding: 12px 22px; background: #F8FAFC; border-bottom: 1px solid var(--border-main); display: flex; align-items: center; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--text-muted); }
+
+        /* Pin Badge */
+        .pin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--pin-color);
+            color: #FFFFFF;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            border-radius: 50%;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.4);
+            cursor: pointer;
+            z-index: 10;
+        }
+        .pin-abs { position: absolute; }
+
+        /* ================= WIREFRAME CANVAS: [TYPE C - VISUAL CURATION] ================= */
+        .wf-curation-canvas { background: #0B0F19; color: #E2E8F0; font-size: 12px; position: relative; }
+
+        /* [PIN 1] Dark Cinema GNB with Global Search */
+        .cur-gnb {
+            background: rgba(11, 15, 25, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .cur-nav-links { display: flex; gap: 24px; font-weight: 700; font-size: 13px; color: #CBD5E1; }
+        .cur-nav-links span:hover, .cur-nav-links span.active { color: #FFFFFF; }
+        
+        .cur-search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 5px 14px;
+            gap: 8px;
+            width: 220px;
+        }
+        .cur-search-bar input { background: transparent; border: none; outline: none; color: white; font-size: 11px; width: 100%; }
+
+        /* [PIN 2] Netflix-Style Hero Spotlight Banner */
+        .cur-hero-spotlight {
+            height: 380px;
+            background: linear-gradient(180deg, rgba(11,15,25,0.2) 0%, #0B0F19 100%), linear-gradient(90deg, #0B0F19 25%, rgba(11,15,25,0.6) 60%, transparent 100%), #1E1B4B;
+            padding: 60px 42px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+        }
+        .cur-spotlight-title { font-size: 34px; font-weight: 900; color: #FFFFFF; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .cur-spotlight-meta { display: flex; gap: 10px; align-items: center; font-size: 11px; color: #94A3B8; margin-bottom: 14px; }
+        .cur-meta-badge { background: var(--brand-primary); color: white; padding: 2px 7px; border-radius: 3px; font-weight: 800; }
+        .cur-spotlight-desc { font-size: 13px; color: #CBD5E1; max-width: 580px; line-height: 1.6; margin-bottom: 22px; }
+        .cur-hero-btns { display: flex; gap: 12px; }
+        .cur-btn-play { background: #FFFFFF; color: #0F172A; font-weight: 800; padding: 10px 24px; border-radius: 6px; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .cur-btn-details { background: rgba(255,255,255,0.15); color: white; font-weight: 700; padding: 10px 20px; border-radius: 6px; text-decoration: none; backdrop-filter: blur(8px); }
+
+        /* [PIN 3] Horizontal Curation Rails (Bento / Netflix Rows) */
+        .cur-section { padding: 26px 42px; position: relative; }
+        .cur-section-title { font-size: 16px; font-weight: 800; color: #FFFFFF; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+        .cur-rail-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            overflow-x: auto;
+        }
+        .cur-game-card {
+            background: #151C2C;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .cur-game-card:hover {
+            transform: scale(1.04);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+        .cur-card-img { height: 110px; background: #1E293B; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; color: #94A3B8; position: relative; }
+        .cur-card-info { padding: 10px 12px; }
+        .cur-card-title { font-size: 12px; font-weight: 800; color: #FFFFFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .cur-card-genre { font-size: 10.5px; color: #64748B; margin-top: 2px; }
+
+        /* [PIN 4] Featured Season Battlepass & Promo Box */
+        .cur-promo-banner {
+            margin: 10px 42px 24px;
+            background: linear-gradient(90deg, #1E1B4B 0%, #311042 50%, #4C0519 100%);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+        .cur-promo-left h3 { font-size: 18px; font-weight: 900; color: #FFFFFF; margin-bottom: 4px; }
+        .cur-promo-left p { font-size: 12px; color: #CBD5E1; }
+        .cur-btn-promo { background: linear-gradient(135deg, #F59E0B, #D97706); color: white; font-weight: 800; padding: 8px 20px; border-radius: 6px; text-decoration: none; }
+
+        /* [PIN 5] Esports & Live Media Stream */
+        .cur-media-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+        .cur-stream-player { background: #000000; border-radius: 8px; height: 160px; display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid rgba(255,255,255,0.1); }
+        .cur-stream-list { display: flex; flex-direction: column; gap: 8px; }
+        .cur-stream-item { background: #151C2C; padding: 8px 12px; border-radius: 6px; display: flex; gap: 10px; align-items: center; font-size: 11px; }
+
+        /* [PIN 6] Footer */
+        .cur-footer { background: #070A10; padding: 28px 42px; font-size: 11px; color: #64748B; border-top: 1px solid rgba(255,255,255,0.06); position: relative; }
+        .cur-footer-links { display: flex; gap: 16px; margin-bottom: 8px; color: #94A3B8; font-weight: 700; }
+
+        /* Spec Panel */
+        .spec-scroll-panel { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 0; }
+        .spec-item-box { background: white; border: 1px solid var(--border-main); border-radius: 10px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .spec-item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); }
+        .spec-pin-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--text-heading); }
+        .spec-tag-type { font-size: 10px; font-weight: 700; background: #F1F5F9; color: #475569; padding: 2px 6px; border-radius: 4px; }
+        .spec-content { font-size: 12px; color: var(--text-body); display: flex; flex-direction: column; gap: 4px; line-height: 1.55; }
+        .spec-content strong { color: var(--text-heading); }
+        .spec-bullet-list { list-style: none; padding-left: 0; }
+        .spec-bullet-list li { position: relative; padding-left: 11px; margin-bottom: 4px; }
+        .spec-bullet-list li::before { content: '•'; position: absolute; left: 0; color: var(--pin-color); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-content">
+                <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+                <div class="brand-text">
+                    <h1>GGV (GNJOY.HK)</h1>
+                    <p>포털 웹 기획서 v1.0</p>
+                </div>
+            </div>
+            <button class="sidebar-collapse-btn" onclick="toggleSidebar()"><i class="fa-solid fa-angles-left"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div>
+                <div class="nav-group-title">Document Info</div>
+                <ul class="nav-list">
+                    <li><a href="gnjoy_main_specification.html" class="nav-item-btn"><div class="nav-item-left"><span>00. 표지 &amp; 개정이력</span></div></a></li>
+                    <li><a href="gnjoy_main_specification.html" class="nav-item-btn"><div class="nav-item-left"><span>01. 사이트맵 &amp; 인덱스</span></div></a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="nav-group-title">Main Proposals (4-Suite)</div>
+                <ul class="nav-list">
+                    <li>
+                        <div class="nav-item-btn" style="cursor: default;"><div class="nav-item-left"><span>메인 페이지 기획안</span></div></div>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_main_specification.html" class="nav-sub-btn"><span>안 A (Figma 기본안)</span></a></li>
+                            <li><a href="gnjoy_main_alternative_spec.html" class="nav-sub-btn"><span>안 B (올인원 허브형)</span></a></li>
+                            <li><a href="gnjoy_main_proposal_c.html" class="nav-sub-btn active"><span>안 C (비주얼 큐레이션형)</span></a></li>
+                            <li><a href="gnjoy_main_proposal_d.html" class="nav-sub-btn"><span>안 D (초고속 결제&amp;런처형)</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>회원</span></div></a></li>
+                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>캐시 충전</span></div></a></li>
+                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>고객 지원 센터</span></div></a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span>Status: 비주얼 큐레이션</span>
+            <span style="background: #F3E8FF; color: #7E22CE; font-weight: 800; padding: 2px 7px; border-radius: 4px; font-size: 10.5px;">Type C</span>
+        </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+        <header class="app-topbar">
+            <div class="topbar-left-zone">
+                <button class="sidebar-toggle-trigger" id="sidebar-toggle-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <span class="page-badge">main_proposal_c</span>
+                <span class="page-heading">메인 제안안 [안 C] (비주얼 큐레이션 &amp; 미디어 스트림형)</span>
+            </div>
+            <div class="device-toggle-group">
+                <button class="device-btn active" id="btn-pc" onclick="switchDevice('pc')"><i class="fa-solid fa-desktop"></i> PC View</button>
+                <button class="device-btn" id="btn-responsive" onclick="switchDevice('responsive')"><i class="fa-solid fa-mobile-screen-button"></i> Tablet/MO View</button>
+            </div>
+        </header>
+
+        <div class="app-content-body">
+            <div id="pc-spec-view" class="screen-spec-grid">
+                
+                <!-- Left: Curation Canvas -->
+                <div class="canvas-card">
+                    <div class="canvas-header">
+                        <span><i class="fa-solid fa-clapperboard"></i> [Type C] 넷플릭스/스팀형 풀스크린 큐레이션 스토리보드</span>
+                        <span style="font-weight: 800; color: #7E22CE;">비주얼 특화안</span>
+                    </div>
+
+                    <div class="wf-curation-canvas">
+                        
+                        <!-- [PIN 1] GNB -->
+                        <div class="cur-gnb">
+                            <span class="pin pin-abs" style="top: 14px; left: 16px;" onclick="highlightSpec('pin1')">1</span>
+                            <div style="display: flex; align-items: center; gap: 20px;">
+                                <img src="./_레이어_1-2.png" alt="GNJOY" style="height: 26px; filter: brightness(1.2);">
+                                <div class="cur-nav-links">
+                                    <span class="active">탐색 (Browse)</span>
+                                    <span>인기 랭킹</span>
+                                    <span>결제 상점</span>
+                                    <span>e스포츠 &amp; 방송</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <div class="cur-search-bar">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: #64748B;"></i>
+                                    <input type="text" placeholder="게임, 이벤트, 소식 검색...">
+                                </div>
+                                <span class="pin pin-abs" style="top: 14px; right: 10px;" onclick="highlightSpec('pin1')">1</span>
+                                <a href="javascript:void(0)" style="background: var(--brand-primary); color: white; padding: 6px 14px; border-radius: 4px; font-weight: 800; font-size: 11.5px; text-decoration: none;">Top-up</a>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 2] Netflix-Style Hero Spotlight -->
+                        <div class="cur-hero-spotlight">
+                            <span class="pin pin-abs" style="top: 24px; left: 24px;" onclick="highlightSpec('pin2')">2</span>
+                            <div class="cur-spotlight-meta">
+                                <span class="cur-meta-badge">SPOTLIGHT #1</span>
+                                <span><i class="fa-solid fa-star" style="color: #F59E0B;"></i> 4.9 평점</span>
+                                <span>•</span>
+                                <span>PC MMORPG</span>
+                                <span>•</span>
+                                <span>공식 글로벌 서버</span>
+                            </div>
+                            <div class="cur-spotlight-title">Ragnarok Online Zero</div>
+                            <div class="cur-spotlight-desc">클래식의 부활, 새로운 모험의 시작. 전 세계 모험가들과 함께 미드가르드의 미개척 던전을 정복하세요.</div>
+                            <div class="cur-hero-btns">
+                                <a href="javascript:void(0)" class="cur-btn-play"><i class="fa-solid fa-play"></i> 무료 플레이 시작</a>
+                                <a href="javascript:void(0)" class="cur-btn-details"><i class="fa-solid fa-circle-info"></i> 상세 정보 &amp; 트레일러</a>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 3] Rail 1: Popular Games -->
+                        <div class="cur-section">
+                            <span class="pin pin-abs" style="top: 14px; left: 20px;" onclick="highlightSpec('pin3')">3</span>
+                            <div class="cur-section-title">
+                                <span>🔥 지금 가장 인기 있는 게임 TOP 5</span>
+                                <span style="font-size: 11px; color: #94A3B8; cursor: pointer;">전체보기 &gt;</span>
+                            </div>
+                            <div class="cur-rail-row">
+                                <div class="cur-game-card">
+                                    <div class="cur-card-img">RO ZERO KEYART</div>
+                                    <div class="cur-card-info"><div class="cur-card-title">Ragnarok Online Zero</div><div class="cur-card-genre">PC MMORPG</div></div>
+                                </div>
+                                <div class="cur-game-card">
+                                    <div class="cur-card-img">ORIGIN KEYART</div>
+                                    <div class="cur-card-info"><div class="cur-card-title">Ragnarok Origin</div><div class="cur-card-genre">Mobile 3D MMORPG</div></div>
+                                </div>
+                                <div class="cur-game-card">
+                                    <div class="cur-card-img">REBIRTH KEYART</div>
+                                    <div class="cur-card-info"><div class="cur-card-title">RO仙境傳說：重生</div><div class="cur-card-genre">Mobile RPG</div></div>
+                                </div>
+                                <div class="cur-game-card">
+                                    <div class="cur-card-img">RO M KEYART</div>
+                                    <div class="cur-card-info"><div class="cur-card-title">Ragnarok M: Eternal</div><div class="cur-card-genre">Mobile Open World</div></div>
+                                </div>
+                                <div class="cur-game-card">
+                                    <div class="cur-card-img">LANDVERSE KEYART</div>
+                                    <div class="cur-card-info"><div class="cur-card-title">Ragnarok Landverse</div><div class="cur-card-genre">Web3 Classic Online</div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 4] Season Pass Promo Banner -->
+                        <div class="cur-promo-banner">
+                            <span class="pin pin-abs" style="top: -10px; left: 20px;" onclick="highlightSpec('pin4')">4</span>
+                            <div class="cur-promo-left">
+                                <h3>SEASON 3 BATTLEPASS &amp; TOP-UP EVENT</h3>
+                                <p>온라인 충전 시 최대 20% 캐시백 &amp; 한정판 코스튬 탈것 100% 지급!</p>
+                            </div>
+                            <a href="javascript:void(0)" class="cur-btn-promo"><i class="fa-solid fa-gift"></i> 이벤트 혜택 수령하기</a>
+                        </div>
+
+                        <!-- [PIN 5] Media & Stream Row -->
+                        <div class="cur-section">
+                            <span class="pin pin-abs" style="top: 14px; left: 20px;" onclick="highlightSpec('pin5')">5</span>
+                            <div class="cur-section-title">
+                                <span>🎬 공식 라이브 &amp; 하이라이트 영상</span>
+                            </div>
+                            <div class="cur-media-grid">
+                                <div class="cur-stream-player">
+                                    <i class="fa-brands fa-youtube" style="font-size: 40px; color: #EF4444;"></i>
+                                    <span style="position: absolute; bottom: 10px; left: 14px; font-size: 11px;">[LIVE] 2026 GGH 글로벌 토너먼트 결승전 중계</span>
+                                </div>
+                                <div class="cur-stream-list">
+                                    <div class="cur-stream-item"><i class="fa-solid fa-play"></i> RO Zero 신규 직업 업데이트 가이드</div>
+                                    <div class="cur-stream-item"><i class="fa-solid fa-play"></i> MyCard 초간편 결제 1분 튜토리얼</div>
+                                    <div class="cur-stream-item"><i class="fa-solid fa-play"></i> 인디게임 신작 'Shangri-La' 트레일러</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 6] Footer -->
+                        <div class="cur-footer">
+                            <span class="pin pin-abs" style="top: 14px; left: 16px;" onclick="highlightSpec('pin6')">6</span>
+                            <div class="cur-footer-links">
+                                <span>Terms of Service</span><span>Privacy Policy</span><span>Ratings</span><span>Contact Support</span>
+                            </div>
+                            <div>© GRAVITY GAME HUB PTE. LTD. ALL RIGHTS RESERVED.</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right: Spec Panel -->
+                <div class="spec-scroll-panel">
+                    <div style="padding-bottom: 10px; border-bottom: 1px solid var(--border-main);">
+                        <h2 style="font-size: 14.5px; font-weight: 800; color: #0F172A;">[Type C] 비주얼 큐레이션형 기획 사양</h2>
+                        <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">스팀/넷플릭스 스타일 미디어 중심 포털</p>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin1">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">1</span> <span>다크 시네마틱 GNB</span></div><span class="spec-tag-type">Header</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>인라인 검색창 탑재</strong>: 게임명, 공지, 업데이트 키워드를 헤더에서 즉시 검색.</li>
+                                <li><strong>글로벌 네비게이션</strong>: 탐색, 랭킹, 상점, e스포츠 직관적 메뉴 구성.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin2">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">2</span> <span>풀스크린 스팟라이트</span></div><span class="spec-tag-type">Spotlight</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>넷플릭스 감성 풀와이드</strong>: 웅장한 키아트와 게임 메타 평점, 태그, 무료 플레이 CTA 1열 배치.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin3">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">3</span> <span>가로 스크롤 카드 레일</span></div><span class="spec-tag-type">Media Rail</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>카테고리별 레일</strong>: 인기 TOP 5, 모바일 신작, 인디 콘솔을 가로 슬라이더(Rail)로 쾌적하게 탐색.</li>
+                                <li><strong>마우스 호버 모션</strong>: 카드 확대 및 스크린샷 프리뷰.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin4">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">4</span> <span>배틀패스 프로모션 바</span></div><span class="spec-tag-type">Banner</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>결제 혜택 강조</strong>: 시즌 패스 및 충전 캐시백 혜택을 시각적으로 강하게 어필.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin5">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">5</span> <span>e스포츠 &amp; 라이브 미디어</span></div><span class="spec-tag-type">Live Stream</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>공식 유튜브/트위치 방송 임베드</strong>: 대회 생중계 및 공식 업데이트 영상 시청 유도.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin6">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">6</span> <span>미니멀 푸터</span></div><span class="spec-tag-type">Footer</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>글로벌 표준 푸터</strong>: 약관, 개인정보, 법정 등급 준수.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Responsive View -->
+            <div id="responsive-spec-view" style="display: none; width: 100%;">
+                <div style="display: flex; gap: 36px; justify-content: center; flex-wrap: wrap;">
+                    <div style="width: 768px; background: #0B0F19; color: white; border-radius: 16px; border: 8px solid #1E293B; overflow: hidden; padding: 20px;">
+                        <h4 style="margin-bottom: 10px;">Tablet View (768px)</h4>
+                        <div style="height: 180px; background: #1E293B; border-radius: 8px; display: flex; align-items: center; justify-content: center;">Spotlight Keyart</div>
+                    </div>
+                    <div style="width: 390px; background: #0B0F19; color: white; border-radius: 24px; border: 8px solid #1E293B; overflow: hidden; padding: 16px;">
+                        <h4 style="margin-bottom: 10px;">Mobile View (390px)</h4>
+                        <div style="height: 140px; background: #1E293B; border-radius: 8px; display: flex; align-items: center; justify-content: center;">Spotlight Mobile</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('app-sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            sidebar.classList.toggle('collapsed');
+            toggleBtn.style.display = sidebar.classList.contains('collapsed') ? 'flex' : 'none';
+        }
+        function switchDevice(mode) {
+            document.getElementById('pc-spec-view').style.display = mode === 'pc' ? 'grid' : 'none';
+            document.getElementById('responsive-spec-view').style.display = mode === 'pc' ? 'none' : 'block';
+            document.getElementById('btn-pc').classList.toggle('active', mode === 'pc');
+            document.getElementById('btn-responsive').classList.toggle('active', mode !== 'pc');
+        }
+        function highlightSpec(pinId) {
+            const el = document.getElementById('spec-' + pinId);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.style.boxShadow = '0 0 0 3px #A855F7';
+                setTimeout(() => el.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)', 2000);
+            }
+        }
+    </script>
+</body>
+</html>
