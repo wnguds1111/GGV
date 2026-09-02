@@ -497,41 +497,317 @@
                             <div class="bil-section-title"><span>🎮 12종 게임 라이브러리 &amp; 실시간 서버 현황</span></div>
                             <table class="bil-game-table">
                                 <thead>
+                        <!-- [PIN 4] Game Matrix with PC & MO Classification & Downloads -->
+                        <div class="bil-section">
+                            <span class="pin pin-abs" style="top: 14px; left: 20px;" onclick="highlightSpec('pin4')">4</span>
+                            <div class="bil-section-title">
+                                <span><i class="fa-solid fa-server" style="color: #2563EB;"></i> 전체 게임 라인업 &amp; 실시간 서버/다운로드 허브 (12종)</span>
+                                <div style="display: flex; gap: 6px;">
+                                    <span style="font-size: 11px; background: #EFF6FF; color: #2563EB; font-weight: 800; padding: 2px 8px; border-radius: 4px;"><i class="fa-brands fa-windows"></i> PC 온라인 (5)</span>
+                                    <span style="font-size: 11px; background: #F5F3FF; color: #7C3AED; font-weight: 800; padding: 2px 8px; border-radius: 4px;"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> 모바일 (7)</span>
+                                </div>
+                            </div>
+                            
+                            <table class="bil-game-table">
+                                <thead>
                                     <tr>
-                                        <th>게임명</th>
-                                        <th>플랫폼</th>
-                                        <th>서버 상태</th>
+                                        <th style="width: 280px;">게임명 (썸네일 클릭 시 공식홈)</th>
+                                        <th style="width: 110px;">플랫폼</th>
+                                        <th style="width: 140px;">다운로드</th>
+                                        <th style="width: 110px;">서버 상태</th>
                                         <th>다이렉트 액션</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!-- 1. RO Zero (PC) -->
                                     <tr>
-                                        <td><strong>Ragnarok Online Zero</strong></td>
-                                        <td><span style="background: #E2E8F0; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;">PC</span></td>
+                                        <td>
+                                            <a href="https://rozero.gnjoy.com.tw" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #0F172A; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800;">ZERO</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">Ragnarok Online Zero</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">PC Classic MMORPG <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #DBEAFE; color: #1D4ED8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-windows"></i> PC</span></td>
+                                        <td>
+                                            <a href="javascript:void(0)" style="display: inline-flex; align-items: center; gap: 3px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; padding: 3px 7px; border-radius: 4px; font-size: 10.5px; font-weight: 800; text-decoration: none;"><i class="fa-brands fa-windows"></i> PC설치</a>
+                                        </td>
                                         <td><span class="bil-signal-dot"></span> 정상 운영 중</td>
                                         <td>
-                                            <a href="javascript:void(0)" style="color: #2563EB; font-weight: 800; margin-right: 10px;">[즉시 실행]</a>
-                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800;">[온라인 충전소]</a>
+                                            <a href="https://rozero.gnjoy.com.tw" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[즉시 실행]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[온라인 충전소]</a>
                                         </td>
                                     </tr>
+
+                                    <!-- 2. RO 2 (PC) -->
                                     <tr>
-                                        <td><strong>Ragnarok Origin</strong></td>
-                                        <td><span style="background: #E2E8F0; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;">Mobile</span></td>
+                                        <td>
+                                            <a href="https://ro2.gnjoy.com" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #0F172A; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800;">RO2</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">Ragnarok Online 2</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">PC 3D Global MMORPG <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #DBEAFE; color: #1D4ED8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-windows"></i> PC</span></td>
+                                        <td>
+                                            <a href="javascript:void(0)" style="display: inline-flex; align-items: center; gap: 3px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; padding: 3px 7px; border-radius: 4px; font-size: 10.5px; font-weight: 800; text-decoration: none;"><i class="fa-brands fa-windows"></i> PC설치</a>
+                                        </td>
                                         <td><span class="bil-signal-dot"></span> 정상 운영 중</td>
                                         <td>
-                                            <a href="javascript:void(0)" style="color: #2563EB; font-weight: 800; margin-right: 10px;">[APK 다운]</a>
-                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800;">[웹스토어]</a>
+                                            <a href="https://ro2.gnjoy.com" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[즉시 실행]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[온라인 충전소]</a>
                                         </td>
                                     </tr>
+
+                                    <!-- 3. RO Origin (MO) -->
                                     <tr>
-                                        <td><strong>RO仙境傳說：重生</strong></td>
-                                        <td><span style="background: #E2E8F0; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;">Mobile</span></td>
+                                        <td>
+                                            <a href="https://roglobal.com" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #7C3AED; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 800;">ORIGIN</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">Ragnarok Origin</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">Open World Mobile RPG <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #F3E8FF; color: #6B21A8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> MO</span></td>
+                                        <td>
+                                            <div style="display: flex; gap: 4px;">
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="APK 직다운"><i class="fa-solid fa-android"></i></a>
+                                            </div>
+                                        </td>
+                                        <td><span class="bil-signal-dot"></span> 정상 운영 중</td>
+                                        <td>
+                                            <a href="https://roglobal.com" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[스토어 이동]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[웹스토어]</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- 4. RO Rebirth (MO) -->
+                                    <tr>
+                                        <td>
+                                            <a href="https://rorebirth.gnjoy.hk" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #7C3AED; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 800;">重生</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">RO仙境傳說：重生</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">3D MMORPG New Gen <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #F3E8FF; color: #6B21A8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> MO</span></td>
+                                        <td>
+                                            <div style="display: flex; gap: 4px;">
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                            </div>
+                                        </td>
                                         <td><span class="bil-signal-dot" style="background: #F59E0B;"></span> 혼잡 (신규 서버)</td>
                                         <td>
-                                            <a href="javascript:void(0)" style="color: #2563EB; font-weight: 800; margin-right: 10px;">[스토어 이동]</a>
-                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800;">[공식 충전]</a>
+                                            <a href="https://rorebirth.gnjoy.hk" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[스토어 이동]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[공식 충전]</a>
                                         </td>
                                     </tr>
+
+                                    <!-- 5. Landverse (PC) -->
+                                    <tr>
+                                        <td>
+                                            <a href="https://landverse.maxion.gg/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #0F172A; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 800;">LAND</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">Ragnarok Landverse</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">Maxion Web3 Classic <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #DBEAFE; color: #1D4ED8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-windows"></i> PC Web3</span></td>
+                                        <td>
+                                            <a href="javascript:void(0)" style="display: inline-flex; align-items: center; gap: 3px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; padding: 3px 7px; border-radius: 4px; font-size: 10.5px; font-weight: 800; text-decoration: none;"><i class="fa-brands fa-windows"></i> PC설치</a>
+                                        </td>
+                                        <td><span class="bil-signal-dot"></span> 정상 운영 중</td>
+                                        <td>
+                                            <a href="https://landverse.maxion.gg/" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[Web3 Play]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[Market]</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- 6. Gunbound (PC) -->
+                                    <tr>
+                                        <td>
+                                            <a href="https://gunbound.gnjoy.hk" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #0F172A; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 800;">GUN</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">GUNBOUND</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">Turn-Based Artillery Shooter <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #DBEAFE; color: #1D4ED8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-windows"></i> PC</span></td>
+                                        <td>
+                                            <a href="javascript:void(0)" style="display: inline-flex; align-items: center; gap: 3px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; padding: 3px 7px; border-radius: 4px; font-size: 10.5px; font-weight: 800; text-decoration: none;"><i class="fa-brands fa-windows"></i> PC설치</a>
+                                        </td>
+                                        <td><span class="bil-signal-dot"></span> 정상 운영 중</td>
+                                        <td>
+                                            <a href="https://gunbound.gnjoy.hk" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[즉시 실행]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[온라인 충전소]</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- 7. Dragonica (PC) -->
+                                    <tr>
+                                        <td>
+                                            <a href="https://dragonica.gnjoy.hk" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #0F172A; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 800;">DRA</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">Dragonica (드라고니카)</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">3D Side-Scrolling Action <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #DBEAFE; color: #1D4ED8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-windows"></i> PC</span></td>
+                                        <td>
+                                            <a href="javascript:void(0)" style="display: inline-flex; align-items: center; gap: 3px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; padding: 3px 7px; border-radius: 4px; font-size: 10.5px; font-weight: 800; text-decoration: none;"><i class="fa-brands fa-windows"></i> PC설치</a>
+                                        </td>
+                                        <td><span class="bil-signal-dot"></span> 정상 운영 중</td>
+                                        <td>
+                                            <a href="https://dragonica.gnjoy.hk" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[즉시 실행]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[온라인 충전소]</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- 8. ROM (MO & PC) -->
+                                    <tr>
+                                        <td>
+                                            <a href="https://rom.gnjoy.hk" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #7C3AED; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 800;">ROM</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">Ragnarok M: Eternal Love</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">Mobile MMORPG Global <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #F3E8FF; color: #6B21A8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> MO/PC</span></td>
+                                        <td>
+                                            <div style="display: flex; gap: 4px;">
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="PC Client"><i class="fa-brands fa-windows"></i></a>
+                                            </div>
+                                        </td>
+                                        <td><span class="bil-signal-dot"></span> 정상 운영 중</td>
+                                        <td>
+                                            <a href="https://rom.gnjoy.hk" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[Play Now]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[웹스토어]</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- 9. ROX (MO & PC) -->
+                                    <tr>
+                                        <td>
+                                            <a href="https://rox.gnjoy.hk" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #7C3AED; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 800;">ROX</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">Ragnarok X: Next Generation</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">3D Mobile MMORPG <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #F3E8FF; color: #6B21A8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> MO/PC</span></td>
+                                        <td>
+                                            <div style="display: flex; gap: 4px;">
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="PC Client"><i class="fa-brands fa-windows"></i></a>
+                                            </div>
+                                        </td>
+                                        <td><span class="bil-signal-dot"></span> 정상 운영 중</td>
+                                        <td>
+                                            <a href="https://rox.gnjoy.hk" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[스토어 이동]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[공식몰]</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- 10. RO 初心之戰 (MO) -->
+                                    <tr>
+                                        <td>
+                                            <a href="https://roorigin.gnjoy.com.tw" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #7C3AED; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 800;">初心</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">RO仙境傳說：初心之戰</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">Classic Mobile RPG <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #F3E8FF; color: #6B21A8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> MO</span></td>
+                                        <td>
+                                            <div style="display: flex; gap: 4px;">
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="APK 직다운"><i class="fa-solid fa-android"></i></a>
+                                            </div>
+                                        </td>
+                                        <td><span class="bil-signal-dot"></span> 정상 운영 중</td>
+                                        <td>
+                                            <a href="https://roorigin.gnjoy.com.tw" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[스토어 이동]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[웹스토어]</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- 11. RO 曙光 (MO) -->
+                                    <tr>
+                                        <td>
+                                            <a href="https://www.gnjoy.hk" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #7C3AED; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 800;">曙光</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">RO仙境傳說：曙光</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">MMORPG New Arrival <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #F3E8FF; color: #6B21A8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> MO</span></td>
+                                        <td>
+                                            <div style="display: flex; gap: 4px;">
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                            </div>
+                                        </td>
+                                        <td><span class="bil-signal-dot" style="background: #3B82F6;"></span> 사전 예약 중</td>
+                                        <td>
+                                            <a href="https://www.gnjoy.hk" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[사전예약]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[공식몰]</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- 12. Ragnarok Crush (MO) -->
+                                    <tr>
+                                        <td>
+                                            <a href="https://www.gnjoy.hk" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0F172A;" title="공식 홈페이지 새창 이동">
+                                                <span style="width: 32px; height: 32px; background: #7C3AED; color: white; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 800;">CRUSH</span>
+                                                <div>
+                                                    <strong style="font-size: 12.5px;">Ragnarok Crush</strong>
+                                                    <div style="font-size: 10.5px; color: #64748B;">Casual Match-3 RPG <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px; color: #3B82F6;"></i></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td><span style="background: #F3E8FF; color: #6B21A8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800;"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> MO</span></td>
+                                        <td>
+                                            <div style="display: flex; gap: 4px;">
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" style="width: 22px; height: 22px; background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none;" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                            </div>
+                                        </td>
+                                        <td><span class="bil-signal-dot"></span> 정상 운영 중</td>
+                                        <td>
+                                            <a href="https://www.gnjoy.hk" target="_blank" style="color: #2563EB; font-weight: 800; margin-right: 10px; text-decoration: none;">[Play Now]</a>
+                                            <a href="javascript:void(0)" style="color: #E11D48; font-weight: 800; text-decoration: none;">[충전소]</a>
+                                        </td>
+                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -549,7 +825,7 @@
                             </div>
                         </div>
 
-                        <!-- [PIN 6] PG Partners Footer -->
+                        <!-- [PIN 6] Real gnjoy.hk Matching Footer & PG Partners -->
                         <div class="bil-footer">
                             <span class="pin pin-abs" style="top: 10px; left: 16px;" onclick="highlightSpec('pin6')">6</span>
                             <div style="font-weight: 800; margin-bottom: 8px; color: #1E293B;">지원 결제 수단 (13개 현지 PG 지원)</div>
@@ -563,7 +839,36 @@
                                 <span class="bil-pg-badge">ATM 가상계좌</span>
                                 <span class="bil-pg-badge">Visa / MasterCard</span>
                             </div>
-                            <div>© GRAVITY GAME HUB PTE. LTD. ALL RIGHTS RESERVED.</div>
+
+                            <div style="display: flex; gap: 16px; margin: 14px 0 10px; color: #334155; font-weight: 800; font-size: 11.5px; flex-wrap: wrap;">
+                                <a href="javascript:void(0)" style="color: #334155; text-decoration: none;">服務條款 (이용약관)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)" style="color: #334155; text-decoration: none;">隱私權政策 (개인정보처리방침)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)" style="color: #334155; text-decoration: none;">遊戲管理規章 (운영정책)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)" style="color: #334155; text-decoration: none;">個人資料暨退費申請 (환불신청)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)" style="color: #334155; text-decoration: none;">聯絡我們 (고객센터)</a>
+                            </div>
+
+                            <div style="color: #64748B; font-size: 10.5px; line-height: 1.6; margin-bottom: 12px;">
+                                <div><strong>GRAVITY GAME HUB PTE. LTD. | 格雷維蒂互動股份有限公司</strong> (代表人: 金珍煥 | 統一編號: 52458428)</div>
+                                <div>地址: 台北市中山區南京東路二段167號10樓 | 客服信箱: <span style="color: #2563EB;">service@gravity.com.tw</span></div>
+                                <div style="margin-top: 2px;">© GRAVITY GAME HUB PTE. LTD. &amp; GRAVITY COMMUNICATIONS CO., LTD. ALL RIGHTS RESERVED.</div>
+                            </div>
+
+                            <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px 14px; font-size: 10px; color: #64748B;">
+                                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 6px; flex-wrap: wrap;">
+                                    <span style="background: #E2E8F0; padding: 2px 6px; border-radius: 3px; font-weight: 800; color: #10B981;">普遍級 (All)</span>
+                                    <span style="background: #E2E8F0; padding: 2px 6px; border-radius: 3px; font-weight: 800; color: #3B82F6;">保護級 (6+)</span>
+                                    <span style="background: #E2E8F0; padding: 2px 6px; border-radius: 3px; font-weight: 800; color: #F59E0B;">輔導級 (12+)</span>
+                                    <span style="background: #E2E8F0; padding: 2px 6px; border-radius: 3px; font-weight: 800; color: #F97316;">輔導級 (15+)</span>
+                                    <span style="background: #E2E8F0; padding: 2px 6px; border-radius: 3px; font-weight: 800; color: #EF4444;">限制級 (18+)</span>
+                                    <span style="margin-left: 6px;">대만 디지털발전부(數發部) 법정 등급제 규정 준수</span>
+                                </div>
+                                <div>【溫馨提醒】注意使用時間，避免沉迷於遊戲。遊戲虛擬貨幣及物品一經購買恕不退換。本遊戲部分內容涉及暴力、戀愛交友、性情節，請依遊戲分級進行體驗。</div>
+                            </div>
                         </div>
 
                     </div>
@@ -605,11 +910,12 @@
                     </div>
 
                     <div class="spec-item-box" id="spec-pin4">
-                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">4</span> <span>서버 신호등 &amp; 듀얼 버튼</span></div><span class="spec-tag-type">Server Table</span></div>
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">4</span> <span>PC/MO 라인업 &amp; 다운로드 허브</span></div><span class="spec-tag-type">Server Table</span></div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>실시간 서버 트래픽 표출</strong>: 정상/혼잡 신호등 표시.</li>
-                                <li><strong>실행 및 충전 다이렉트 링크</strong>: 게임별 다운로드/웹스토어 직결.</li>
+                                <li><strong>PC 및 모바일 12종 전수 분류</strong>: PC 온라인(5종) 및 모바일(7종) 표기.</li>
+                                <li><strong>썸네일 클릭 시 공식홈페이지 연결</strong>: 썸네일 클릭 시 각 게임 공식 사이트 새 창(<code>target="_blank"</code>) 이동.</li>
+                                <li><strong>플랫폼별 다운로드 원클릭</strong>: <code>Apple (iOS)</code>, <code>Google Play</code>, <code>APK</code>, <code>Windows PC</code> 즉시 다운로드 버튼 배치.</li>
                             </ul>
                         </div>
                     </div>
@@ -624,10 +930,12 @@
                     </div>
 
                     <div class="spec-item-box" id="spec-pin6">
-                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">6</span> <span>13종 현지 PG 파트너 푸터</span></div><span class="spec-tag-type">Payment Footer</span></div>
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">6</span> <span>실제 gnjoy.hk 푸터 &amp; 13종 PG</span></div><span class="spec-tag-type">Payment Footer</span></div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>현지 결제 수단 신뢰도 제고</strong>: 대만 MyCard, GASH, 홍콩 옥토퍼스, PayMe 로고 표기.</li>
+                                <li><strong>13종 현지 PG 파트너 로고</strong>: 대만 MyCard, GASH, 홍콩 옥토퍼스, PayMe 등.</li>
+                                <li><strong>공식 법인 사업자 및 약관</strong>: 格雷維蒂互動股份有限公司, 대표자 金珍煥, 台北市 주소, 客服信箱.</li>
+                                <li><strong>대만 5개 법정 등급제 표기</strong>: 普遍(0+), 保護(6+), 輔12, 輔15, 限制(18+) 및 법정 경고문.</li>
                             </ul>
                         </div>
                     </div>

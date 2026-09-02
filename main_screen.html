@@ -510,34 +510,91 @@
             transform: translateY(-4px);
             box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.08);
         }
-        .nw-card-thumb {
+        .nw-card-thumb-link {
+            position: relative;
+            display: block;
             height: 110px;
             background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+            text-decoration: none;
+            overflow: hidden;
+        }
+        .nw-card-thumb-inner {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
             font-size: 13px;
             color: #475569;
-            position: relative;
+            transition: transform 0.25s ease;
         }
+        .nw-card-thumb-link:hover .nw-card-thumb-inner { transform: scale(1.08); }
+        .nw-thumb-hover-badge {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.75);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 11.5px;
+            font-weight: 800;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .nw-card-thumb-link:hover .nw-thumb-hover-badge { opacity: 1; }
+
         .nw-card-badge {
             position: absolute;
             top: 10px;
             left: 10px;
-            font-size: 10.5px;
+            font-size: 10px;
             font-weight: 800;
             padding: 3px 8px;
             border-radius: 4px;
             color: white;
+            z-index: 5;
         }
         .nw-card-badge.hot { background: #DC2626; }
         .nw-card-badge.new { background: #2563EB; }
-        .nw-card-badge.mo { background: #059669; }
-        .nw-card-body { padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+        .nw-card-badge.mo { background: #7C3AED; }
+        .nw-card-badge.pc { background: #2563EB; }
+        
+        .nw-card-body { padding: 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
         .nw-card-title { font-size: 13.5px; font-weight: 800; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .nw-card-sub { font-size: 11.5px; color: #64748B; }
-        .nw-card-platforms { display: flex; gap: 6px; font-size: 11.5px; color: #94A3B8; margin-top: 4px; }
+        .nw-card-sub { font-size: 11px; color: #64748B; margin-bottom: 4px; }
+        
+        /* Platform Download Button Row */
+        .nw-platform-dl-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FAFC;
+            padding: 5px 8px;
+            border-radius: 6px;
+            border: 1px solid #EEF2F6;
+            margin-top: auto;
+        }
+        .nw-platform-dl-lbl { font-size: 10px; font-weight: 700; color: #64748B; }
+        .nw-platform-dl-icons { display: flex; gap: 4px; }
+        .nw-dl-icon-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            background: #FFFFFF;
+            color: #334155;
+            font-size: 11px;
+            text-decoration: none;
+            border: 1px solid #CBD5E1;
+            transition: all 0.15s ease;
+        }
+        .nw-dl-icon-btn:hover { background: var(--brand-primary); color: #FFFFFF; border-color: var(--brand-primary); }
+        .nw-dl-icon-btn.pc-btn { width: auto; padding: 0 6px; font-size: 10px; font-weight: 800; gap: 3px; }
 
         /* PIN 5: News & Live Server Status Center */
         .nw-news-status-grid {
@@ -629,20 +686,34 @@
             gap: 6px;
         }
 
-        /* PIN 7: Clean Light Footer */
+        /* PIN 7: Real gnjoy.hk Matching Footer */
         .nw-footer {
-            background: #F8FAFC;
-            border-top: 1px solid #E2E8F0;
-            padding: 36px 48px;
-            font-size: 11.5px;
-            color: #64748B;
+            background: #0B1120;
+            color: #94A3B8;
+            padding: 32px 48px 36px;
+            font-size: 11px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
+            line-height: 1.6;
         }
-        .nw-footer-links { display: flex; gap: 18px; font-weight: 700; color: #475569; }
-        .nw-footer-ratings { display: flex; gap: 12px; align-items: center; margin-top: 6px; }
-        .rating-badge { border: 1px solid #CBD5E1; padding: 2px 6px; border-radius: 4px; font-size: 10.5px; font-weight: 800; }
+        .nw-footer-links { display: flex; gap: 18px; font-weight: 800; color: #CBD5E1; flex-wrap: wrap; }
+        .nw-footer-links a { color: #CBD5E1; text-decoration: none; }
+        .nw-footer-links a:hover { color: #FFFFFF; }
+        .nw-footer-corp-info { color: #64748B; font-size: 10.5px; }
+        .nw-footer-rating-container {
+            background: #111827;
+            border: 1px solid #1F2937;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .nw-rating-badge-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        .nw-rate-pill { background: #1E293B; border: 1px solid #334155; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; color: #E2E8F0; }
+        .nw-warning-text { font-size: 10px; color: #94A3B8; line-height: 1.5; }
 
         /* Spec Description Panel */
         .spec-scroll-panel {
@@ -908,116 +979,258 @@
                             </div>
                         </div>
 
-                        <!-- PIN 4: Neowiz-Style Clean Game Grid (12 Games) -->
+                        <!-- PIN 4: Clean Game Grid with PC & MO Classification -->
                         <div class="nw-section">
                             <span class="pin pin-abs" style="top: 10px; left: 20px;" onclick="highlightSpec('pin4')">4</span>
                             <div class="nw-section-header">
-                                <div class="nw-section-title">ALL GAMES</div>
+                                <div class="nw-section-title">ALL GAMES (12종 라이브러리)</div>
                                 <div class="nw-filter-tabs">
-                                    <button class="nw-filter-btn active">전체 (ALL)</button>
-                                    <button class="nw-filter-btn">PC 온라인</button>
-                                    <button class="nw-filter-btn">모바일 게임</button>
-                                    <button class="nw-filter-btn">신작/사전예약</button>
+                                    <button class="nw-filter-btn active">전체 (12)</button>
+                                    <button class="nw-filter-btn"><i class="fa-brands fa-windows"></i> PC 온라인 (5)</button>
+                                    <button class="nw-filter-btn"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> 모바일 (7)</button>
                                 </div>
                             </div>
 
                             <div class="nw-game-grid">
+                                <!-- Card 1: RO Zero (PC) -->
                                 <div class="nw-game-card">
-                                    <div class="nw-card-thumb"><span class="nw-card-badge hot">HOT</span>RO Zero</div>
+                                    <a href="https://rozero.gnjoy.com.tw" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="nw-card-thumb-inner">RO ZERO</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
                                     <div class="nw-card-body">
                                         <div class="nw-card-title">Ragnarok Online Zero</div>
-                                        <div class="nw-card-sub">PC MMORPG • Official Server</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-windows"></i> Windows</div>
+                                        <div class="nw-card-sub">PC Classic MMORPG • Official Server</div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Card 2: RO 2 (PC) -->
                                 <div class="nw-game-card">
-                                    <div class="nw-card-thumb"><span class="nw-card-badge new">NEW</span>RO 2</div>
+                                    <a href="https://ro2.gnjoy.com" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="nw-card-thumb-inner">RO 2</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
                                     <div class="nw-card-body">
                                         <div class="nw-card-title">Ragnarok Online 2</div>
                                         <div class="nw-card-sub">PC 3D MMORPG • Global Server</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-windows"></i> Windows</div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Card 3: RO Origin (MO) -->
                                 <div class="nw-game-card">
-                                    <div class="nw-card-thumb"><span class="nw-card-badge mo">MO</span>RO M</div>
-                                    <div class="nw-card-body">
-                                        <div class="nw-card-title">Ragnarok M: Eternal Love</div>
-                                        <div class="nw-card-sub">Mobile MMORPG</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> <i class="fa-brands fa-android"></i></div>
-                                    </div>
-                                </div>
-                                <div class="nw-game-card">
-                                    <div class="nw-card-thumb"><span class="nw-card-badge mo">MO</span>ROX</div>
-                                    <div class="nw-card-body">
-                                        <div class="nw-card-title">Ragnarok X: Next Gen</div>
-                                        <div class="nw-card-sub">3D Mobile MMORPG</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> <i class="fa-brands fa-windows"></i></div>
-                                    </div>
-                                </div>
-                                <div class="nw-game-card">
-                                    <div class="nw-card-thumb">Origin</div>
+                                    <a href="https://roglobal.com" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge mo">MO</span>
+                                        <div class="nw-card-thumb-inner">RO ORIGIN</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
                                     <div class="nw-card-body">
                                         <div class="nw-card-title">Ragnarok Origin</div>
-                                        <div class="nw-card-sub">Fantasy MMORPG</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
+                                        <div class="nw-card-sub">Fantasy 3D MMORPG</div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="APK 직다운"><i class="fa-solid fa-android"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Card 4: RO Rebirth (MO) -->
                                 <div class="nw-game-card">
-                                    <div class="nw-card-thumb">Rebirth</div>
+                                    <a href="https://rorebirth.gnjoy.hk" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge mo">MO</span>
+                                        <div class="nw-card-thumb-inner">RO 重生</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
                                     <div class="nw-card-body">
                                         <div class="nw-card-title">RO仙境傳說：重生</div>
-                                        <div class="nw-card-sub">Mobile 3D RPG</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
+                                        <div class="nw-card-sub">Mobile 3D RPG New Gen</div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Card 5: RO 初心之戰 (MO) -->
                                 <div class="nw-game-card">
-                                    <div class="nw-card-thumb">初心之戰</div>
+                                    <a href="https://roorigin.gnjoy.com.tw" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge mo">MO</span>
+                                        <div class="nw-card-thumb-inner">初心之戰</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
                                     <div class="nw-card-body">
                                         <div class="nw-card-title">RO仙境傳說：初心之戰</div>
                                         <div class="nw-card-sub">Classic Mobile RPG</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="APK 직다운"><i class="fa-solid fa-android"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Card 6: RO 曙光 (MO) -->
                                 <div class="nw-game-card">
-                                    <div class="nw-card-thumb">曙光</div>
+                                    <a href="https://www.gnjoy.hk" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge mo">MO</span>
+                                        <div class="nw-card-thumb-inner">曙光</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
                                     <div class="nw-card-body">
                                         <div class="nw-card-title">RO仙境傳說：曙光</div>
                                         <div class="nw-card-sub">MMORPG • New Arrival</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Card 7: Landverse (PC) -->
                                 <div class="nw-game-card">
-                                    <div class="nw-card-thumb">Landverse</div>
+                                    <a href="https://landverse.maxion.gg/" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="nw-card-thumb-inner">LANDVERSE</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
                                     <div class="nw-card-body">
                                         <div class="nw-card-title">Ragnarok Landverse</div>
                                         <div class="nw-card-sub">Web3 Classic Online</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-windows"></i> PC Web</div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Card 8: ROM (MO & PC) -->
                                 <div class="nw-game-card">
-                                    <div class="nw-card-thumb">Crush</div>
+                                    <a href="https://rom.gnjoy.hk" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge mo">MO/PC</span>
+                                        <div class="nw-card-thumb-inner">RO M</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-body">
+                                        <div class="nw-card-title">Ragnarok M: Eternal Love</div>
+                                        <div class="nw-card-sub">Mobile MMORPG Global</div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn pc-btn" title="PC"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 9: ROX (MO & PC) -->
+                                <div class="nw-game-card">
+                                    <a href="https://rox.gnjoy.hk" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge mo">MO/PC</span>
+                                        <div class="nw-card-thumb-inner">ROX</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-body">
+                                        <div class="nw-card-title">Ragnarok X: Next Gen</div>
+                                        <div class="nw-card-sub">3D Mobile MMORPG</div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn pc-btn" title="PC"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 10: Crush (MO) -->
+                                <div class="nw-game-card">
+                                    <a href="https://www.gnjoy.hk" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge mo">MO</span>
+                                        <div class="nw-card-thumb-inner">RO CRUSH</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
                                     <div class="nw-card-body">
                                         <div class="nw-card-title">Ragnarok Crush</div>
                                         <div class="nw-card-sub">Casual Match-3 RPG</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Card 11: Gunbound (PC) -->
                                 <div class="nw-game-card">
-                                    <div class="nw-card-thumb">Gunbound</div>
+                                    <a href="https://gunbound.gnjoy.hk" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="nw-card-thumb-inner">GUNBOUND</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
                                     <div class="nw-card-body">
                                         <div class="nw-card-title">GUNBOUND</div>
                                         <div class="nw-card-sub">Turn-Based Artillery Game</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-windows"></i> PC Online</div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Card 12: Dragonica (PC) -->
                                 <div class="nw-game-card">
-                                    <div class="nw-card-thumb">Dragonica</div>
+                                    <a href="https://dragonica.gnjoy.hk" target="_blank" class="nw-card-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-badge pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="nw-card-thumb-inner">DRAGONICA</div>
+                                        <div class="nw-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
                                     <div class="nw-card-body">
                                         <div class="nw-card-title">Dragonica</div>
                                         <div class="nw-card-sub">3D Side-Scrolling Action</div>
-                                        <div class="nw-card-platforms"><i class="fa-brands fa-windows"></i> PC Online</div>
+                                        <div class="nw-platform-dl-row">
+                                            <span class="nw-platform-dl-lbl">다운로드</span>
+                                            <div class="nw-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="nw-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
 
@@ -1083,28 +1296,44 @@
                             <a href="javascript:void(0)" class="nw-btn-cs"><i class="fa-solid fa-headset"></i> 1:1 온라인 문의하기</a>
                         </div>
 
-                        <!-- PIN 7: Clean Light Footer -->
+                        <!-- PIN 7: Real gnjoy.hk Matching Footer -->
                         <div class="nw-footer" style="position: relative;">
                             <span class="pin pin-abs" style="top: 12px; left: 16px;" onclick="highlightSpec('pin7')">7</span>
                             <div class="nw-footer-links">
-                                <span>서비스 이용약관</span>
-                                <span>개인정보처리방침</span>
-                                <span>모바일 운영정책</span>
-                                <span>법정 연령 등급 안내</span>
-                                <span>고객센터</span>
+                                <a href="javascript:void(0)">服務條款 (이용약관)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)">隱私權政策 (개인정보처리방침)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)">遊戲管理規章 (운영정책)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)">個人資料暨退費申請 (환불신청)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)">聯絡我們 (고객센터)</a>
                             </div>
-                            <div>
-                                © GRAVITY GAME HUB PTE. LTD. ALL RIGHTS RESERVED. TRADEMARKS BELONG TO THEIR RESPECTIVE OWNERS.
+                            
+                            <div class="nw-footer-corp-info">
+                                <div><strong>GRAVITY GAME HUB PTE. LTD. | 格雷維蒂互動股份有限公司</strong> (代表人: 金珍煥 | 統一編號: 52458428)</div>
+                                <div>地址: 台北市中山區南京東路二段167號10樓 | 客服信箱: <span style="color: #93C5FD;">service@gravity.com.tw</span></div>
+                                <div style="margin-top: 2px; color: #64748B;">© GRAVITY GAME HUB PTE. LTD. &amp; GRAVITY COMMUNICATIONS CO., LTD. ALL RIGHTS RESERVED.</div>
                             </div>
-                            <div class="nw-footer-ratings">
-                                <span class="rating-badge">普遍級 (All)</span>
-                                <span class="rating-badge">保護級 (6+)</span>
-                                <span class="rating-badge">輔導級 (12+)</span>
-                                <span class="rating-badge">輔導級 (15+)</span>
-                                <span class="rating-badge">限制級 (18+)</span>
-                                <span style="font-size: 11px; color: #94A3B8; margin-left: 10px;">대만 디지털발전부 법정 게임물 등급제 표기 준수</span>
+
+                            <div class="nw-footer-rating-container">
+                                <div class="nw-rating-badge-row">
+                                    <span class="nw-rate-pill" style="border-color: #10B981; color: #34D399;">普遍級 (All)</span>
+                                    <span class="nw-rate-pill" style="border-color: #3B82F6; color: #60A5FA;">保護級 (6+)</span>
+                                    <span class="nw-rate-pill" style="border-color: #F59E0B; color: #FBBF24;">輔導級 (12+)</span>
+                                    <span class="nw-rate-pill" style="border-color: #F97316; color: #FB923C;">輔導級 (15+)</span>
+                                    <span class="nw-rate-pill" style="border-color: #EF4444; color: #F87171;">限制級 (18+)</span>
+                                    <span style="font-size: 10px; color: #94A3B8; margin-left: 6px;">대만 디지털발전부(數發部) 법정 등급제 규정 준수</span>
+                                </div>
+                                <div class="nw-warning-text">
+                                    【溫馨提醒】注意使用時間，避免沉迷於遊戲。遊戲虛擬貨幣及物品一經購買恕不退換。本遊戲部分內容涉及暴力、戀愛交友、性情節，請依遊戲分級進行體驗。
+                                </div>
                             </div>
                         </div>
+
+                    </div>
+                </div>
 
                     </div>
                 </div>

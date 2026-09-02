@@ -563,104 +563,108 @@
             border-color: #CBD5E1;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
-        .wf-thumb-box {
+        /* Clickable Thumbnail Link */
+        .wf-thumb-link {
+            position: relative;
+            display: block;
+            height: 80px;
             background: #F1F5F9;
             border: 1px dashed #CBD5E1;
             border-radius: 6px;
-            height: 76px;
+            text-decoration: none;
+            overflow: hidden;
+        }
+        .wf-thumb-box-inner {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #64748B;
+            color: #475569;
             font-weight: 800;
             font-size: 12px;
-            position: relative;
-            background-image: linear-gradient(to top right, transparent calc(50% - 1px), #E2E8F0, transparent calc(50% + 1px)), linear-gradient(to bottom right, transparent calc(50% - 1px), #E2E8F0, transparent calc(50% + 1px));
+            transition: transform 0.2s ease;
         }
-        .wf-tag-new { position: absolute; top: 4px; left: 4px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; font-size: 12px; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
-        .wf-tag-blue { position: absolute; top: 4px; left: 4px; background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; font-size: 12px; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
-        .wf-game-info { display: flex; flex-direction: column; gap: 3px; }
-        .wf-game-name { font-size: 13px; font-weight: 800; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .wf-platform-icons { display: flex; gap: 5px; color: #94A3B8; font-size: 12px; margin-top: 2px; }
-
-        /* [약] Indie & Console Games Carousel (Pin 5) */
-        .wf-indie-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 12px;
-        }
-        .wf-indie-card {
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 6px;
-            padding: 8px;
+        .wf-thumb-link:hover .wf-thumb-box-inner { transform: scale(1.08); }
+        .wf-thumb-hover-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.75);
+            color: #FFFFFF;
             display: flex;
-            flex-direction: column;
-            gap: 6px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-            transition: all 0.2s ease;
-        }
-        .wf-indie-card:hover {
-            border-color: #CBD5E1;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-        .wf-indie-thumb {
-            background: #F1F5F9;
-            border: 1px dashed #CBD5E1;
-            border-radius: 4px;
-            height: 72px;
-            position: relative;
-            background-image: linear-gradient(to top right, transparent calc(50% - 1px), #E2E8F0, transparent calc(50% + 1px)), linear-gradient(to bottom right, transparent calc(50% - 1px), #E2E8F0, transparent calc(50% + 1px));
-        }
-        .wf-indie-tag { position: absolute; bottom: 4px; left: 4px; background: #FEE2E2; color: #DC2626; border: 1px solid #FECACA; font-size: 12px; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
-        .wf-indie-tag.steam { background: #F0F9FF; color: #0284C7; border: 1px solid #BAE6FD; }
-        .wf-indie-title { font-size: 12px; font-weight: 700; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .wf-indie-plat { font-size: 12px; color: #64748B; display: flex; gap: 4px; }
-
-        /* [강] News Section (Pin 6) */
-        .wf-news-box {
-            background: #1E293B;
-            border: 1px solid #0F172A;
-            border-radius: 10px;
-            padding: 28px 34px;
-            color: white;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 24px;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+            justify-content: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 800;
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
-        .wf-news-badge { font-size: 12px; color: #FDA4AF; font-weight: 800; margin-bottom: 4px; }
-        .wf-news-title { font-size: 16px; font-weight: 900; line-height: 1.35; margin-bottom: 8px; color: #FFFFFF; }
-        .wf-news-date { font-size: 12px; color: #94A3B8; margin-bottom: 16px; }
-        .wf-btn-more { display: inline-block; background: var(--brand-primary); color: white; font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 4px; text-decoration: none; box-shadow: 0 2px 6px rgba(225, 29, 72, 0.25); }
-        .wf-news-img-ph { background: #334155; border: 1px dashed #64748B; border-radius: 8px; height: 120px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #E2E8F0; }
+        .wf-thumb-link:hover .wf-thumb-hover-overlay { opacity: 1; }
 
-        /* [강] Customer Support Center (Pin 7) */
-        .wf-cs-banner {
-            background: #0F172A;
-            color: white;
-            padding: 38px 28px;
-            text-align: center;
-            position: relative;
-            border-top: 1px solid #1E293B;
-            border-bottom: 1px solid #1E293B;
+        .wf-tag-new { position: absolute; top: 4px; left: 4px; background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; font-size: 11px; font-weight: 800; padding: 2px 6px; border-radius: 4px; z-index: 5; }
+        .wf-tag-blue { position: absolute; top: 4px; left: 4px; background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; font-size: 11px; font-weight: 800; padding: 2px 6px; border-radius: 4px; z-index: 5; }
+        .wf-tag-purple { position: absolute; top: 4px; left: 4px; background: #F5F3FF; color: #7C3AED; border: 1px solid #DDD6FE; font-size: 11px; font-weight: 800; padding: 2px 6px; border-radius: 4px; z-index: 5; }
+        
+        .wf-game-info { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+        .wf-game-name { font-size: 13px; font-weight: 800; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        /* Platform Download Button Row */
+        .wf-platform-dl-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FAFC;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #EEF2F6;
+            margin-top: 4px;
         }
-        .wf-cs-banner h3 { font-size: 17px; font-weight: 900; margin-bottom: 6px; color: #FFFFFF; }
-        .wf-cs-banner p { font-size: 12.5px; color: #CBD5E1; margin-bottom: 16px; }
-        .wf-btn-cs { display: inline-flex; align-items: center; gap: 6px; background: var(--brand-primary); color: white; font-size: 12px; font-weight: 800; padding: 8px 20px; border-radius: 20px; text-decoration: none; box-shadow: 0 2px 6px rgba(225, 29, 72, 0.25); }
+        .wf-platform-dl-lbl { font-size: 10px; font-weight: 700; color: #64748B; }
+        .wf-platform-dl-icons { display: flex; gap: 4px; }
+        .wf-dl-icon-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            background: #FFFFFF;
+            color: #334155;
+            font-size: 11px;
+            text-decoration: none;
+            border: 1px solid #CBD5E1;
+            transition: all 0.15s ease;
+        }
+        .wf-dl-icon-btn:hover { background: var(--brand-primary); color: #FFFFFF; border-color: var(--brand-primary); }
+        .wf-dl-icon-btn.pc-btn { width: auto; padding: 0 6px; font-size: 10px; font-weight: 800; gap: 3px; }
 
-        /* [강] Footer (Pin 8) */
+        /* [강] Footer (Pin 8 - Real gnjoy.hk Matching) */
         .wf-footer {
             background: #0B0F19;
             color: #94A3B8;
-            padding: 28px 44px;
-            font-size: 12px;
+            padding: 30px 44px;
+            font-size: 11px;
             line-height: 1.6;
             position: relative;
         }
-        .wf-footer-links { display: flex; gap: 16px; margin-bottom: 12px; color: #E2E8F0; font-weight: 600; font-size: 12px; }
-        .wf-footer-brand { display: flex; align-items: center; gap: 8px; color: white; font-weight: 800; font-size: 13px; margin-bottom: 4px; }
+        .wf-footer-links { display: flex; gap: 16px; margin-bottom: 12px; color: #CBD5E1; font-weight: 800; font-size: 11.5px; flex-wrap: wrap; }
+        .wf-footer-links a { color: #CBD5E1; text-decoration: none; }
+        .wf-footer-links a:hover { color: #FFFFFF; }
+        .wf-footer-corp-info { color: #64748B; font-size: 10.5px; margin-bottom: 12px; }
+        .wf-footer-rating-container {
+            background: #111827;
+            border: 1px solid #1F2937;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .wf-rating-badge-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        .wf-rate-pill { background: #1E293B; border: 1px solid #334155; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; color: #E2E8F0; }
+        .wf-warning-text { font-size: 10px; color: #94A3B8; line-height: 1.5; }
 
         /* Pin Positioning */
         .pin-pos-gnb { top: 14px; left: 120px; }
@@ -1114,109 +1118,221 @@
                                     <span>GRAVITY GAMES</span>
                                 </div>
 
-                                <!-- Featured Top 2 (Large Cards) -->
+                                <!-- Featured Top 2 (PC Flagship Games) -->
                                 <div class="wf-featured-grid">
                                     <div class="wf-featured-card">
-                                        <span class="wf-card-badge hot">HOT</span>
-                                        <div class="wf-card-logo-ph">LOGO</div>
-                                        <div class="wf-game-title">Ragnarok Online Zero</div>
-                                        <div class="wf-game-sub">PC MMORPG • Official Server</div>
+                                        <a href="https://rozero.gnjoy.com.tw" target="_blank" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                                            <span class="wf-card-badge hot"><i class="fa-brands fa-windows"></i> PC • HOT</span>
+                                            <div class="wf-card-logo-ph"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                                            <div class="wf-game-title">Ragnarok Online Zero</div>
+                                            <div class="wf-game-sub">PC MMORPG • Official Server (클릭 시 공식홈 이동)</div>
+                                        </a>
                                     </div>
                                     <div class="wf-featured-card">
-                                        <span class="wf-card-badge">NEW</span>
-                                        <div class="wf-card-logo-ph">LOGO</div>
-                                        <div class="wf-game-title">Ragnarok Online 2</div>
-                                        <div class="wf-game-sub">PC 3D MMORPG • Global Service</div>
+                                        <a href="https://ro2.gnjoy.com" target="_blank" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                                            <span class="wf-card-badge"><i class="fa-brands fa-windows"></i> PC • NEW</span>
+                                            <div class="wf-card-logo-ph"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+                                            <div class="wf-game-title">Ragnarok Online 2</div>
+                                            <div class="wf-game-sub">PC 3D MMORPG • Global Service (클릭 시 공식홈 이동)</div>
+                                        </a>
                                     </div>
                                 </div>
 
-                                <!-- 4-Column Grid (12 Games) -->
+                                <!-- 4-Column Grid (PC / MO Divided 12 Games) -->
                                 <span class="pin pin-abs pin-pos-grid" onclick="highlightSpec('pin4')">4</span>
                                 <div class="wf-game-grid">
+                                    
+                                    <!-- 1. RO Origin (MO) -->
                                     <div class="wf-game-card">
-                                        <div class="wf-thumb-box"><span class="wf-tag-new">NEW</span>Crush LOGO</div>
-                                        <div class="wf-game-info">
-                                            <div class="wf-game-name">Ragnarok Crush</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
-                                        </div>
-                                    </div>
-                                    <div class="wf-game-card">
-                                        <div class="wf-thumb-box">RO M LOGO</div>
-                                        <div class="wf-game-info">
-                                            <div class="wf-game-name">Ragnarok M: Eternal Love</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
-                                        </div>
-                                    </div>
-                                    <div class="wf-game-card">
-                                        <div class="wf-thumb-box"><span class="wf-tag-blue">PC/MO</span>Idle LOGO</div>
-                                        <div class="wf-game-info">
-                                            <div class="wf-game-name">Ragnarok Idle Adventure</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
-                                        </div>
-                                    </div>
-                                    <div class="wf-game-card">
-                                        <div class="wf-thumb-box">ROX LOGO</div>
-                                        <div class="wf-game-info">
-                                            <div class="wf-game-name">Ragnarok X: Next Gen</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> <i class="fa-brands fa-windows"></i></div>
-                                        </div>
-                                    </div>
-                                    <div class="wf-game-card">
-                                        <div class="wf-thumb-box">Landverse LOGO</div>
-                                        <div class="wf-game-info">
-                                            <div class="wf-game-name">Ragnarok Landverse</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-windows"></i> Web3</div>
-                                        </div>
-                                    </div>
-                                    <div class="wf-game-card">
-                                        <div class="wf-thumb-box">The RO LOGO</div>
-                                        <div class="wf-game-info">
-                                            <div class="wf-game-name">The Ragnarok</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
-                                        </div>
-                                    </div>
-                                    <div class="wf-game-card">
-                                        <div class="wf-thumb-box">Origin LOGO</div>
+                                        <a href="https://roglobal.com" target="_blank" class="wf-thumb-link" title="공식 홈페이지 새창 이동">
+                                            <span class="wf-tag-blue">MO</span>
+                                            <div class="wf-thumb-box-inner">RO ORIGIN</div>
+                                            <div class="wf-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식홈</div>
+                                        </a>
                                         <div class="wf-game-info">
                                             <div class="wf-game-name">Ragnarok Origin</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
+                                            <div class="wf-platform-dl-row">
+                                                <span class="wf-platform-dl-lbl">다운로드</span>
+                                                <div class="wf-platform-dl-icons">
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="APK 직다운"><i class="fa-solid fa-android"></i></a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <!-- 2. RO Rebirth (MO) -->
                                     <div class="wf-game-card">
-                                        <div class="wf-thumb-box">Rebirth LOGO</div>
+                                        <a href="https://rorebirth.gnjoy.hk" target="_blank" class="wf-thumb-link" title="공식 홈페이지 새창 이동">
+                                            <span class="wf-tag-blue">MO</span>
+                                            <div class="wf-thumb-box-inner">RO 重生</div>
+                                            <div class="wf-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식홈</div>
+                                        </a>
                                         <div class="wf-game-info">
                                             <div class="wf-game-name">RO仙境傳說：重生</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
+                                            <div class="wf-platform-dl-row">
+                                                <span class="wf-platform-dl-lbl">다운로드</span>
+                                                <div class="wf-platform-dl-icons">
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <!-- 3. RO 初心之戰 (MO) -->
                                     <div class="wf-game-card">
-                                        <div class="wf-thumb-box">初心之戰 LOGO</div>
+                                        <a href="https://roorigin.gnjoy.com.tw" target="_blank" class="wf-thumb-link" title="공식 홈페이지 새창 이동">
+                                            <span class="wf-tag-blue">MO</span>
+                                            <div class="wf-thumb-box-inner">初心之戰</div>
+                                            <div class="wf-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식홈</div>
+                                        </a>
                                         <div class="wf-game-info">
                                             <div class="wf-game-name">RO仙境傳說：初心之戰</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
+                                            <div class="wf-platform-dl-row">
+                                                <span class="wf-platform-dl-lbl">다운로드</span>
+                                                <div class="wf-platform-dl-icons">
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="APK 직다운"><i class="fa-solid fa-android"></i></a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <!-- 4. RO 曙光 (MO) -->
                                     <div class="wf-game-card">
-                                        <div class="wf-thumb-box">曙光 LOGO</div>
+                                        <a href="https://www.gnjoy.hk" target="_blank" class="wf-thumb-link" title="공식 홈페이지 새창 이동">
+                                            <span class="wf-tag-new">NEW</span>
+                                            <div class="wf-thumb-box-inner">曙光 LOGO</div>
+                                            <div class="wf-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식홈</div>
+                                        </a>
                                         <div class="wf-game-info">
                                             <div class="wf-game-name">RO仙境傳說：曙光</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i></div>
+                                            <div class="wf-platform-dl-row">
+                                                <span class="wf-platform-dl-lbl">다운로드</span>
+                                                <div class="wf-platform-dl-icons">
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <!-- 5. RO M (MO & PC) -->
                                     <div class="wf-game-card">
-                                        <div class="wf-thumb-box">Gunbound LOGO</div>
+                                        <a href="https://rom.gnjoy.hk" target="_blank" class="wf-thumb-link" title="공식 홈페이지 새창 이동">
+                                            <span class="wf-tag-purple">PC/MO</span>
+                                            <div class="wf-thumb-box-inner">RO M</div>
+                                            <div class="wf-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식홈</div>
+                                        </a>
+                                        <div class="wf-game-info">
+                                            <div class="wf-game-name">Ragnarok M: Eternal Love</div>
+                                            <div class="wf-platform-dl-row">
+                                                <span class="wf-platform-dl-lbl">다운로드</span>
+                                                <div class="wf-platform-dl-icons">
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn pc-btn" title="PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 6. ROX (MO & PC) -->
+                                    <div class="wf-game-card">
+                                        <a href="https://rox.gnjoy.hk" target="_blank" class="wf-thumb-link" title="공식 홈페이지 새창 이동">
+                                            <span class="wf-tag-purple">PC/MO</span>
+                                            <div class="wf-thumb-box-inner">ROX</div>
+                                            <div class="wf-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식홈</div>
+                                        </a>
+                                        <div class="wf-game-info">
+                                            <div class="wf-game-name">Ragnarok X: Next Gen</div>
+                                            <div class="wf-platform-dl-row">
+                                                <span class="wf-platform-dl-lbl">다운로드</span>
+                                                <div class="wf-platform-dl-icons">
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn pc-btn" title="PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 7. Landverse (PC) -->
+                                    <div class="wf-game-card">
+                                        <a href="https://landverse.maxion.gg/" target="_blank" class="wf-thumb-link" title="공식 홈페이지 새창 이동">
+                                            <span class="wf-tag-blue">PC Web3</span>
+                                            <div class="wf-thumb-box-inner">LANDVERSE</div>
+                                            <div class="wf-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식홈</div>
+                                        </a>
+                                        <div class="wf-game-info">
+                                            <div class="wf-game-name">Ragnarok Landverse</div>
+                                            <div class="wf-platform-dl-row">
+                                                <span class="wf-platform-dl-lbl">다운로드</span>
+                                                <div class="wf-platform-dl-icons">
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn pc-btn" title="Windows PC"><i class="fa-brands fa-windows"></i> PC</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 8. Crush (MO) -->
+                                    <div class="wf-game-card">
+                                        <a href="https://www.gnjoy.hk" target="_blank" class="wf-thumb-link" title="공식 홈페이지 새창 이동">
+                                            <span class="wf-tag-new">NEW</span>
+                                            <div class="wf-thumb-box-inner">RO CRUSH</div>
+                                            <div class="wf-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식홈</div>
+                                        </a>
+                                        <div class="wf-game-info">
+                                            <div class="wf-game-name">Ragnarok Crush</div>
+                                            <div class="wf-platform-dl-row">
+                                                <span class="wf-platform-dl-lbl">다운로드</span>
+                                                <div class="wf-platform-dl-icons">
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 9. GUNBOUND (PC) -->
+                                    <div class="wf-game-card">
+                                        <a href="https://gunbound.gnjoy.hk" target="_blank" class="wf-thumb-link" title="공식 홈페이지 새창 이동">
+                                            <span class="wf-tag-blue">PC Online</span>
+                                            <div class="wf-thumb-box-inner">GUNBOUND</div>
+                                            <div class="wf-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식홈</div>
+                                        </a>
                                         <div class="wf-game-info">
                                             <div class="wf-game-name">GUNBOUND</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-windows"></i> Casual Action</div>
+                                            <div class="wf-platform-dl-row">
+                                                <span class="wf-platform-dl-lbl">다운로드</span>
+                                                <div class="wf-platform-dl-icons">
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <!-- 10. Dragonica (PC) -->
                                     <div class="wf-game-card">
-                                        <div class="wf-thumb-box">Dragonica LOGO</div>
+                                        <a href="https://dragonica.gnjoy.hk" target="_blank" class="wf-thumb-link" title="공식 홈페이지 새창 이동">
+                                            <span class="wf-tag-blue">PC Online</span>
+                                            <div class="wf-thumb-box-inner">DRAGONICA</div>
+                                            <div class="wf-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식홈</div>
+                                        </a>
                                         <div class="wf-game-info">
-                                            <div class="wf-game-name">Dragonica</div>
-                                            <div class="wf-platform-icons"><i class="fa-brands fa-windows"></i> 3D Side-Scroll</div>
+                                            <div class="wf-game-name">Dragonica (드라고니카)</div>
+                                            <div class="wf-platform-dl-row">
+                                                <span class="wf-platform-dl-lbl">다운로드</span>
+                                                <div class="wf-platform-dl-icons">
+                                                    <a href="javascript:void(0)" class="wf-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -1293,17 +1409,38 @@
                                 <a href="javascript:void(0)" class="wf-btn-cs"><i class="fa-solid fa-headset"></i> Contact Support</a>
                             </div>
 
-                            <!-- [PIN 8] FOOTER -->
+                            <!-- [PIN 8] Real gnjoy.hk Matching FOOTER -->
                             <div class="wf-footer">
                                 <span class="pin pin-abs pin-pos-footer" onclick="highlightSpec('pin8')">8</span>
                                 <div class="wf-footer-links">
-                                    <span>Privacy Policy</span>
-                                    <span>Terms of Service</span>
-                                    <span>Payment Policy</span>
-                                    <span>Security Center</span>
+                                    <a href="javascript:void(0)">服務條款 (이용약관)</a>
+                                    <span>•</span>
+                                    <a href="javascript:void(0)">隱私權政策 (개인정보처리방침)</a>
+                                    <span>•</span>
+                                    <a href="javascript:void(0)">遊戲管理規章 (운영정책)</a>
+                                    <span>•</span>
+                                    <a href="javascript:void(0)">個人資料暨退費申請 (환불신청)</a>
+                                    <span>•</span>
+                                    <a href="javascript:void(0)">聯絡我們 (고객센터)</a>
                                 </div>
-                                <div class="wf-footer-brand"><i class="fa-solid fa-cube"></i> GRAVITY GAME HUB</div>
-                                <div>© GRAVITY GAME HUB PTE. LTD. ALL RIGHTS RESERVED. TRADEMARKS BELONG TO THEIR RESPECTIVE OWNERS.</div>
+                                <div class="wf-footer-corp-info">
+                                    <div><strong>GRAVITY GAME HUB PTE. LTD. | 格雷維蒂互動股份有限公司</strong> (代表人: 金珍煥 | 統一編號: 52458428)</div>
+                                    <div>地址: 台北市中山區南京東路二段167號10樓 | 客服信箱: <span style="color: #93C5FD;">service@gravity.com.tw</span></div>
+                                    <div style="margin-top: 4px; color: #64748B;">© GRAVITY GAME HUB PTE. LTD. &amp; GRAVITY COMMUNICATIONS CO., LTD. ALL RIGHTS RESERVED.</div>
+                                </div>
+                                <div class="wf-footer-rating-container">
+                                    <div class="wf-rating-badge-row">
+                                        <span class="wf-rate-pill" style="border-color: #10B981; color: #34D399;">普遍級 (All)</span>
+                                        <span class="wf-rate-pill" style="border-color: #3B82F6; color: #60A5FA;">保護級 (6+)</span>
+                                        <span class="wf-rate-pill" style="border-color: #F59E0B; color: #FBBF24;">輔導級 (12+)</span>
+                                        <span class="wf-rate-pill" style="border-color: #F97316; color: #FB923C;">輔導級 (15+)</span>
+                                        <span class="wf-rate-pill" style="border-color: #EF4444; color: #F87171;">限制級 (18+)</span>
+                                        <span style="color: #94A3B8; font-size: 10px; margin-left: 6px;">대만 디지털발전부(數發部) 법정 등급제 규정 준수</span>
+                                    </div>
+                                    <div class="wf-warning-text">
+                                        【溫馨提醒】注意使用時間，避免沉迷於遊戲。遊戲虛擬貨幣及物品一經購買恕不退換。本遊戲部分內容涉及暴力、戀愛交友、性情節，請依遊戲分級進行體驗。
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -1365,17 +1502,14 @@
                         <!-- PIN 4 SPEC -->
                         <div class="spec-item-box" id="spec-pin4">
                             <div class="spec-item-header">
-                                <div class="spec-pin-title"><span class="pin">4</span> <span>GRAVITY GAMES (12종)</span></div>
-                                <span class="spec-tag-type">Card Grid</span>
+                                <div class="spec-pin-title"><span class="pin">4</span> <span>PC / MO 게임 라이브러리 &amp; 다운로드</span></div>
+                                <span class="spec-tag-type">Game Grid</span>
                             </div>
                             <div class="spec-content">
                                 <ul class="spec-bullet-list">
-                                    <li><strong>12종 라인업</strong>: Origin, Rebirth, 初心之戰, Twilight, Landverse, Crush 등.</li>
-                                    <li><strong>플랫폼</strong>: iOS, Android, PC, Steam 아이콘 표출.</li>
-                                    <li><strong>결제 라우팅 분기</strong>:
-                                        <br>• GNJOY 결제 4종: <code>billing01(W)</code> 연결.
-                                        <br>• 전용 스토어 8종: 해당 게임 웹스토어로 분기.
-                                    </li>
+                                    <li><strong>PC / MO 플랫폼 명확 분리</strong>: PC 온라인(Zero, RO2, Landverse, Gunbound, Dragonica)과 모바일(Origin, Rebirth, 初心之戰, 曙光, ROM, ROX, Crush) 분류 뱃지 적용.</li>
+                                    <li><strong>썸네일 클릭 시 공식홈페이지 연결</strong>: 썸네일 호버 시 <code>[공식홈]</code> 오버레이 표시 및 클릭 시 게임별 공식 홈페이지 새 창(<code>target="_blank"</code>) 이동.</li>
+                                    <li><strong>플랫폼별 다운로드 아이콘</strong>: 지원 기기별로 <code>Apple (iOS)</code>, <code>Google Play (Android)</code>, <code>APK 직접 다운로드</code>, <code>Windows PC 클라이언트</code> 아이콘 제공.</li>
                                 </ul>
                             </div>
                         </div>
@@ -1424,13 +1558,14 @@
                         <!-- PIN 8 SPEC -->
                         <div class="spec-item-box" id="spec-pin8">
                             <div class="spec-item-header">
-                                <div class="spec-pin-title"><span class="pin">8</span> <span>FOOTER (정책 &amp; 법인)</span></div>
-                                <span class="spec-tag-type">Footer</span>
+                                <div class="spec-pin-title"><span class="pin">8</span> <span>실제 gnjoy.hk 공식 푸터</span></div>
+                                <span class="spec-tag-type">gnjoy.hk Footer</span>
                             </div>
                             <div class="spec-content">
                                 <ul class="spec-bullet-list">
-                                    <li><strong>정책 링크</strong>: 개인정보처리방침(<code>footer01(L)</code>), 서비스 약관(<code>footer02(L)</code>) 연결.</li>
-                                    <li><strong>카피라이트</strong>: GGH 권리 표기.</li>
+                                    <li><strong>공식 약관 링크</strong>: 服務條款(이용약관), 隱私權政策(개인정보처리방침), 遊戲管理規章(운영정책), 個人資料暨退費申請(환불신청), 聯絡我們(고객센터).</li>
+                                    <li><strong>공식 법인 사업자 정보</strong>: GRAVITY GAME HUB PTE. LTD. / 格雷維蒂互動股份有限公司 (대표: 金珍煥, 統一編號: 52458428, 台北市 주소, 客服信箱 service@gravity.com.tw).</li>
+                                    <li><strong>대만 5대 법정 등급 및 법정 경고문</strong>: 普遍級(0+), 保護級(6+), 輔12, 輔15, 限制級(18+) 뱃지 및 과몰입 방지 법정 경고문 일체화.</li>
                                 </ul>
                             </div>
                         </div>
