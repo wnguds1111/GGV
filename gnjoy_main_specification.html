@@ -854,11 +854,23 @@
             <div>
                 <div class="nav-group-title">Screen Storyboard</div>
                 <ul class="nav-list">
-                    <!-- 1. 메인 -->
+                    <!-- 1. 메인 (안 A / 안 B) -->
                     <li>
                         <button class="nav-item-btn active" id="btn-nav-main" onclick="switchNav('main-screen')">
-                            <div class="nav-item-left"><span>메인</span></div>
+                            <div class="nav-item-left"><span>메인 페이지</span></div>
                         </button>
+                        <ul class="nav-sub-tree">
+                            <li>
+                                <button class="nav-sub-btn active" onclick="switchNav('main-screen')">
+                                    <span>안 A (Figma 기본안)</span>
+                                </button>
+                            </li>
+                            <li>
+                                <a href="gnjoy_main_alternative_spec.html" class="nav-sub-btn" style="color: #60A5FA;">
+                                    <span>안 B (올인원 허브 제안안) &rarr;</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <!-- 2. 캐시충전 -->
