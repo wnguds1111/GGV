@@ -1,0 +1,14 @@
+### Information Architecture
+### 포털 경로
+* GGV : [www.gnjoy.hk](https://www.gnjoy.hk/)
+### 사이트 언어
+* 번체 중국어(Traditional Chinese)
+### 주요 타깃 지역
+* 대만, 홍콩, 마카오
+### 게임 목록
+## 1\. 가입/로그인/마이페이지
+* 로그인 / 회원가입 : <span style="color: rgb(51, 65, 85);">Google, FB, Apple - 소셜로만 진행</span>
+* <span style="color: rgb(51, 65, 85);">본인 인증 수단 (전부 필수)</span>
+* 가입 항목
+* 마이페이지
+## 2\. 결제 채널 지원 현황 비교

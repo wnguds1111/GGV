@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOC-01 정보 구조 (IA) | GNJOY 포털 웹 기획서</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --topbar-height: 60px;
+            --canvas-bg: #F8FAFC;
+            --panel-bg: #FFFFFF;
+            --border-main: #E2E8F0;
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --brand-primary: #E11D48;
+            --brand-subtle: #FFF1F2;
+            --accent-blue: #2563EB;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--canvas-bg);
+            color: var(--text-body);
+            line-height: 1.5;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .app-sidebar {
+            width: var(--sidebar-width);
+            background: #0F172A;
+            color: #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid #1E293B;
+            user-select: none;
+            z-index: 100;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .app-sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-width)); opacity: 0; pointer-events: none; }
+        .sidebar-brand {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1E293B;
+            height: var(--topbar-height);
+        }
+        .brand-content { display: flex; align-items: center; gap: 12px; }
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--brand-primary), #BE123C);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+        }
+        .brand-text h1 { font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; }
+        .brand-text p { font-size: 11px; color: #94A3B8; }
+        .sidebar-collapse-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94A3B8;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .sidebar-collapse-btn:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+        .sidebar-nav {
+            flex: 1;
+            padding: 18px 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .nav-group-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 8px;
+            margin-bottom: 6px;
+        }
+        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        .nav-item-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 12px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            color: #F1F5F9;
+            font-size: 13.5px;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .nav-item-btn:hover { background: #1E293B; color: #F8FAFC; }
+        .nav-item-btn.active {
+            background: var(--brand-primary);
+            color: #FFFFFF;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
+        }
+        .nav-item-left { display: flex; align-items: center; gap: 8px; }
+        .nav-item-badge {
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.12);
+            color: #E2E8F0;
+        }
+        .nav-item-btn.active .nav-item-badge { background: rgba(0,0,0,0.25); color: #FFFFFF; }
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #1E293B;
+            background: #0B1120;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #64748B;
+        }
+        .badge-done {
+            font-size: 11px;
+            font-weight: 800;
+            background: #ECFDF5;
+            color: #059669;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #A7F3D0;
+        }
+        .badge-draft {
+            font-size: 11px;
+            font-weight: 700;
+            background: #F1F5F9;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-main);
+        }
+
+        /* Main Workspace */
+        .app-main { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .app-topbar {
+            height: var(--topbar-height);
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border-main);
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 90;
+        }
+        .topbar-left-zone { display: flex; align-items: center; gap: 14px; }
+        .sidebar-toggle-trigger {
+            background: #F8FAFC;
+            border: 1px solid var(--border-main);
+            color: var(--text-heading);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .page-badge {
+            background: var(--brand-subtle);
+            color: var(--brand-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #FECDD3;
+        }
+        .page-heading { font-size: 15px; font-weight: 800; color: var(--text-heading); }
+        .topbar-page-nav { display: flex; gap: 8px; }
+        .topbar-nav-link {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-main);
+            background: #F8FAFC;
+            transition: all 0.15s ease;
+        }
+        .topbar-nav-link:hover { background: #FFFFFF; color: var(--brand-primary); border-color: var(--brand-primary); }
+
+        .app-content-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px 48px 80px;
+            display: flex;
+            justify-content: center;
+        }
+        .doc-section-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-main);
+            border-radius: 16px;
+            padding: 44px 48px;
+            width: 100%;
+            max-width: 1480px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+        }
+        .cover-hero-box {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #2563EB 100%);
+            color: #FFFFFF;
+            padding: 36px 44px;
+            border-radius: 14px;
+            margin-bottom: 36px;
+        }
+        .cover-hero-box h1 { font-size: 28px; font-weight: 900; margin-top: 14px; line-height: 1.35; }
+        .cover-hero-box p { font-size: 14px; color: #CBD5E1; margin-top: 10px; }
+
+        .standard-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13.5px;
+            border: 1px solid var(--border-main);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.02);
+        }
+        .standard-table th {
+            background: #F1F5F9;
+            color: #0F172A;
+            font-weight: 800;
+            font-size: 14px;
+            padding: 18px 24px;
+            border-bottom: 2px solid #CBD5E1;
+            border-right: 1px solid var(--border-main);
+            text-align: left;
+            letter-spacing: -0.2px;
+        }
+        .standard-table td {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-main);
+            border-right: 1px solid var(--border-main);
+            color: var(--text-body);
+            vertical-align: middle;
+            line-height: 1.7;
+            transition: background 0.15s ease;
+        }
+        .standard-table tbody tr:hover td {
+            background-color: #F8FAFC;
+        }
+        .standard-table tbody tr:last-child td { border-bottom: none; }
+        .standard-table td:last-child, .standard-table th:last-child { border-right: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-content">
+                <div class="brand-icon"><i class="fa-solid fa-gamepad"></i></div>
+                <div class="brand-text">
+                    <h1>GNJOY.HK</h1>
+                    <p>중화권 포털 기획서</p>
+                </div>
+            </div>
+            <button class="sidebar-collapse-btn" onclick="toggleSidebar()" title="메뉴 접기">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <div class="nav-group-title">기획 문서 바로가기</div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="index.html" class="nav-item-btn">
+                            <div class="nav-item-left"><span>00. 표지 &amp; 개정 이력</span></div>
+                            <span class="nav-item-badge">COVER</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="sitemap.html" class="nav-item-btn active">
+                            <div class="nav-item-left"><span>01. 정보 구조 (IA)</span></div>
+                            <span class="nav-item-badge">IA</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="benchmark.html" class="nav-item-btn">
+                            <div class="nav-item-left"><span>02. 중화권 분석 &amp; 벤치마킹</span></div>
+                            <span class="nav-item-badge">BM</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="main_screen.html" class="nav-item-btn">
+                            <div class="nav-item-left"><span>03. 메인 화면 기획 &amp; UI</span></div>
+                            <span class="nav-item-badge">SPEC</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span>Status: 작성 완료</span>
+            <span class="badge-draft">v1.4.0</span>
+        </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+        <header class="app-topbar">
+            <div class="topbar-left-zone">
+                <button class="sidebar-toggle-trigger" id="sidebar-toggle-btn" title="메뉴 열기" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <span class="page-badge">DOC-01</span>
+                <span class="page-heading">01. 정보 구조 (Information Architecture)</span>
+            </div>
+            <div class="topbar-page-nav">
+                <a href="index.html" class="topbar-nav-link">&larr; 이전: 표지</a>
+                <a href="benchmark.html" class="topbar-nav-link">다음: 02. 벤치마킹 &rarr;</a>
+            </div>
+        </header>
+
+        <div class="app-content-body">
+            <div class="doc-section-card">
+                <!-- Hero Header -->
+                <div class="cover-hero-box">
+                    <span style="font-size: 12px; font-weight: 800; background: rgba(37, 99, 235, 0.28); border: 1px solid #60A5FA; padding: 4px 12px; border-radius: 20px; color: #BFDBFE; text-transform: uppercase;">Information Architecture</span>
+                    <h1>01. 정보 구조도 (IA)</h1>
+                    <p>GNJOY 중화권 포털 리뉴얼 전체 7대 1Depth 메뉴 체계 및 2~3Depth 세부 화면 ID, 주요 기능 명세입니다.</p>
+                </div>
+
+                <table class="standard-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 120px;">1 Depth</th>
+                            <th style="width: 150px;">2 Depth</th>
+                            <th style="width: 130px;">화면 ID</th>
+                            <th style="width: 200px;">화면명 (Screen Name)</th>
+                            <th>화면 설명 및 주요 기능 (Description)</th>
+                            <th style="width: 95px; text-align: center;">작성상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 1. 메인 -->
+                        <tr>
+                            <td><strong>메인</strong></td>
+                            <td>-</td>
+                            <td><strong style="color: var(--brand-primary); font-family: 'JetBrains Mono';">main</strong></td>
+                            <td><strong>메인 홈 (Portal Home)</strong></td>
+                            <td>네오위즈 스타일의 밝은 화이트 게이밍 포털 (시네마틱 히어로 배너, 4대 퀵바, 12종 게임 라이브러리, 실시간 서버 상태 센터)</td>
+                            <td style="text-align: center;"><span class="badge-done">작성 완료</span></td>
+                        </tr>
+
+                        <!-- 2. 캐시충전 (Rowspan 2) -->
+                        <tr>
+                            <td rowspan="2"><strong>캐시충전</strong></td>
+                            <td>온라인 캐시 충전</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">billing01(W)</strong></td>
+                            <td>온라인 캐시 충전 (/Billing)</td>
+                            <td>게임/서버/캐릭터 선택 후 대만 MyCard, GASH, 홍콩 옥토퍼스(Octopus), PayMe 등 13개 결제 수단 연동</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>거래 및 결제내역</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">billing02(L)</strong></td>
+                            <td>충전 및 거래내역 조회 (/Billing/BillingLog)</td>
+                            <td>기간별/게임별 결제 내역 조회, 주문번호(Order ID), 결제 상태 확인 및 환불/반품 접수</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+
+                        <!-- 3. 새소식 (Rowspan 2) -->
+                        <tr>
+                            <td rowspan="2"><strong>새소식</strong></td>
+                            <td>공지사항 &amp; 이벤트</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">news01(L)</strong></td>
+                            <td>공지사항 &amp; 이벤트 목록 (/News)</td>
+                            <td>전체/공지/이벤트/점검 카테고리별 뉴스 목록 및 검색</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>공지 상세</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">news02(L)</strong></td>
+                            <td>공지사항 상세 본문 (/NewsDetail)</td>
+                            <td>개별 공지/이벤트 상세 본문 및 첨부파일/링크 안내</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+
+                        <!-- 4. 고객지원 (Rowspan 3) -->
+                        <tr>
+                            <td rowspan="3"><strong>고객지원</strong></td>
+                            <td>FAQ 자주 묻는 질문</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">support01(L)</strong></td>
+                            <td>통합 고객센터 &amp; FAQ (/Cs)</td>
+                            <td>카테고리별 FAQ 검색, 키워드 검색 및 고객센터 안내</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>1:1 온라인 문의</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">support02(W)</strong></td>
+                            <td>1:1 온라인 문의 (회원/비회원)</td>
+                            <td>회원 로그인 1:1 문의 (/Question) 및 로그인 불가/정지 계정 유저 대상 비회원 문의 (/QuestionGuest) 접수</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>의견 피드백</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">support03(W)</strong></td>
+                            <td>서비스 의견 피드백 (/Feedback)</td>
+                            <td>서비스 및 포털 개선을 위한 유저 의견/피드백 등록 센터</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+
+                        <!-- 5. 로그인 회원가입 (Rowspan 2) -->
+                        <tr>
+                            <td rowspan="2"><strong>로그인 회원가입</strong></td>
+                            <td>소셜 &amp; 일반 로그인</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">login01(P)</strong></td>
+                            <td>소셜 &amp; 일반 간편 로그인 모달</td>
+                            <td>Google, Apple, Facebook 간편로그인 &amp; GNJOY ID/PW 로그인, Cloudflare Turnstile 봇 검증 (/Member/Signin)</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>이용약관 동의</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">login02(P)</strong></td>
+                            <td>필수 이용약관 동의 모달</td>
+                            <td>신규 가입 및 플랫폼 약관 개정 시 필수 약관/개인정보 동의 처리 (/Login/iAgree)</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+
+                        <!-- 6. 마이페이지 (Rowspan 4) -->
+                        <tr>
+                            <td rowspan="4"><strong>마이페이지</strong></td>
+                            <td>회원정보 &amp; 계정관리</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">mypage01(L)</strong></td>
+                            <td>회원정보 &amp; 기본설정 (/Member/Logined)</td>
+                            <td>플랫폼 계정ID(고정), 계정상태 표출, 닉네임 수정(최대 20자), 성별, 주소, 비밀번호 변경 및 약관 관리</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>본인인증 센터</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">mypage02(P)</strong></td>
+                            <td>신원 본인인증 &amp; MID 인증</td>
+                            <td>3단계 신분증 심사, 이메일 인증, SMS 6자리 OTP 인증 및 통신사 소액결제 MID 인증 (/Mid)</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>SNS 계정 연동</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">mypage03(P)</strong></td>
+                            <td>SNS 계정 바인딩 모달</td>
+                            <td>Apple ID 연동 (/Member/AppleBind) 및 Facebook 연동 (/Member/FbBind) 계정 신규 바인딩 및 해제 관리</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>개인 메시지함</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">mypage04(L)</strong></td>
+                            <td>개인 알림 메시지 센터 (/Member/PersonalMsg)</td>
+                            <td>시스템 공지, 계정보안 통지, 결제 완료 알림 및 1:1 CS 문의 답변 수신함 (최대 90일 보관)</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+
+                        <!-- 7. 푸터 (Rowspan 3) -->
+                        <tr>
+                            <td rowspan="3"><strong>푸터</strong></td>
+                            <td>서비스 이용약관</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">footer01(L)</strong></td>
+                            <td>서비스 이용약관 (/Cs/Terms)</td>
+                            <td>포털 및 게임 서비스 이용에 관한 통합 표준 이용약관 전문</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>개인정보처리방침</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">footer02(L)</strong></td>
+                            <td>개인정보처리방침 (/Cs/Policies)</td>
+                            <td>법정 필수 개인정보 수집, 이용, 보관 및 제3자 제공 정책 전문</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td>모바일 운영정책</td>
+                            <td><strong style="color: #475569; font-family: 'JetBrains Mono';">footer03(L)</strong></td>
+                            <td>모바일 운영정책 &amp; 환불 규정 (/Cs/Regulation)</td>
+                            <td>모바일 게임 운영 정책, 부정행위 제재 및 환불 처리 기준 전문</td>
+                            <td style="text-align: center;"><span style="font-size: 11px; color: #64748B;">대기</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('app-sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            sidebar.classList.toggle('collapsed');
+            if (sidebar.classList.contains('collapsed')) {
+                toggleBtn.style.display = 'flex';
+            } else {
+                toggleBtn.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

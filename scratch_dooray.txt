@@ -1,0 +1,1083 @@
+GGV 사이트 분석
+
+### Information Architecture
+
+![Inline-image-2026-08-03 10.56.01.675.png](/share/pages/fDcqpRR6RE6xT3ptBpyrVg/attach-files/4390749808429655618)
+
+### 포털 경로
+
+* GGV : [www.gnjoy.hk](https://www.gnjoy.hk/)
+
+### 사이트 언어
+
+* 번체 중국어(Traditional Chinese)
+
+### 주요 타깃 지역
+
+* 대만, 홍콩, 마카오
+
+<br>
+
+### 게임 목록
+
+<table><colgroup><col style="width: 378.55px"><col style="width: 188.77px"><col style="width: 312.77px"></colgroup><tr><th style="background-color: rgb(241, 245, 249)">
+
+**게임명**
+
+</th><th style="background-color: rgb(241, 245, 249)">
+
+**웹사이트**
+
+</th><th style="background-color: rgb(241, 245, 249)">
+
+**GNJOY 결제 지원**
+
+</th></tr><tr><td>
+
+**RO仙境傳說：愛如初見 Classic**
+
+</td><td>
+
+[공식 사이트](https://roocasia.gnjoy.game/)
+
+</td><td>
+
+❌ [전용 결제 페이지](https://roocasia.gnjoy.game/shopStore/?from=roocasia_official)
+
+</td></tr><tr><td>
+
+**RO仙境傳說：世界之旅** 
+
+</td><td>
+
+[공식 사이트](https://gwww.gnjoy.hk/rotwgw/index.html#/)
+
+</td><td>
+
+❌ [전용 결제 페이지](https://pay.gnjoy.hk/platform/officialTopupNew.html?gameId=386&srtl=3276.0.0.0&op_scid=Im7Cmy6-vS7ZpNuORdylS&customFrom=global-website#/)
+
+</td></tr><tr><td>
+
+**RO仙境傳說：重生** (Rebirth)
+
+</td><td>
+
+[공식 사이트](https://ror.gnjoy.hk/)
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+**RO仙境傳說：愛如初見** (Origin)
+
+</td><td>
+
+[공식 사이트](https://roo.gnjoy.hk/)
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+**RO仙境傳說：曙光** (Twilight)
+
+</td><td>
+
+[공식 사이트](https://rotwilight.gnjoy.hk/)
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+**RO仙境傳說：初心之戰**
+
+</td><td>
+
+[공식 사이트](https://roba.gnjoy.hk/)
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+**Ragnarok Origin: ROO LNA**
+
+</td><td>
+
+[공식 사이트](https://lna.roglobal.com/)
+
+</td><td>
+
+❌ [전용 결제 페이지](https://lna.roglobal.com/shopStore/selectOrder/)
+
+</td></tr><tr><td>
+
+**Ragnarok: Back To Glory**
+
+</td><td>
+
+[공식 사이트](https://gevents.gnjoy.hk/rog_pre_registration/#/index)
+
+</td><td>
+
+❌ 결제 없음
+
+</td></tr><tr><td>
+
+**Ragnarok: Twilight Global**
+
+</td><td>
+
+[공식 사이트](https://rotwilightglobal.gnjoy.game/)
+
+</td><td>
+
+❌ [전용 결제 페이지](https://rotwilightglobal-pc.gnjoy.game/login/index?return=https://rotwilightglobal-pc.gnjoy.game/)
+
+</td></tr><tr><td>
+
+**Ragnarok: The New World**
+
+</td><td>
+
+[공식 사이트](https://gwww.gnjoy.hk/sea_official/)
+
+</td><td>
+
+❌ [전용 결제 페이지](https://pay.gnjoy.hk/platform/officialTopupNew.html?gameId=456&cid=web&srtl=3276.0.0.0&op_scid=Slcp5hLl5a0J5CQJvaeL0&customFrom=global-pay#/)
+
+</td></tr><tr><td>
+
+**Ragnarok: Rebirth Global**
+
+</td><td>
+
+[공식 사이트](https://rornaofficial.gnjoy.game/na-officialSite)
+
+</td><td>
+
+❌ [전용 결제 페이지](https://rorglobal.gnjoy.game/topup-na)
+
+</td></tr><tr><td>
+
+**Ragnarok Origin Classic (Global)**
+
+</td><td>
+
+[공식 사이트](https://roocamer.gnjoy.game/home/)
+
+</td><td>
+
+❌ [전용 결제 페이지](https://roocamer.gnjoy.game/shopStore/?from=roocamer_official)
+
+</td></tr></table>
+
+<br>
+
+## 1\. 가입/로그인/마이페이지
+
+* 로그인 / 회원가입 : <span style="color: rgb(51, 65, 85);">Google, FB, Apple - 소셜로만 진행</span>
+* <span style="color: rgb(51, 65, 85);">본인 인증 수단 (전부 필수)</span>
+
+    * 신분증 인증 : <span style="color: rgb(51, 65, 85);">대만/홍콩/마카오 신분증 번호 및 외국인 거류증(ARC) 등록 및 본인 식별</span>
+    * 이메일 인증 : <span style="color: rgb(15, 23, 42);">이메일 인증 링크</span>
+    * 휴대폰 SMS : <span style="color: rgb(51, 65, 85);">국가 번호선택 +</span> <span style="color: rgb(15, 23, 42);">6자리 코드 입력</span>
+
+*※ 인증 전 <span style="color: rgb(17, 17, 17);">결제 및 플랫폼 이용 불가</span>*
+
+<br>
+
+* 가입 항목
+
+<table><colgroup><col><col><col><col></colgroup><tr><td style="background-color: rgb(241, 245, 249); vertical-align: top">
+
+**수집 데이터 항목**
+
+</td><td style="background-color: rgb(241, 245, 249); vertical-align: top">
+
+**필수 / 선택**
+
+</td><td style="background-color: rgb(241, 245, 249); vertical-align: top">
+
+**수집 목적 및 세부 규칙**
+
+</td><td style="background-color: rgb(241, 245, 249); vertical-align: top">
+
+**수정 / 검증 특이사항**
+
+</td></tr><tr><td>
+
+**GNJOY 플랫폼 계정 ID**
+
+</td><td>
+
+**<span style="color: rgb(220, 38, 38);">필수</span>**
+
+</td><td>
+
+일반 가입 시 영문/숫자 조합 계정 (최대 16자). 소셜 가입 시 `GNOA0098429481` 형태로 자동 생성.
+
+</td><td>
+
+가입 후 수정 불가
+
+</td></tr><tr><td style="vertical-align: top">
+
+**플랫폼 닉네임**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(2, 132, 199);">선택</span>**
+
+</td><td style="vertical-align: top">
+
+커뮤니티 및 프로필 표출용 닉네임. 초기에는 계정 ID로 자동 설정.
+
+</td><td style="vertical-align: top">
+
+프로필 수정 가능
+
+</td></tr><tr><td style="vertical-align: top">
+
+**신분증 번호 (신원 인증)**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(220, 38, 38);">필수</span>**
+
+</td><td style="vertical-align: top">
+
+대만/홍콩/마카오 신분증 번호.
+
+<span style="color: rgb(51, 65, 85);">대만 국민건강보험카드, 홍콩 영구 주민신분증, 마카오 주민신분증 실물 사진을 업로드하여 심사하는 방식.</span>
+
+</td><td style="vertical-align: top">
+
+포맷 체크 후 마스킹 저장 (예: A12\*\*\*\*\*89)
+
+인증신청은 최대3회 까지 신청 가능
+
+</td></tr><tr><td>
+
+**성별**
+
+</td><td>
+
+**<span style="color: rgb(2, 132, 199);">선택</span>**
+
+</td><td>
+
+남성 / 여성 라디오 버튼 선택.
+
+</td><td>
+
+프로필 수정 가능
+
+</td></tr><tr><td style="vertical-align: top">
+
+**실명**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(220, 38, 38);">필수</span>**
+
+</td><td style="vertical-align: top">
+
+실제 명의자 이름. 계정 도용 시 1:1 고객센터 본인 확인에 활용.
+
+</td><td style="vertical-align: top">
+
+입력 확정 후 수정 불가
+
+</td></tr><tr><td style="vertical-align: top">
+
+**생년월일**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(220, 38, 38);">필수</span>**
+
+</td><td style="vertical-align: top">
+
+YYYY/MM/DD 형식.
+
+</td><td style="vertical-align: top">
+
+입력 확정 후 수정 불가
+
+</td></tr><tr><td style="vertical-align: top">
+
+**이메일 주소**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(220, 38, 38);">필수</span>**
+
+</td><td style="vertical-align: top">
+
+이메일 인증코드 발송 형식.
+
+</td><td style="vertical-align: top">
+
+입력 확정 후 수정 불가
+
+</td></tr><tr><td style="vertical-align: top">
+
+**휴대폰 번호**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(220, 38, 38);">필수</span>**
+
+</td><td style="vertical-align: top">
+
+SMS 6자리 인증 발송 형식.
+
+</td><td style="vertical-align: top">
+
+입력 확정 후 수정 불가
+
+</td></tr><tr><td style="vertical-align: top">
+
+**거주지 주소**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(2, 132, 199);">선택</span>**
+
+</td><td style="vertical-align: top">
+
+도시/지역 선택 + 상세 주소. 오프라인 경품 배송 및 본인 주소 확인.
+
+</td><td style="vertical-align: top">
+
+프로필 수정 가능
+
+</td></tr><tr><td style="vertical-align: top">
+
+**약관 동의 여부**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(220, 38, 38);">필수</span>**
+
+</td><td style="vertical-align: top">
+
+이용약관, 개인정보 수집/이용 동의 및 만 18세 미만 법정대리인 동의 체크.
+
+</td><td style="vertical-align: top">
+
+약관 체크박스 하나로 처리
+
+</td></tr></table>
+
+* 마이페이지
+
+    * 애플 연동 / 페이스북 연동: <span style="color: rgb(51, 65, 85);">소셜 계정을 GNJOY 플랫폼 계정과 바인딩하여 3rd-Party 게임 계정을 통합 관리.</span>
+    * 개인 메시지함 : <span style="color: rgb(51, 65, 85);">플랫폼 시스템 알림, 계정 보안 통지, 결제 안내 및 1:1 CS 답변 수신 알림 센터</span>, <span style="color: rgb(15, 23, 42);">(최대 90일 보관)</span>
+
+## 2\. 결제 채널 지원 현황 비교
+
+<table><colgroup><col><col><col><col><col><col></colgroup><tr><th style="background-color: rgb(248, 250, 252)">
+
+**결제 방식**
+
+</th><th style="background-color: rgb(248, 250, 252)">
+
+**채널**
+
+</th><th style="background-color: rgb(248, 250, 252)">
+
+**<span style="color: rgb(17, 17, 17);">RO仙境傳說：初心之戰</span>**
+
+</th><th style="background-color: rgb(248, 250, 252)">
+
+**RO仙境傳說：愛如初見** (Origin)
+
+</th><th style="background-color: rgb(248, 250, 252)">
+
+**RO仙境傳說：重生** (Rebirth)
+
+</th><th style="background-color: rgb(248, 250, 252)">
+
+**RO仙境傳說：曙光** (Twilight)
+
+</th></tr><tr><td style="vertical-align: top" rowspan="2">
+
+**포인트 카드**
+
+</td><td style="vertical-align: top">
+
+MyCard
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td style="vertical-align: top">
+
+GASH
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td style="vertical-align: top" rowspan="2">
+
+**신용 카드**
+
+</td><td style="vertical-align: top">
+
+대만 신용카드 3D
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td style="vertical-align: top">
+
+홍콩/마카오 신용카드 3D
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td rowspan="3">
+
+**회원비 공제**
+
+</td><td>
+
+MyCard 전자지
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td style="vertical-align: top">
+
+<span style="color: rgb(51, 65, 85);">GASH 전자지갑 대만</span> 
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td style="vertical-align: top">
+
+<span style="color: rgb(51, 65, 85);">GASH 전자지갑 홍콩</span>
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td style="vertical-align: top" rowspan="3">
+
+**모바일 결제**
+
+</td><td style="vertical-align: top">
+
+Apple Pay
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td></tr><tr><td style="vertical-align: top">
+
+Easy Pay
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td></tr><tr><td style="vertical-align: top">
+
+LINE Pay
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td></tr><tr><td style="vertical-align: top" rowspan="4">
+
+**홍콩/마카오 전용 결제**
+
+</td><td style="vertical-align: top">
+
+AlipayHK
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td></tr><tr><td>
+
+PayPal
+
+</td><td>
+
+❌
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+❌
+
+</td><td>
+
+❌
+
+</td></tr><tr><td style="vertical-align: top">
+
+무통장 입금
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td></tr><tr><td style="vertical-align: top">
+
+옥토퍼스 카드
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td></tr><tr><td style="vertical-align: top" rowspan="3">
+
+ <strong><span style="color: rgb(51, 65, 85);">통신사 소액결제</span></strong>
+
+</td><td style="vertical-align: top">
+
+중화 텔레콤
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td></tr><tr><td style="vertical-align: top">
+
+파이스톤 텔레커뮤니케이션즈
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td></tr><tr><td style="vertical-align: top">
+
+타이완 모바일
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td></tr><tr><td style="vertical-align: top" rowspan="2">
+
+**HiNet 유선(집) 전화 결제**
+
+</td><td style="vertical-align: top">
+
+중화 텔레콤 (지역 통화)
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+❌
+
+</td></tr><tr><td>
+
+중화 텔레콤(하이넷)
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+❌
+
+</td></tr><tr><td style="vertical-align: top" rowspan="13">
+
+**Web <span style="color: rgb(51, 65, 85);">실시간 이체</span>**
+
+</td><td style="vertical-align: top">
+
+대만 은행
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td style="vertical-align: top">
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+토지 은행
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+협동 은행
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+퍼스트 뱅크
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+화난 은행
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+창화 은행
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+상하이 은행
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+타이페이 푸본
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+메가 뱅크
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+중화 우편
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+유산 은행
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+태신 은행
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr><tr><td>
+
+차이나 트러스
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td><td>
+
+**<span style="color: rgb(112, 173, 71);">O</span>**
+
+</td></tr></table>
