@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCR-MAIN-05 [안 E] 네오위즈 스타일 밝은 모던 프리미엄형 | GNJOY.HK 포털 기획서</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --topbar-height: 60px;
+            --canvas-bg: #F1F5F9;
+            --panel-bg: #FFFFFF;
+            --border-main: #CBD5E1;
+            --border-subtle: #F1F5F9;
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --brand-primary: #E11D48; /* GNJOY Coral Red */
+            --brand-subtle: #FFF1F2;
+            --pin-color: #7C3AED;     /* Storyboard Purple Pin */
+            --accent-blue: #2563EB;
+            --accent-green: #059669;
+            --accent-amber: #D97706;
+            --neowiz-dark: #0F172A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--canvas-bg);
+            color: var(--text-body);
+            line-height: 1.5;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .app-sidebar {
+            width: var(--sidebar-width);
+            background: #0F172A;
+            color: #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid #1E293B;
+            user-select: none;
+            z-index: 100;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .app-sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-width)); opacity: 0; pointer-events: none; }
+        .sidebar-brand {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1E293B;
+            height: var(--topbar-height);
+        }
+        .brand-content { display: flex; align-items: center; gap: 12px; }
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--brand-primary), #BE123C);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+        }
+        .brand-text h1 { font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; }
+        .brand-text p { font-size: 11px; color: #94A3B8; }
+        .sidebar-collapse-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94A3B8;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .sidebar-collapse-btn:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+        .sidebar-nav {
+            flex: 1;
+            padding: 18px 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .nav-group-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 8px;
+            margin-bottom: 6px;
+        }
+        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        .nav-item-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 12px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            color: #F1F5F9;
+            font-size: 13.5px;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .nav-item-btn:hover { background: #1E293B; color: #F8FAFC; }
+        .nav-item-btn.active {
+            background: var(--brand-primary);
+            color: #FFFFFF;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
+        }
+        .nav-item-left { display: flex; align-items: center; gap: 8px; }
+        .nav-item-badge {
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.12);
+            color: #E2E8F0;
+        }
+        .nav-item-btn.active .nav-item-badge { background: rgba(0,0,0,0.25); color: #FFFFFF; }
+
+        /* Sub-Tree for Main Proposals */
+        .nav-sub-tree {
+            list-style: none;
+            padding-left: 18px;
+            margin: 4px 0 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            border-left: 1px solid #334155;
+            margin-left: 14px;
+        }
+        .nav-sub-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #94A3B8;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+        .nav-sub-btn:hover { color: #FFFFFF; background: rgba(255,255,255,0.06); }
+        .nav-sub-btn.active {
+            color: #FFFFFF;
+            background: rgba(225, 29, 72, 0.35);
+            font-weight: 800;
+            border-left: 2px solid var(--brand-primary);
+        }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #1E293B;
+            background: #0B1120;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #64748B;
+        }
+        .badge-proposal {
+            font-size: 10.5px;
+            font-weight: 800;
+            background: #ECFDF5;
+            color: #059669;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #A7F3D0;
+        }
+
+        /* Main Workspace */
+        .app-main { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .app-topbar {
+            height: var(--topbar-height);
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border-main);
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 90;
+        }
+        .topbar-left-zone { display: flex; align-items: center; gap: 14px; }
+        .sidebar-toggle-trigger {
+            background: #F8FAFC;
+            border: 1px solid var(--border-main);
+            color: var(--text-heading);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .page-badge {
+            background: #EFF6FF;
+            color: #2563EB;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #BFDBFE;
+        }
+        .page-heading { font-size: 15px; font-weight: 800; color: var(--text-heading); }
+        .topbar-view-tabs { display: flex; background: #F1F5F9; padding: 4px; border-radius: 8px; gap: 4px; }
+        .view-tab-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748B;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .view-tab-btn.active {
+            background: #FFFFFF;
+            color: var(--text-heading);
+            font-weight: 800;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        /* Specification Split Layout */
+        .app-content-body { flex: 1; overflow-y: auto; padding: 24px 28px; }
+        .spec-split-container {
+            display: grid;
+            grid-template-columns: minmax(840px, 1.35fr) minmax(380px, 0.85fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* Wireframe Container */
+        .wf-container {
+            background: #FFFFFF;
+            border: 1px solid var(--border-main);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            position: relative;
+        }
+        .wf-browser-bar {
+            background: #F8FAFC;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .wf-traffic-lights { display: flex; gap: 6px; }
+        .wf-light { width: 10px; height: 10px; border-radius: 50%; }
+        .wf-light.red { background: #EF4444; }
+        .wf-light.yellow { background: #F59E0B; }
+        .wf-light.green { background: #10B981; }
+        .wf-url-pill {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #64748B;
+            width: 320px;
+            text-align: center;
+        }
+
+        /* Storyboard Pin Styling */
+        .pin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--pin-color);
+            color: white;
+            font-size: 11px;
+            font-weight: 900;
+            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.4);
+            cursor: pointer;
+            z-index: 40;
+            border: 2px solid #FFFFFF;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .pin:hover { transform: scale(1.25); background: #6D28D9; }
+        .pin.pin-abs { position: absolute; }
+
+        /* [PIN 1] Neowiz-Style Minimalist Modern GNB */
+        .nw-gnb {
+            background: #FFFFFF;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 0 36px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .nw-gnb-left { display: flex; align-items: center; gap: 36px; }
+        .nw-logo-img { height: 28px; width: auto; object-fit: contain; }
+        .nw-gnb-menu { display: flex; gap: 28px; list-style: none; }
+        .nw-gnb-menu a {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #0F172A;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            position: relative;
+            padding: 8px 0;
+            transition: color 0.15s ease;
+        }
+        .nw-gnb-menu a:hover { color: var(--brand-primary); }
+        .nw-gnb-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--brand-primary);
+            border-radius: 2px;
+        }
+        .nw-gnb-right { display: flex; align-items: center; gap: 14px; }
+        .nw-lang-btn {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #475569;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            padding: 5px 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .nw-btn-topup {
+            background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
+            color: white;
+            font-weight: 800;
+            font-size: 12.5px;
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+            transition: transform 0.15s ease;
+        }
+        .nw-btn-topup:hover { transform: translateY(-1px); }
+
+        /* [PIN 2] Neowiz Layered Hero Showcase Stage */
+        .nw-hero-stage {
+            position: relative;
+            height: 420px;
+            background: linear-gradient(135deg, #F8FAFC 0%, #EDF2F7 50%, #E2E8F0 100%);
+            border-bottom: 1px solid #E2E8F0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        .nw-hero-bg-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 75% 50%, rgba(225, 29, 72, 0.08) 0%, rgba(255,255,255,0) 60%);
+            pointer-events: none;
+        }
+        .nw-hero-content {
+            position: relative;
+            z-index: 10;
+            padding: 0 54px;
+            max-width: 580px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .nw-hero-badge {
+            align-self: flex-start;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10.5px;
+            font-weight: 900;
+            color: #FFFFFF;
+            background: #0F172A;
+            padding: 4px 12px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .nw-hero-title {
+            font-family: 'Montserrat', 'Pretendard', sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: #0F172A;
+            line-height: 1.15;
+            letter-spacing: -0.5px;
+        }
+        .nw-hero-subtitle {
+            font-size: 13.5px;
+            color: #475569;
+            line-height: 1.6;
+        }
+        .nw-hero-ctas {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nw-btn-hero-primary {
+            background: #0F172A;
+            color: #FFFFFF;
+            font-weight: 800;
+            font-size: 12.5px;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2);
+            transition: all 0.15s ease;
+        }
+        .nw-btn-hero-primary:hover { background: #1E293B; transform: translateY(-2px); }
+        .nw-btn-hero-secondary {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            color: #1E293B;
+            font-weight: 800;
+            font-size: 12.5px;
+            padding: 10px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+        .nw-btn-hero-secondary:hover { background: #F8FAFC; border-color: #94A3B8; }
+        
+        /* Hero Visual Right Layer */
+        .nw-hero-visual-layer {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 440px;
+            height: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+        .nw-visual-card {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #FFFFFF 0%, #F1F5F9 100%);
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .nw-visual-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: #0F172A;
+            letter-spacing: -1px;
+            margin-bottom: 6px;
+        }
+
+        /* Hero Progress Indicator Bar */
+        .nw-hero-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 54px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .nw-hero-page-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; color: #475569; }
+        .nw-hero-progress-track { width: 140px; height: 3px; background: #CBD5E1; border-radius: 2px; overflow: hidden; }
+        .nw-hero-progress-fill { width: 45%; height: 100%; background: var(--brand-primary); border-radius: 2px; }
+
+        /* [PIN 3] 4-Pillar Portal Value Hub */
+        .nw-value-strip {
+            background: #FFFFFF;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 20px 48px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            position: relative;
+        }
+        .nw-value-item {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: #0F172A;
+            transition: all 0.2s ease;
+        }
+        .nw-value-item:hover {
+            border-color: #CBD5E1;
+            background: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+        }
+        .nw-value-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .nw-value-icon.red { background: #FFF1F2; color: #E11D48; }
+        .nw-value-icon.blue { background: #EFF6FF; color: #2563EB; }
+        .nw-value-icon.purple { background: #F5F3FF; color: #7C3AED; }
+        .nw-value-icon.green { background: #ECFDF5; color: #059669; }
+        .nw-value-title { font-size: 13px; font-weight: 800; color: #0F172A; }
+        .nw-value-desc { font-size: 11px; color: #64748B; margin-top: 1px; }
+
+        /* [PIN 4] Interactive Games Showcase Grid (PC & MO 12종) */
+        .nw-games-section { padding: 36px 48px; position: relative; background: #FFFFFF; }
+        .nw-section-top {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .nw-section-title-wrap h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: #0F172A;
+            letter-spacing: -0.5px;
+        }
+        .nw-section-title-wrap p { font-size: 12px; color: #64748B; margin-top: 2px; }
+        .nw-filter-pill-group { display: flex; gap: 8px; }
+        .nw-pill-btn {
+            background: #F1F5F9;
+            border: 1px solid transparent;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 7px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .nw-pill-btn:hover { background: #E2E8F0; color: #0F172A; }
+        .nw-pill-btn.active {
+            background: #0F172A;
+            color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+        }
+
+        /* 12 Game Cards Grid */
+        .nw-games-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .nw-game-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+        .nw-game-card:hover {
+            border-color: #CBD5E1;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.08);
+        }
+        .nw-card-thumb-box {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+            display: block;
+            text-decoration: none;
+            overflow: hidden;
+        }
+        .nw-thumb-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 14px;
+            color: #475569;
+            transition: transform 0.25s ease;
+        }
+        .nw-card-thumb-box:hover .nw-thumb-content { transform: scale(1.08); }
+        .nw-card-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: white;
+            z-index: 5;
+        }
+        .nw-card-tag.pc { background: #2563EB; }
+        .nw-card-tag.mo { background: #7C3AED; }
+        .nw-card-tag.hot { background: #DC2626; }
+        .nw-thumb-hover-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.78);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 11.5px;
+            font-weight: 800;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .nw-card-thumb-box:hover .nw-thumb-hover-overlay { opacity: 1; }
+
+        .nw-card-info { padding: 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+        .nw-card-game-title {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #0F172A;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .nw-card-genre { font-size: 11px; color: #64748B; margin-bottom: 4px; }
+        
+        .nw-card-dl-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FAFC;
+            padding: 5px 8px;
+            border-radius: 6px;
+            border: 1px solid #EEF2F6;
+            margin-top: auto;
+        }
+        .nw-dl-label { font-size: 10px; font-weight: 700; color: #64748B; }
+        .nw-dl-btns { display: flex; gap: 4px; }
+        .nw-icon-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            background: #FFFFFF;
+            color: #334155;
+            font-size: 11px;
+            text-decoration: none;
+            border: 1px solid #CBD5E1;
+            transition: all 0.15s ease;
+        }
+        .nw-icon-btn:hover { background: var(--brand-primary); color: #FFFFFF; border-color: var(--brand-primary); }
+        .nw-icon-btn.pc-btn { width: auto; padding: 0 6px; font-size: 10px; font-weight: 800; gap: 3px; }
+
+        /* [PIN 5] Media & News Split Center */
+        .nw-media-section {
+            background: #F8FAFC;
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 36px 48px;
+            position: relative;
+        }
+        .nw-media-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 24px;
+        }
+        .nw-news-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .nw-news-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .nw-news-title { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 900; color: #0F172A; }
+        .nw-news-list { display: flex; flex-direction: column; gap: 8px; }
+        .nw-news-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #F1F5F9;
+            font-size: 12px;
+        }
+        .nw-news-item:last-child { border-bottom: none; }
+        .nw-news-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #EFF6FF;
+            color: #2563EB;
+            margin-right: 8px;
+        }
+        .nw-news-badge.event { background: #FFF1F2; color: #E11D48; }
+
+        /* Featured Video Card */
+        .nw-video-card {
+            background: #0F172A;
+            color: #FFFFFF;
+            border-radius: 12px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+        .nw-video-thumb-sim {
+            height: 120px;
+            background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #E11D48;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .nw-video-thumb-sim:hover { transform: scale(1.02); }
+
+        /* [PIN 6] 100% Real gnjoy.hk Matching Footer */
+        .nw-footer {
+            background: #0B1120;
+            color: #94A3B8;
+            padding: 36px 48px;
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            line-height: 1.6;
+            position: relative;
+        }
+        .nw-footer-links { display: flex; gap: 18px; font-weight: 800; color: #CBD5E1; flex-wrap: wrap; }
+        .nw-footer-links a { color: #CBD5E1; text-decoration: none; }
+        .nw-footer-links a:hover { color: #FFFFFF; }
+        .nw-footer-corp { color: #64748B; font-size: 10.5px; }
+        .nw-footer-ratings-box {
+            background: #111827;
+            border: 1px solid #1F2937;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .nw-ratings-pills { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        .nw-rating-pill { background: #1E293B; border: 1px solid #334155; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; }
+        .nw-warning-txt { font-size: 10px; color: #94A3B8; line-height: 1.5; }
+
+        /* Spec Panel */
+        .spec-scroll-panel { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 0; }
+        .spec-item-box { background: white; border: 1px solid var(--border-main); border-radius: 10px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .spec-item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); }
+        .spec-pin-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--text-heading); }
+        .spec-tag-type { font-size: 10px; font-weight: 700; background: #F1F5F9; color: #475569; padding: 2px 6px; border-radius: 4px; }
+        .spec-content { font-size: 12px; color: var(--text-body); display: flex; flex-direction: column; gap: 4px; line-height: 1.55; }
+        .spec-bullet-list { list-style: none; padding-left: 0; }
+        .spec-bullet-list li { position: relative; padding-left: 11px; margin-bottom: 4px; }
+        .spec-bullet-list li::before { content: '•'; position: absolute; left: 0; color: var(--pin-color); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-content">
+                <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+                <div class="brand-text">
+                    <h1>GGV (GNJOY.HK)</h1>
+                    <p>포털 웹 기획서 v1.5</p>
+                </div>
+            </div>
+            <button class="sidebar-collapse-btn" onclick="toggleSidebar()"><i class="fa-solid fa-angles-left"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div>
+                <div class="nav-group-title">Document Info</div>
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-item-btn"><div class="nav-item-left"><span>00. 표지 &amp; 개정이력</span></div></a></li>
+                    <li><a href="sitemap.html" class="nav-item-btn"><div class="nav-item-left"><span>01. 사이트맵 &amp; 인덱스</span></div></a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="nav-group-title">Main Proposals (5-Suite)</div>
+                <ul class="nav-list">
+                    <li>
+                        <div class="nav-item-btn" style="cursor: default;"><div class="nav-item-left"><span>메인 페이지 기획안</span></div></div>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_main_specification.html" class="nav-sub-btn"><span>안 A (Figma 기본안)</span></a></li>
+                            <li><a href="gnjoy_main_alternative_spec.html" class="nav-sub-btn"><span>안 B (올인원 허브형)</span></a></li>
+                            <li><a href="gnjoy_main_proposal_c.html" class="nav-sub-btn"><span>안 C (비주얼 큐레이션형)</span></a></li>
+                            <li><a href="gnjoy_main_proposal_d.html" class="nav-sub-btn"><span>안 D (초고속 결제&amp;런처형)</span></a></li>
+                            <li><a href="gnjoy_main_proposal_e.html" class="nav-sub-btn active"><span>안 E (네오위즈 밝은모던형)</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>회원</span></div></a></li>
+                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>캐시 충전</span></div></a></li>
+                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>고객 지원 센터</span></div></a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span>제안안 타입 E</span>
+            <span class="badge-proposal">NEOWIZ STYLE</span>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+        <header class="app-topbar">
+            <div class="topbar-left-zone">
+                <button class="sidebar-toggle-trigger" id="sidebar-toggle-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <span class="page-badge">SCR-MAIN-05 / E안</span>
+                <span class="page-heading">메인 페이지 기획안: [안 E] 네오위즈 스타일 밝은 모던 프리미엄형</span>
+            </div>
+            <div class="topbar-view-tabs">
+                <button class="view-tab-btn active" onclick="switchView('pc')"><i class="fa-solid fa-desktop"></i> PC 와이드 (1440px+)</button>
+                <button class="view-tab-btn" onclick="switchView('resp')"><i class="fa-solid fa-mobile-screen"></i> 반응형 뷰 (MO/Tablet)</button>
+            </div>
+        </header>
+
+        <div class="app-content-body">
+            <div class="spec-split-container" id="pc-spec-view">
+                
+                <!-- Left: Wireframe View -->
+                <div class="wf-container">
+                    <div class="wf-browser-bar">
+                        <div class="wf-traffic-lights">
+                            <span class="wf-light red"></span>
+                            <span class="wf-light yellow"></span>
+                            <span class="wf-light green"></span>
+                        </div>
+                        <div class="wf-url-pill">https://www.gnjoy.hk/ (Type E - Neowiz Modern)</div>
+                        <div style="font-size: 11px; color: #94A3B8;"><i class="fa-solid fa-lock"></i> 100% SSL Secure</div>
+                    </div>
+
+                    <div style="position: relative;">
+
+                        <!-- [PIN 1] Minimalist Modern Sticky GNB -->
+                        <div class="nw-gnb">
+                            <span class="pin pin-abs" style="top: 18px; left: 10px;" onclick="highlightSpec('pin1')">1</span>
+                            <div class="nw-gnb-left">
+                                <a href="gnjoy_main_proposal_e.html" style="display: flex; align-items: center;">
+                                    <img src="_레이어_1-2.png" alt="GNJOY LOGO" class="nw-logo-img">
+                                </a>
+                                <ul class="nw-gnb-menu">
+                                    <li><a href="javascript:void(0)" class="active">GAMES</a></li>
+                                    <li><a href="javascript:void(0)">TOP-UP (線上儲值)</a></li>
+                                    <li><a href="javascript:void(0)">MEDIA &amp; NEWS</a></li>
+                                    <li><a href="javascript:void(0)">SUPPORT</a></li>
+                                </ul>
+                            </div>
+                            <div class="nw-gnb-right">
+                                <div class="nw-lang-btn">
+                                    <i class="fa-solid fa-globe"></i> <span>繁體中文 (HK/TW)</span> <i class="fa-solid fa-chevron-down" style="font-size: 9px;"></i>
+                                </div>
+                                <a href="javascript:void(0)" style="font-size: 12.5px; font-weight: 700; color: #334155; text-decoration: none; margin: 0 4px;">登入 (Login)</a>
+                                <a href="javascript:void(0)" class="nw-btn-topup"><i class="fa-solid fa-bolt"></i> 線上儲值</a>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 2] Neowiz Layered Hero Showcase Stage -->
+                        <div class="nw-hero-stage">
+                            <span class="pin pin-abs" style="top: 20px; left: 16px;" onclick="highlightSpec('pin2')">2</span>
+                            <div class="nw-hero-bg-overlay"></div>
+                            
+                            <!-- Hero Content Left -->
+                            <div class="nw-hero-content">
+                                <span class="nw-hero-badge">FEATURED PC MMORPG</span>
+                                <h1 class="nw-hero-title">RAGNAROK ONLINE<br><span style="color: var(--brand-primary);">ZERO</span></h1>
+                                <p class="nw-hero-subtitle">라그나로크 클래식의 감동을 그대로, 중화권 공식 서버 신규 에피소드 대규모 업데이트 오픈!</p>
+                                <div class="nw-hero-ctas">
+                                    <a href="https://rozero.gnjoy.com.tw" target="_blank" class="nw-btn-hero-primary">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i> 官方網站 (공식 홈페이지)
+                                    </a>
+                                    <a href="javascript:void(0)" class="nw-btn-hero-secondary">
+                                        <i class="fa-solid fa-play" style="color: #E11D48;"></i> 트레일러 영상
+                                    </a>
+                                    <a href="javascript:void(0)" class="nw-btn-hero-secondary">
+                                        <i class="fa-brands fa-windows" style="color: #2563EB;"></i> PC 다운로드
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Hero Visual Right -->
+                            <div class="nw-hero-visual-layer">
+                                <div class="nw-visual-card">
+                                    <div class="nw-visual-logo">RO ZERO</div>
+                                    <div style="font-size: 12px; color: #64748B; margin-bottom: 12px;">Official Gravity Taiwan / HK Server</div>
+                                    <div style="background: #0F172A; color: white; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 800;">
+                                        <i class="fa-solid fa-signal" style="color: #10B981;"></i> LIVE: 정상 서비스 중
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hero Progress Track -->
+                            <div class="nw-hero-controls">
+                                <span class="nw-hero-page-num">01 / 04</span>
+                                <div class="nw-hero-progress-track">
+                                    <div class="nw-hero-progress-fill"></div>
+                                </div>
+                                <span style="font-size: 11px; color: #94A3B8; cursor: pointer;"><i class="fa-solid fa-chevron-left"></i> &nbsp; <i class="fa-solid fa-chevron-right"></i></span>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 3] 4-Pillar Portal Value Hub -->
+                        <div class="nw-value-strip">
+                            <span class="pin pin-abs" style="top: -10px; left: 20px;" onclick="highlightSpec('pin3')">3</span>
+                            
+                            <a href="javascript:void(0)" class="nw-value-item">
+                                <div class="nw-value-icon red"><i class="fa-solid fa-bolt"></i></div>
+                                <div>
+                                    <div class="nw-value-title">線上儲值 (Top-up)</div>
+                                    <div class="nw-value-desc">+15% 보너스 다이아 증정</div>
+                                </div>
+                            </a>
+
+                            <a href="javascript:void(0)" class="nw-value-item">
+                                <div class="nw-value-icon blue"><i class="fa-solid fa-gift"></i></div>
+                                <div>
+                                    <div class="nw-value-title">序號兌換 (Redeem)</div>
+                                    <div class="nw-value-desc">시리얼 쿠폰 즉시 등록</div>
+                                </div>
+                            </a>
+
+                            <a href="javascript:void(0)" class="nw-value-item">
+                                <div class="nw-value-icon purple"><i class="fa-solid fa-desktop"></i></div>
+                                <div>
+                                    <div class="nw-value-title">PC 主程式 (Launcher)</div>
+                                    <div class="nw-value-desc">통합 PC 클라이언트 설치</div>
+                                </div>
+                            </a>
+
+                            <a href="javascript:void(0)" class="nw-value-item">
+                                <div class="nw-value-icon green"><i class="fa-solid fa-comments"></i></div>
+                                <div>
+                                    <div class="nw-value-title">官方社群 (Community)</div>
+                                    <div class="nw-value-desc">공식 FB / Discord / 바하무트</div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- [PIN 4] Interactive Games Showcase Grid (PC & MO 12종) -->
+                        <div class="nw-games-section">
+                            <span class="pin pin-abs" style="top: 20px; left: 18px;" onclick="highlightSpec('pin4')">4</span>
+                            
+                            <div class="nw-section-top">
+                                <div class="nw-section-title-wrap">
+                                    <h2>ALL GAMES</h2>
+                                    <p>그라비티 공식 12종 게임 라이브러리 및 다이렉트 다운로드 허브</p>
+                                </div>
+                                <div class="nw-filter-pill-group">
+                                    <button class="nw-pill-btn active">전체 (12)</button>
+                                    <button class="nw-pill-btn"><i class="fa-brands fa-windows"></i> PC 온라인 (5)</button>
+                                    <button class="nw-pill-btn"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> 모바일 (7)</button>
+                                </div>
+                            </div>
+
+                            <div class="nw-games-grid">
+                                
+                                <!-- 1. RO Zero (PC) -->
+                                <div class="nw-game-card">
+                                    <a href="https://rozero.gnjoy.com.tw" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="nw-thumb-content">RO ZERO</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">Ragnarok Online Zero</div>
+                                        <div class="nw-card-genre">PC Classic MMORPG</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 2. RO 2 (PC) -->
+                                <div class="nw-game-card">
+                                    <a href="https://ro2.gnjoy.com" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="nw-thumb-content">RO 2</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">Ragnarok Online 2</div>
+                                        <div class="nw-card-genre">PC 3D Global MMORPG</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 3. RO Origin (MO) -->
+                                <div class="nw-game-card">
+                                    <a href="https://roglobal.com" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag mo">MO</span>
+                                        <div class="nw-thumb-content">RO ORIGIN</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">Ragnarok Origin</div>
+                                        <div class="nw-card-genre">Open World Mobile RPG</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="APK 직다운"><i class="fa-solid fa-android"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 4. RO Rebirth (MO) -->
+                                <div class="nw-game-card">
+                                    <a href="https://rorebirth.gnjoy.hk" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag mo">MO</span>
+                                        <div class="nw-thumb-content">RO 重生</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">RO仙境傳說：重生</div>
+                                        <div class="nw-card-genre">3D MMORPG New Gen</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 5. Landverse (PC) -->
+                                <div class="nw-game-card">
+                                    <a href="https://landverse.maxion.gg/" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="nw-thumb-content">LANDVERSE</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">Ragnarok Landverse</div>
+                                        <div class="nw-card-genre">Maxion Web3 Classic</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 6. ROM (MO & PC) -->
+                                <div class="nw-game-card">
+                                    <a href="https://rom.gnjoy.hk" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag mo">MO/PC</span>
+                                        <div class="nw-thumb-content">RO M</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">Ragnarok M: Eternal Love</div>
+                                        <div class="nw-card-genre">Mobile MMORPG Global</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn pc-btn" title="PC"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 7. ROX (MO & PC) -->
+                                <div class="nw-game-card">
+                                    <a href="https://rox.gnjoy.hk" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag mo">MO/PC</span>
+                                        <div class="nw-thumb-content">ROX</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">Ragnarok X: Next Gen</div>
+                                        <div class="nw-card-genre">3D Mobile MMORPG</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn pc-btn" title="PC"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 8. RO 初心之戰 (MO) -->
+                                <div class="nw-game-card">
+                                    <a href="https://roorigin.gnjoy.com.tw" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag mo">MO</span>
+                                        <div class="nw-thumb-content">初心之戰</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">RO仙境傳說：初心之戰</div>
+                                        <div class="nw-card-genre">Classic Mobile RPG</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="APK 직다운"><i class="fa-solid fa-android"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 9. RO 曙光 (MO) -->
+                                <div class="nw-game-card">
+                                    <a href="https://www.gnjoy.hk" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag mo">MO</span>
+                                        <div class="nw-thumb-content">曙光</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">RO仙境傳說：曙光</div>
+                                        <div class="nw-card-genre">MMORPG New Arrival</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 10. Ragnarok Crush (MO) -->
+                                <div class="nw-game-card">
+                                    <a href="https://www.gnjoy.hk" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag mo">MO</span>
+                                        <div class="nw-thumb-content">RO CRUSH</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">Ragnarok Crush</div>
+                                        <div class="nw-card-genre">Casual Match-3 RPG</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="nw-icon-btn" title="Google Play"><i class="fa-brands fa-google-play"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 11. Gunbound (PC) -->
+                                <div class="nw-game-card">
+                                    <a href="https://gunbound.gnjoy.hk" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="nw-thumb-content">GUNBOUND</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">GUNBOUND</div>
+                                        <div class="nw-card-genre">Artillery Shooter</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 12. Dragonica (PC) -->
+                                <div class="nw-game-card">
+                                    <a href="https://dragonica.gnjoy.hk" target="_blank" class="nw-card-thumb-box" title="공식 홈페이지 새창 이동">
+                                        <span class="nw-card-tag pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="nw-thumb-content">DRAGONICA</div>
+                                        <div class="nw-thumb-hover-overlay"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="nw-card-info">
+                                        <div class="nw-card-game-title">Dragonica (드라고니카)</div>
+                                        <div class="nw-card-genre">3D Action RPG</div>
+                                        <div class="nw-card-dl-row">
+                                            <span class="nw-dl-label">다운로드</span>
+                                            <div class="nw-dl-btns">
+                                                <a href="javascript:void(0)" class="nw-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- [PIN 5] Media & News Split Center -->
+                        <div class="nw-media-section">
+                            <span class="pin pin-abs" style="top: 18px; left: 20px;" onclick="highlightSpec('pin5')">5</span>
+                            
+                            <div class="nw-media-grid">
+                                <!-- News Box -->
+                                <div class="nw-news-card">
+                                    <div class="nw-news-header">
+                                        <div class="nw-news-title">LATEST NEWS</div>
+                                        <a href="javascript:void(0)" style="font-size: 12px; font-weight: 700; color: #2563EB; text-decoration: none;">더보기 +</a>
+                                    </div>
+                                    <div class="nw-news-list">
+                                        <div class="nw-news-item">
+                                            <div><span class="nw-news-badge">공지</span> <strong>[점검]</strong> 정기 서버 점검 및 보안 패치 안내</div>
+                                            <span style="color: #94A3B8; font-size: 11px;">2026.09.02</span>
+                                        </div>
+                                        <div class="nw-news-item">
+                                            <div><span class="nw-news-badge event">이벤트</span> <strong>[이벤트]</strong> MyCard 충전 시 15% 보너스 인게임 다이아 증정</div>
+                                            <span style="color: #94A3B8; font-size: 11px;">2026.09.01</span>
+                                        </div>
+                                        <div class="nw-news-item">
+                                            <div><span class="nw-news-badge">업데이트</span> <strong>[업데이트]</strong> Ragnarok Online Zero 신규 던전 오픈</div>
+                                            <span style="color: #94A3B8; font-size: 11px;">2026.08.28</span>
+                                        </div>
+                                        <div class="nw-news-item">
+                                            <div><span class="nw-news-badge">공지</span> <strong>[안내]</strong> 홍콩/대만 결제 수단 추가 및 시스템 점검 안내</div>
+                                            <span style="color: #94A3B8; font-size: 11px;">2026.08.25</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Featured Video Card -->
+                                <div class="nw-video-card">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.5px; color: #FDA4AF;">FEATURED MEDIA</span>
+                                        <span style="font-size: 11px; color: #94A3B8;"><i class="fa-brands fa-youtube"></i> YouTube</span>
+                                    </div>
+                                    <div class="nw-video-thumb-sim">
+                                        <i class="fa-solid fa-circle-play"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 13.5px; font-weight: 800; color: #FFFFFF;">RO仙境傳說：重生 3D 월드 쇼케이스 영상</div>
+                                        <div style="font-size: 11px; color: #94A3B8; margin-top: 2px;">그라비티 공식 유튜브 채널에서 전체 영상을 확인하세요.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 6] 100% Real gnjoy.hk Matching Footer -->
+                        <div class="nw-footer">
+                            <span class="pin pin-abs" style="top: 14px; left: 16px;" onclick="highlightSpec('pin6')">6</span>
+                            
+                            <div class="nw-footer-links">
+                                <a href="javascript:void(0)">服務條款 (이용약관)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)">隱私權政策 (개인정보처리방침)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)">遊戲管理規章 (운영정책)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)">個人資料暨退費申請 (환불신청)</a>
+                                <span>•</span>
+                                <a href="javascript:void(0)">聯絡我們 (고객센터)</a>
+                            </div>
+
+                            <div class="nw-footer-corp">
+                                <div><strong>GRAVITY GAME HUB PTE. LTD. | 格雷維蒂互動股份有限公司</strong> (代表人: 金珍煥 | 統一編號: 52458428)</div>
+                                <div>地址: 台北市中山區南京東路二段167號10樓 | 客服信箱: <span style="color: #93C5FD;">service@gravity.com.tw</span></div>
+                                <div style="margin-top: 2px;">© GRAVITY GAME HUB PTE. LTD. &amp; GRAVITY COMMUNICATIONS CO., LTD. ALL RIGHTS RESERVED.</div>
+                            </div>
+
+                            <div class="nw-footer-ratings-box">
+                                <div class="nw-ratings-pills">
+                                    <span class="nw-rating-pill" style="border-color: #10B981; color: #34D399;">普遍級 (All)</span>
+                                    <span class="nw-rating-pill" style="border-color: #3B82F6; color: #60A5FA;">保護級 (6+)</span>
+                                    <span class="nw-rating-pill" style="border-color: #F59E0B; color: #FBBF24;">輔導級 (12+)</span>
+                                    <span class="nw-rating-pill" style="border-color: #F97316; color: #FB923C;">輔導級 (15+)</span>
+                                    <span class="nw-rating-pill" style="border-color: #EF4444; color: #F87171;">限制級 (18+)</span>
+                                    <span style="font-size: 10px; color: #94A3B8; margin-left: 6px;">대만 디지털발전부(數發部) 법정 등급제 규정 준수</span>
+                                </div>
+                                <div class="nw-warning-txt">
+                                    【溫馨提醒】注意使用時間，避免沉迷於遊戲。遊戲虛擬貨幣及物品一經購買恕不退換。本遊戲部分內容涉及暴力、戀愛交友、性情節，請依遊戲分級進行體驗。
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right: Spec Panel -->
+                <div class="spec-scroll-panel">
+                    <div style="padding-bottom: 10px; border-bottom: 1px solid var(--border-main);">
+                        <h2 style="font-size: 14.5px; font-weight: 800; color: #0F172A;">[Type E] 네오위즈 스타일 밝은 모던형 사양</h2>
+                        <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">여백과 비주얼 쇼케이스 중심의 글로벌 트렌드 모델</p>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin1">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">1</span> <span>미니멀 모던 GNB 헤더</span></div><span class="spec-tag-type">Sticky GNB</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>화이트 미니멀 고정 헤더</strong>: 네오위즈 특유의 절제된 여백과 볼드 영문 메뉴 타이포그래피(Montserrat).</li>
+                                <li><strong>최상단 결제 액션 유도</strong>: 우측 <code>[線上儲值 (Top-up)]</code> 그라데이션 CTA 버튼 고정 노출.</li>
+                                <li><strong>다국어 및 계정</strong>: 繁體中文(대만/홍콩), EN, KR 실시간 선택 및 간편 로그인 지원.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin2">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">2</span> <span>레이어드 비주얼 쇼케이스</span></div><span class="spec-tag-type">Hero Stage</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>레이어드 비주얼 구성</strong>: 배경 키아트 + 플로팅 타이틀 로고 + 대표 캐릭터 컷아웃 결합.</li>
+                                <li><strong>인라인 다이렉트 액션 3종</strong>: <code>[공식 홈페이지 ↗]</code>, <code>[트레일러 영상 ▶]</code>, <code>[PC 다운로드]</code> 버튼 배치.</li>
+                                <li><strong>슬라이드 프로그레스 바</strong>: 자동 롤링 프로그레스 바(5초) 및 수동 전환 컨트롤러.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin3">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">3</span> <span>4대 핵심 포털 밸류 허브</span></div><span class="spec-tag-type">Quick Hub</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>핵심 서비스 바로가기 4종</strong>: 온라인 결제 충전소, 쿠폰 시리얼 리딤, PC 통합 런처, 공식 커뮤니티.</li>
+                                <li><strong>호버 인터랙션</strong>: 부드러운 카드 리프트(Lift) 및 미묘한 그림자 효과로 클릭감 강화.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin4">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">4</span> <span>PC / MO 12종 게임 라이브러리</span></div><span class="spec-tag-type">Games Grid</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>PC / MO 명확한 분류</strong>: 상단 탭을 통해 PC 온라인(5종)과 모바일(7종) 필터링 지원.</li>
+                                <li><strong>썸네일 클릭 시 공식홈 이동</strong>: 썸네일 호버 시 <code>[공식 홈페이지 바로가기 ↗]</code> 오버레이 표출 및 새창(<code>target="_blank"</code>) 연결.</li>
+                                <li><strong>플랫폼별 다운로드 버튼</strong>: <code>Apple</code>, <code>Google Play</code>, <code>APK</code>, <code>Windows PC</code> 즉시 다운로드 지원.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin5">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">5</span> <span>미디어 &amp; 뉴스 통합 센터</span></div><span class="spec-tag-type">Media / News</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>좌측 뉴스/공지사항</strong>: 공지, 이벤트, 업데이트 뱃지 분류 및 최신 소식 제공.</li>
+                                <li><strong>우측 추천 유튜브 영상</strong>: 최신 프로모션 영상 썸네일 및 재생 트리거.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="spec-item-box" id="spec-pin6">
+                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">6</span> <span>실제 gnjoy.hk 100% 매칭 푸터</span></div><span class="spec-tag-type">Live Footer</span></div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>법정 필수 약관 5종 링크</strong>: 이용약관, 개인정보처리방침, 운영규장, 환불신청, 고객센터.</li>
+                                <li><strong>공식 법인 및 사업자 정보</strong>: 格雷維蒂互動股份有限公司, 대표자 金珍煥, 統一編號, 台北市 주소, 客服信箱.</li>
+                                <li><strong>대만 5개 법정 등급제 &amp; 경고문</strong>: 數發部 법정 5대 등급 및 온심제성(溫馨提醒) 규정 준수.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Responsive Spec View -->
+            <div id="responsive-spec-view" style="display: none; width: 100%;">
+                <div style="display: flex; gap: 36px; justify-content: center; flex-wrap: wrap; padding: 20px 0;">
+                    
+                    <!-- Tablet Device (768px) -->
+                    <div style="width: 768px; background: white; border-radius: 16px; border: 8px solid #0F172A; box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden;">
+                        <div style="background: #0F172A; color: white; padding: 10px 16px; font-size: 11px; font-weight: 800; display: flex; justify-content: space-between;">
+                            <span><i class="fa-solid fa-tablet-screen-button"></i> Tablet View (768px)</span>
+                            <span>GNJOY.HK Type E</span>
+                        </div>
+                        <div style="padding: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 12px; margin-bottom: 16px;">
+                                <img src="_레이어_1-2.png" alt="logo" style="height: 22px;">
+                                <span style="background: #E11D48; color: white; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 4px;">線上儲值</span>
+                            </div>
+                            <div style="background: #F1F5F9; border-radius: 8px; padding: 20px; margin-bottom: 16px;">
+                                <div style="font-size: 10px; font-weight: 800; color: #E11D48;">FEATURED</div>
+                                <div style="font-size: 18px; font-weight: 900; color: #0F172A;">RAGNAROK ZERO</div>
+                                <div style="font-size: 11px; color: #64748B; margin-top: 4px;">중화권 공식 서버 신규 에피소드 오픈</div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px; font-size: 11px;">
+                                    <strong>RO ZERO (PC)</strong>
+                                    <div style="color: #64748B; font-size: 10px;">PC Classic MMORPG</div>
+                                </div>
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px; font-size: 11px;">
+                                    <strong>RO ORIGIN (MO)</strong>
+                                    <div style="color: #64748B; font-size: 10px;">Mobile 3D RPG</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Device (390px) -->
+                    <div style="width: 390px; background: white; border-radius: 28px; border: 10px solid #0F172A; box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden;">
+                        <div style="background: #0F172A; color: white; padding: 12px 16px; font-size: 11px; font-weight: 800; text-align: center;">
+                            <span><i class="fa-solid fa-mobile-screen"></i> Mobile View (390px)</span>
+                        </div>
+                        <div style="padding: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                                <img src="_레이어_1-2.png" alt="logo" style="height: 18px;">
+                                <i class="fa-solid fa-bars" style="color: #0F172A;"></i>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #0F172A, #1E293B); color: white; border-radius: 10px; padding: 16px; margin-bottom: 14px;">
+                                <div style="font-size: 9px; color: #FDA4AF; font-weight: 800;">TOP-UP BENEFIT</div>
+                                <div style="font-size: 15px; font-weight: 900; margin: 4px 0;">+15% 보너스 충전</div>
+                                <button style="background: #E11D48; color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 10.5px; font-weight: 800; width: 100%;">지금 충전하기</button>
+                            </div>
+                            <div style="font-weight: 800; font-size: 13px; margin-bottom: 8px;">GAMES (12종)</div>
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-size: 11.5px; font-weight: 800;">Ragnarok Zero</div>
+                                        <div style="font-size: 10px; color: #64748B;">PC Online</div>
+                                    </div>
+                                    <span style="font-size: 10px; color: #2563EB; font-weight: 800;">공식홈 &gt;</span>
+                                </div>
+                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-size: 11.5px; font-weight: 800;">RO仙境傳說：重生</div>
+                                        <div style="font-size: 10px; color: #64748B;">Mobile 3D</div>
+                                    </div>
+                                    <span style="font-size: 10px; color: #2563EB; font-weight: 800;">공식홈 &gt;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('app-sidebar');
+            const trigger = document.getElementById('sidebar-toggle-btn');
+            sidebar.classList.toggle('collapsed');
+            if (sidebar.classList.contains('collapsed')) {
+                trigger.style.display = 'inline-flex';
+            } else {
+                trigger.style.display = 'none';
+            }
+        }
+
+        function switchView(mode) {
+            const pcView = document.getElementById('pc-spec-view');
+            const respView = document.getElementById('responsive-spec-view');
+            const buttons = document.querySelectorAll('.view-tab-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            if (mode === 'pc') {
+                pcView.style.display = 'grid';
+                respView.style.display = 'none';
+                buttons[0].classList.add('active');
+            } else {
+                pcView.style.display = 'none';
+                respView.style.display = 'block';
+                buttons[1].classList.add('active');
+            }
+        }
+
+        function highlightSpec(pinId) {
+            const target = document.getElementById('spec-' + pinId);
+            if (!target) return;
+            
+            document.querySelectorAll('.spec-item-box').forEach(el => {
+                el.style.borderColor = 'var(--border-main)';
+                el.style.backgroundColor = 'white';
+            });
+
+            target.style.borderColor = 'var(--pin-color)';
+            target.style.backgroundColor = '#FAF5FF';
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>
