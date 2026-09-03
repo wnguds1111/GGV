@@ -1075,13 +1075,18 @@
                 <span class="page-heading">메인 화면 기획서: 올인원 플레이어 허브형 (All-in-One Hub)</span>
             </div>
 
-            <div class="device-toggle-group">
-                <button class="device-btn active" id="btn-pc" onclick="switchDevice('pc')">
-                    <i class="fa-solid fa-desktop"></i> PC View (와이어프레임 + 디스크립션)
-                </button>
-                <button class="device-btn" id="btn-responsive" onclick="switchDevice('responsive')">
-                    <i class="fa-solid fa-mobile-screen-button"></i> Tablet &amp; MO View (반응형)
-                </button>
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div class="topbar-page-nav">
+                    <a href="benchmark.html" class="topbar-nav-link" style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-decoration: none; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border-main); background: #F8FAFC;">&larr; 이전: 02. 시장분석 &amp; 벤치마킹</a>
+                </div>
+                <div class="device-toggle-group">
+                    <button class="device-btn active" id="btn-pc" onclick="switchDevice('pc')">
+                        <i class="fa-solid fa-desktop"></i> PC View (와이어프레임 + 디스크립션)
+                    </button>
+                    <button class="device-btn" id="btn-mo" onclick="switchDevice('mo')">
+                        <i class="fa-solid fa-mobile-screen-button"></i> Tablet &amp; MO View (반응형)
+                    </button>
+                </div>
             </div>
         </header>
 
