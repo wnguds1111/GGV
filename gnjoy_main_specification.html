@@ -364,6 +364,38 @@
         }
         .hub-cash-val { color: #F59E0B; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
 
+        .hub-btn-auth {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #E2E8F0;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.15s ease;
+        }
+        .hub-btn-auth:hover {
+            background: rgba(255, 255, 255, 0.16);
+            color: #FFFFFF;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .hub-btn-signup {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #FFFFFF;
+            background: #1E293B;
+            border: 1px solid #334155;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: all 0.15s ease;
+        }
+        .hub-btn-signup:hover {
+            background: #334155;
+            border-color: #475569;
+        }
+
         .hub-btn-topup {
             background: linear-gradient(135deg, var(--brand-primary), #BE123C);
             color: white;
@@ -909,7 +941,7 @@
                         <div class="hub-gnb">
                             <span class="pin pin-abs" style="top: 14px; left: 16px;" onclick="highlightSpec('pin1')">1</span>
                             <div class="hub-logo">
-                                <img src="./_레이어_1-2.png" alt="GNJOY" style="height: 28px; object-fit: contain; vertical-align: middle;">
+                                <img src="./gnjoy_logo_white.png" alt="GNJOY" style="height: 28px; object-fit: contain; vertical-align: middle;">
                             </div>
                             <div class="hub-nav-links">
                                 <span class="active">HOME</span>
@@ -919,13 +951,8 @@
                                 <span>SUPPORT</span>
                             </div>
                             <div class="hub-gnb-right">
-                                <!-- Live User Wallet Mini Card -->
-                                <div class="hub-user-wallet">
-                                    <i class="fa-solid fa-coins" style="color: #F59E0B;"></i>
-                                    <span>GNJOY Cash:</span>
-                                    <span class="hub-cash-val">1,250 P</span>
-                                </div>
-                                <div style="font-size: 11px; color: #94A3B8;">EN <i class="fa-solid fa-chevron-down" style="font-size: 8px;"></i></div>
+                                <a href="javascript:void(0)" class="hub-btn-auth">로그인 (Login)</a>
+                                <a href="javascript:void(0)" class="hub-btn-signup">회원가입</a>
                                 <span class="pin pin-abs" style="top: 14px; right: 10px;" onclick="highlightSpec('pin1')">1</span>
                                 <a href="javascript:void(0)" class="hub-btn-topup"><i class="fa-solid fa-bolt"></i> Top-up</a>
                             </div>
@@ -1400,12 +1427,13 @@
                     <!-- PIN 1 SPEC -->
                     <div class="spec-item-box" id="spec-pin1">
                         <div class="spec-item-header">
-                            <div class="spec-pin-title"><span class="pin">1</span> <span>스마트 GNB &amp; 유저 지갑</span></div>
+                            <div class="spec-pin-title"><span class="pin">1</span> <span>스마트 GNB &amp; 계정 인증</span></div>
                             <span class="spec-tag-type">Header</span>
                         </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>보유 캐시(GNJOY Cash) 실시간 표출</strong>: 로그인 유저의 충전 잔액을 GNB에 상시 노출하여 잔액 부족 시 즉각적인 충전 유도.</li>
+                                <li><strong>화이트 GNJOY 공식 로고</strong>: 다크 네이비 GNB 상단에서 높은 가독성을 확보하도록 GNJOY 로고 텍스트를 선명한 화이트/레드 투톤으로 표출.</li>
+                                <li><strong>원클릭 로그인 &amp; 회원가입</strong>: 다국어/지갑 위젯을 정돈하고 <code>[로그인 (Login)]</code>, <code>[회원가입]</code> 버튼을 전면 배치하여 사용자 유입 및 인증 동선 간소화.</li>
                                 <li><strong>Top-up 고정 CTA</strong>: GNJOY 시그니처 레드 버튼 유지 ➔ <code>billing01(W)</code> 직접 연결.</li>
                             </ul>
                         </div>
@@ -1501,9 +1529,12 @@
                     <!-- Tablet -->
                     <div style="width: 768px; background: white; border-radius: 16px; border: 8px solid #1E293B; overflow: hidden;">
                         <div class="hub-gnb" style="padding: 12px 20px;">
-                            <img src="./_레이어_1-2.png" alt="GNJOY" style="height: 24px;">
+                            <img src="./gnjoy_logo_white.png" alt="GNJOY" style="height: 24px;">
                             <div class="hub-nav-links" style="font-size: 11.5px; gap: 14px;"><span>HOME</span><span>GAMES</span><span>TOP-UP</span><span>SUPPORT</span></div>
-                            <a href="javascript:void(0)" class="hub-btn-topup" style="padding: 5px 12px; font-size: 11px;">Top-up</a>
+                            <div style="display: flex; gap: 6px; align-items: center;">
+                                <a href="javascript:void(0)" class="hub-btn-auth" style="padding: 4px 8px; font-size: 10.5px;">로그인</a>
+                                <a href="javascript:void(0)" class="hub-btn-topup" style="padding: 5px 12px; font-size: 11px;">Top-up</a>
+                            </div>
                         </div>
                         <div class="hub-hero" style="padding: 32px 24px; flex-direction: column; gap: 20px; align-items: flex-start;">
                             <div class="hub-hero-title" style="font-size: 24px;">Ragnarok Online Zero</div>
@@ -1521,8 +1552,11 @@
                     <div style="width: 390px; background: white; border-radius: 24px; border: 8px solid #1E293B; overflow: hidden;">
                         <div style="height: 20px; background: #1E293B;"></div>
                         <div class="hub-gnb" style="padding: 10px 14px;">
-                            <img src="./_레이어_1-2.png" alt="GNJOY" style="height: 20px;">
-                            <a href="javascript:void(0)" class="hub-btn-topup" style="padding: 4px 10px; font-size: 10px;">Top-up</a>
+                            <img src="./gnjoy_logo_white.png" alt="GNJOY" style="height: 20px;">
+                            <div style="display: flex; gap: 4px; align-items: center;">
+                                <a href="javascript:void(0)" class="hub-btn-auth" style="padding: 3px 6px; font-size: 9.5px;">로그인</a>
+                                <a href="javascript:void(0)" class="hub-btn-topup" style="padding: 4px 10px; font-size: 10px;">Top-up</a>
+                            </div>
                         </div>
                         <div class="hub-hero" style="padding: 24px 16px;">
                             <div class="hub-hero-title" style="font-size: 18px;">Ragnarok Zero</div>
