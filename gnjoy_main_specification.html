@@ -292,8 +292,8 @@
         .canvas-card {
             background: var(--panel-bg);
             border-radius: 12px;
-            border: 1px solid var(--border-main);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1.5px solid #CBD5E1;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             overflow: hidden;
             width: 100%;
         }
@@ -534,9 +534,9 @@
         .hub-floating-quick-menu {
             position: relative;
             background: #FFFFFF;
-            border: 1px solid var(--border-main);
+            border: 1.5px solid #94A3B8;
             border-radius: 10px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
             width: 72px;
             display: flex;
             flex-direction: column;
@@ -609,7 +609,14 @@
             margin-bottom: 20px;
         }
         .hub-section-title { font-size: 17px; font-weight: 900; color: #0F172A; }
-        .hub-filter-tabs { display: flex; background: #F1F5F9; padding: 3px; border-radius: 6px; gap: 3px; }
+        .hub-filter-tabs {
+            display: flex;
+            background: #F1F5F9;
+            padding: 3px;
+            border-radius: 6px;
+            gap: 3px;
+            border: 1.5px solid #94A3B8;
+        }
         .hub-filter-btn {
             background: transparent; border: none; padding: 6px 16px; border-radius: 4px;
             font-size: 12px; font-weight: 700; color: #64748B; cursor: pointer; transition: all 0.15s;
@@ -628,30 +635,30 @@
         }
         .hub-game-card {
             background: #FFFFFF;
-            border: 1px solid #E2E8F0;
+            border: 1.5px solid #94A3B8;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
         }
         .hub-game-card:hover {
-            border-color: #64748B;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-color: #0F172A;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
             transform: translateY(-2px);
         }
 
-        /* Clickable Thumbnail (Wireframe 16:9 Placeholder Format) */
+        /* Clickable Thumbnail (Wireframe 16:9 Placeholder Format - Height 170px) */
         .hub-thumb-link {
             position: relative;
             display: block;
-            height: 135px;
-            background: #F1F5F9;
+            height: 170px;
+            background: #F8FAFC;
             color: #334155;
             text-decoration: none;
             overflow: hidden;
-            border-bottom: 1px solid #E2E8F0;
+            border-bottom: 1.5px solid #94A3B8;
         }
         .hub-thumb-img-box {
             width: 100%;
@@ -660,20 +667,20 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 6px;
             background: #F1F5F9;
             transition: all 0.2s ease;
-            padding: 10px;
+            padding: 14px;
             box-sizing: border-box;
         }
         .hub-thumb-img-box i {
-            font-size: 26px;
+            font-size: 32px;
             color: #94A3B8;
             margin-bottom: 2px;
             transition: color 0.2s ease;
         }
         .hub-thumb-title {
-            font-size: 13.5px;
+            font-size: 14px;
             font-weight: 800;
             color: #0F172A;
             letter-spacing: -0.2px;
@@ -681,8 +688,8 @@
             line-height: 1.2;
         }
         .hub-thumb-sub {
-            font-size: 10.5px;
-            font-weight: 500;
+            font-size: 11px;
+            font-weight: 600;
             color: #94A3B8;
             text-align: center;
         }
@@ -746,7 +753,7 @@
             background: #F8FAFC;
             padding: 8px 10px;
             border-radius: 6px;
-            border: 1px solid #EEF2F6;
+            border: 1px solid #94A3B8;
             margin-top: auto;
         }
         .hub-dl-icon-btn {
@@ -760,8 +767,13 @@
             color: #334155;
             font-size: 13px;
             text-decoration: none;
-            border: 1px solid #CBD5E1;
+            border: 1px solid #94A3B8;
             transition: all 0.15s ease;
+        }
+        .hub-dl-icon-btn:hover {
+            background: #0F172A;
+            color: #FFFFFF;
+            border-color: #0F172A;
         }
         .hub-dl-icon-btn:hover { background: #0F172A; color: #FFFFFF; border-color: #0F172A; }
         
@@ -769,7 +781,7 @@
         .hub-card-footer {
             margin-top: 10px;
             padding-top: 10px;
-            border-top: 1px solid #F1F5F9;
+            border-top: 1.5px solid #CBD5E1;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -778,9 +790,9 @@
         .hub-btn-card-site {
             font-size: 11.5px;
             font-weight: 700;
-            color: #475569;
+            color: #334155;
             background: #F8FAFC;
-            border: 1px solid #E2E8F0;
+            border: 1px solid #94A3B8;
             padding: 5px 10px;
             border-radius: 5px;
             text-decoration: none;
@@ -788,6 +800,11 @@
             align-items: center;
             gap: 4px;
             transition: all 0.15s ease;
+        }
+        .hub-btn-card-site:hover {
+            background: #EEF2F6;
+            color: #0F172A;
+            border-color: #0F172A;
         }
         .hub-btn-card-site:hover {
             background: #EEF2F6;
@@ -812,10 +829,7 @@
             background: #334155;
             border-color: #334155;
         }
-        .hub-btn-card-pay:hover {
-            background: #BE123C;
-            transform: translateY(-1px);
-        }
+        
 
         /* [PIN 5] EVENT & NOTICE Dual Board */
         .hub-feed-grid {
@@ -825,10 +839,10 @@
         }
         .hub-feed-box {
             background: #FFFFFF;
-            border: 1px solid #E2E8F0;
+            border: 1.5px solid #CBD5E1;
             border-radius: 10px;
             padding: 20px 22px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
             display: flex;
             flex-direction: column;
         }
@@ -865,7 +879,7 @@
         .hub-event-card {
             display: flex;
             flex-direction: column;
-            border: 1px solid #E2E8F0;
+            border: 1.5px solid #94A3B8;
             border-radius: 8px;
             overflow: hidden;
             text-decoration: none;
@@ -879,7 +893,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
         }
         .hub-event-thumb {
-            height: 130px;
+            height: 165px;
             background: #F1F5F9;
             color: #475569;
             display: flex;
@@ -888,13 +902,13 @@
             justify-content: center;
             gap: 6px;
             position: relative;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
-            border-bottom: 1px solid #E2E8F0;
+            border-bottom: 1.5px solid #94A3B8;
             transition: background 0.15s ease;
         }
         .hub-event-thumb i {
-            font-size: 22px;
+            font-size: 32px;
             color: #94A3B8;
         }
         .hub-event-card:hover .hub-event-thumb {
