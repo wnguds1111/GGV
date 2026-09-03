@@ -319,8 +319,9 @@
         .hub-footer-inner {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
+            text-align: left;
         }
         .canvas-header {
             padding: 12px 22px;
@@ -1560,22 +1561,23 @@
                             </div>
                         </div>
 
-                        <!-- Real gnjoy.hk Official Footer (1400px Centered Container) -->
-                        <div class="hub-hk-footer" style="background: #0B1120; color: #94A3B8; padding: 28px 24px; font-size: 11.5px; position: relative; text-align: center; border-top: 1px solid #1E293B;">
+                        <!-- Real gnjoy.hk Official Footer (Left-Aligned, 1400px Container) -->
+                        <div class="hub-hk-footer" style="background: #0B1120; color: #94A3B8; padding: 34px 60px 38px; font-size: 11.5px; position: relative; text-align: left; border-top: 1px solid #1E293B;">
                             <div class="hub-container hub-footer-inner">
-                                <div style="margin-bottom: 8px;"><span class="pin" style="cursor: pointer;" onclick="highlightSpec('pin6')">6</span></div>
-                                <div>
-                                    <img src="./gnjoy_logo_white.png" alt="GRAVITY" style="height: 22px; opacity: 0.85;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 2px;">
+                                    <span class="pin" style="cursor: pointer;" onclick="highlightSpec('pin6')">6</span>
+                                    <img src="./gnjoy_logo_white.png" alt="GRAVITY" style="height: 24px; opacity: 0.9;">
                                 </div>
-                                <div style="display: flex; align-items: center; justify-content: center; gap: 16px; font-weight: 700; color: #CBD5E1;">
+                                <div style="display: flex; align-items: center; justify-content: flex-start; gap: 16px; font-weight: 700; color: #CBD5E1;">
                                     <a href="https://www.gnjoy.hk/Terms" target="_blank" style="color: #CBD5E1; text-decoration: none;">服務條款 (Terms of Service)</a>
                                     <span style="color: #475569; font-size: 10px;">|</span>
                                     <a href="https://www.gnjoy.hk/Policies" target="_blank" style="color: #CBD5E1; text-decoration: none;">隱私權政策 (Privacy Policy)</a>
                                     <span style="color: #475569; font-size: 10px;">|</span>
                                     <a href="https://www.gnjoy.hk/Cs" target="_blank" style="color: #CBD5E1; text-decoration: none;">客服中心 (Support)</a>
                                 </div>
-                                <div style="font-size: 11px; color: #64748B; letter-spacing: -0.2px;">
-                                    Copyright © <span style="color: #E2E8F0; font-weight: 700;">GRAVITY</span> CO., Ltd. &amp; Lee MyoungJin(studio DTDS). ALL Rights Reserved.
+                                <div style="font-size: 11px; color: #64748B; letter-spacing: -0.2px; text-align: left; line-height: 1.6;">
+                                    Copyright © <span style="color: #E2E8F0; font-weight: 700;">GRAVITY</span> CO., Ltd. &amp; Lee MyoungJin(studio DTDS). ALL Rights Reserved.<br>
+                                    <span style="color: #475569;">글로벌 그라비티 공식 게임 포털 서비스 (Taiwan, Hong Kong, Macau)</span>
                                 </div>
                             </div>
                         </div>
