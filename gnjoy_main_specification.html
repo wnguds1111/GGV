@@ -280,10 +280,12 @@
         /* ================= 3. SCREEN SPECIFICATION GRID ================= */
         .screen-spec-grid {
             display: grid;
-            grid-template-columns: 1fr 370px;
+            grid-template-columns: 1fr 380px;
             gap: 28px;
             align-items: start;
             width: 100%;
+            max-width: 1840px;
+            margin: 0 auto;
         }
 
         .canvas-card {
@@ -292,6 +294,33 @@
             border: 1px solid var(--border-main);
             box-shadow: 0 4px 20px rgba(0,0,0,0.04);
             overflow: hidden;
+            width: 100%;
+        }
+
+        /* 1,400px ~ 1,440px Central Grid Container */
+        .hub-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .hub-gnb-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .hub-hero-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+        .hub-footer-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
         }
         .canvas-header {
             padding: 12px 22px;
@@ -339,10 +368,7 @@
         .hub-gnb {
             background: #0F172A;
             color: white;
-            padding: 14px 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            padding: 14px 28px;
             position: relative;
             border-bottom: 1px solid #1E293B;
         }
@@ -415,12 +441,9 @@
             background: linear-gradient(135deg, #0B1120 0%, #0F172A 50%, #1E293B 100%);
             border-bottom: 1px solid #1E293B;
             color: white;
-            padding: 56px 42px 42px;
+            padding: 48px 28px 40px;
             position: relative;
             min-height: 320px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
         .hub-hero-left { max-width: 540px; }
         .hub-hero-tag-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
@@ -551,7 +574,12 @@
         }
 
         /* [PIN 4] Smart Game Matrix & Interactive Filter */
-        .hub-section { padding: 34px 42px; border-bottom: 1px solid #F1F5F9; position: relative; }
+        .hub-section {
+            padding: 36px 28px;
+            border-bottom: 1px solid #F1F5F9;
+            position: relative;
+            background: #FFFFFF;
+        }
         .hub-section-header {
             display: flex;
             align-items: center;
@@ -1016,14 +1044,6 @@
                         <a href="gnjoy_main_specification.html" class="nav-item-btn active">
                             <div class="nav-item-left"><span>메인 페이지</span></div>
                         </a>
-                        <ul class="nav-sub-tree">
-            <li><a href="#pin1" class="nav-sub-btn"><span>GNB &amp; 유저 바</span></a></li>
-            <li><a href="#pin2" class="nav-sub-btn"><span>Hero 슬라이더</span></a></li>
-            <li><a href="#pin3" class="nav-sub-btn"><span>Quick 메뉴</span></a></li>
-            <li><a href="#pin4" class="nav-sub-btn"><span>12종 게임 라이브러리</span></a></li>
-            <li><a href="#pin5" class="nav-sub-btn"><span>이벤트 &amp; 공지 보드</span></a></li>
-            <li><a href="#pin6" class="nav-sub-btn"><span>공식 푸터</span></a></li>
-        </ul>
                     </li>
 
                     <!-- 캐시충전 -->
@@ -1128,73 +1148,78 @@
                 <div class="canvas-card">
                     <div class="wf-hub-canvas">
                         
-                        <!-- [PIN 1] Hub GNB -->
+                        <!-- [PIN 1] Hub GNB (1400px Centered Container) -->
                         <div class="hub-gnb">
-                            <span class="pin pin-abs" style="top: 14px; left: 16px;" onclick="highlightSpec('pin1')">1</span>
-                            <div class="hub-logo">
-                                <img src="./gnjoy_logo_white.png" alt="GNJOY" style="height: 28px; object-fit: contain; vertical-align: middle;">
-                            </div>
-                            <div class="hub-nav-links">
-                                <span class="active">HOME</span>
-                                <span>GAMES</span>
-                                <span>TOP-UP</span>
-                                <span>COMMUNITY</span>
-                                <span>SUPPORT</span>
-                            </div>
-                            <div class="hub-gnb-right">
-                                <a href="javascript:void(0)" class="hub-btn-auth">Login</a>
-                                <a href="javascript:void(0)" class="hub-btn-signup">Sign Up</a>
-                                <span class="pin pin-abs" style="top: 14px; right: 10px;" onclick="highlightSpec('pin1')">1</span>
+                            <div class="hub-container hub-gnb-inner">
+                                <span class="pin pin-abs" style="top: 8px; left: -12px;" onclick="highlightSpec('pin1')">1</span>
+                                <div class="hub-logo">
+                                    <img src="./gnjoy_logo_white.png" alt="GNJOY" style="height: 28px; object-fit: contain; vertical-align: middle;">
+                                </div>
+                                <div class="hub-nav-links">
+                                    <span class="active">HOME</span>
+                                    <span>GAMES</span>
+                                    <span>TOP-UP</span>
+                                    <span>COMMUNITY</span>
+                                    <span>SUPPORT</span>
+                                </div>
+                                <div class="hub-gnb-right">
+                                    <a href="javascript:void(0)" class="hub-btn-auth">Login</a>
+                                    <a href="javascript:void(0)" class="hub-btn-signup">Sign Up</a>
+                                    <span class="pin pin-abs" style="top: 8px; right: -12px;" onclick="highlightSpec('pin1')">1</span>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- [PIN 2 & 3] Hero Banner with Live Video & Pinned Quick Menu -->
+                        <!-- [PIN 2 & 3] Hero Banner with Live Video & Pinned Quick Menu (1400px Centered Container) -->
                         <div class="hub-hero">
-                            <span class="pin pin-abs" style="top: 20px; left: 20px;" onclick="highlightSpec('pin2')">2</span>
-                            <div class="hub-hero-left">
-                                <div class="hub-hero-tag-row">
-                                    <span class="hub-badge-live">FEATURED TITLE</span>
-                                </div>
-                                <div class="hub-hero-title">Ragnarok Online Zero<br><span style="color: #FDA4AF; font-size: 26px;">GRAND OPEN</span></div>
-                                <div class="hub-hero-desc">정통 라그나로크의 감동과 진화된 시스템의 완벽한 조화! 지금 바로 미드가르드 대륙으로 새로운 모험을 떠나보세요.</div>
-                                <div class="hub-hero-cta-group">
-                                    <a href="javascript:void(0)" class="hub-btn-play-primary"><i class="fa-solid fa-play"></i> GAME START</a>
-                                </div>
-                            </div>
-
-                            <div style="display: flex; align-items: center; gap: 14px;">
-                                <div class="hub-hero-preview-box">
-                                    <div class="hub-play-video-icon"><i class="fa-solid fa-play"></i></div>
+                            <div class="hub-container hub-hero-inner">
+                                <span class="pin pin-abs" style="top: -10px; left: -12px;" onclick="highlightSpec('pin2')">2</span>
+                                <div class="hub-hero-left">
+                                    <div class="hub-hero-tag-row">
+                                        <span class="hub-badge-live">FEATURED TITLE</span>
+                                    </div>
+                                    <div class="hub-hero-title">Ragnarok Online Zero<br><span style="color: #FDA4AF; font-size: 26px;">GRAND OPEN</span></div>
+                                    <div class="hub-hero-desc">정통 라그나로크의 감동과 진화된 시스템의 완벽한 조화! 지금 바로 미드가르드 대륙으로 새로운 모험을 떠나보세요.</div>
+                                    <div class="hub-hero-cta-group">
+                                        <a href="javascript:void(0)" class="hub-btn-play-primary"><i class="fa-solid fa-play"></i> GAME START</a>
+                                    </div>
                                 </div>
 
-                                <!-- [PIN 3] Pinned Quick Menu (기획서 화면 내 고정) -->
-                                <div class="hub-floating-quick-menu">
-                                    <span class="pin pin-abs" style="top: -10px; left: -10px;" onclick="highlightSpec('pin3')">3</span>
-                                    <div class="hub-quick-header">QUICK</div>
-                                    <a href="javascript:void(0)" class="hub-quick-item" title="온라인 캐시 충전">
-                                        <i class="fa-solid fa-bolt" style="color: var(--brand-primary);"></i>
-                                        <span>캐시충전</span>
-                                    </a>
-                                    <a href="javascript:void(0)" class="hub-quick-item" title="쿠폰 시리얼 교환">
-                                        <i class="fa-solid fa-gift" style="color: #2563EB;"></i>
-                                        <span>쿠폰교환</span>
-                                    </a>
-                                    <a href="javascript:void(0)" class="hub-quick-item" title="고객지원 센터">
-                                        <i class="fa-solid fa-headset" style="color: #059669;"></i>
-                                        <span>고객지원</span>
-                                    </a>
-                                    <a href="javascript:void(0)" class="hub-quick-item hub-quick-top" title="맨 위로 이동">
-                                        <i class="fa-solid fa-chevron-up"></i>
-                                        <span>TOP</span>
-                                    </a>
+                                <div style="display: flex; align-items: center; gap: 14px;">
+                                    <div class="hub-hero-preview-box">
+                                        <div class="hub-play-video-icon"><i class="fa-solid fa-play"></i></div>
+                                    </div>
+
+                                    <!-- [PIN 3] Pinned Quick Menu (기획서 화면 내 고정) -->
+                                    <div class="hub-floating-quick-menu">
+                                        <span class="pin pin-abs" style="top: -10px; left: -10px;" onclick="highlightSpec('pin3')">3</span>
+                                        <div class="hub-quick-header">QUICK</div>
+                                        <a href="javascript:void(0)" class="hub-quick-item" title="온라인 캐시 충전">
+                                            <i class="fa-solid fa-bolt" style="color: var(--brand-primary);"></i>
+                                            <span>캐시충전</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="hub-quick-item" title="쿠폰 시리얼 교환">
+                                            <i class="fa-solid fa-gift" style="color: #2563EB;"></i>
+                                            <span>쿠폰교환</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="hub-quick-item" title="고객지원 센터">
+                                            <i class="fa-solid fa-headset" style="color: #059669;"></i>
+                                            <span>고객지원</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="hub-quick-item hub-quick-top" title="맨 위로 이동">
+                                            <i class="fa-solid fa-chevron-up"></i>
+                                            <span>TOP</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- [PIN 4] Game Matrix with PC & MO Separation -->
+                        <!-- [PIN 4] Game Matrix with PC & MO Separation (1400px Centered Container) -->
                         <div class="hub-section">
-                            <span class="pin pin-abs" style="top: 14px; left: 20px;" onclick="highlightSpec('pin4')">4</span>
-                            <div class="hub-section-header">
+                            <div class="hub-container">
+                                <span class="pin pin-abs" style="top: -8px; left: -12px;" onclick="highlightSpec('pin4')">4</span>
+                                <div class="hub-section-header">
                                 <div class="hub-section-title">GRAVITY GAME LIBRARY</div>
                                 <div class="hub-filter-tabs">
                                     <button class="hub-filter-btn active">전체 (12)</button>
@@ -1433,12 +1458,14 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
                         </div>
 
-                        <!-- [PIN 5] EVENT & NOTICE Dual Board -->
+                        <!-- [PIN 5] EVENT & NOTICE Dual Board (1400px Centered Container) -->
                         <div class="hub-section">
-                            <span class="pin pin-abs" style="top: 14px; left: 20px;" onclick="highlightSpec('pin5')">5</span>
-                            <div class="hub-feed-grid">
+                            <div class="hub-container">
+                                <span class="pin pin-abs" style="top: -8px; left: -12px;" onclick="highlightSpec('pin5')">5</span>
+                                <div class="hub-feed-grid">
                                 <!-- Left: EVENT Board -->
                                 <div class="hub-feed-box">
                                     <div class="hub-feed-head">
@@ -1514,12 +1541,13 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
                         </div>
 
-                        <!-- Real gnjoy.hk Official Footer -->
-                        <div class="hub-hk-footer" style="background: #0B1120; color: #94A3B8; padding: 28px 42px; font-size: 11.5px; position: relative; text-align: center; border-top: 1px solid #1E293B;">
-                            <span class="pin pin-abs" style="top: 14px; left: 16px;" onclick="highlightSpec('pin6')">6</span>
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+                        <!-- Real gnjoy.hk Official Footer (1400px Centered Container) -->
+                        <div class="hub-hk-footer" style="background: #0B1120; color: #94A3B8; padding: 28px 24px; font-size: 11.5px; position: relative; text-align: center; border-top: 1px solid #1E293B;">
+                            <div class="hub-container hub-footer-inner">
+                                <span class="pin pin-abs" style="top: 8px; left: -12px;" onclick="highlightSpec('pin6')">6</span>
                                 <div>
                                     <img src="./gnjoy_logo_white.png" alt="GRAVITY" style="height: 22px; opacity: 0.85;">
                                 </div>
@@ -1557,7 +1585,8 @@
                             <ul class="spec-bullet-list">
                                 <li><strong>화이트 GNJOY 공식 로고</strong>: 다크 네이비 GNB 상단에서 높은 가독성을 확보하도록 GNJOY 로고 텍스트를 선명한 화이트/레드 투톤으로 표출.</li>
                                 <li><strong>원클릭 로그인 &amp; 회원가입</strong>: 다국어/지갑/탑업 위젯을 정돈하고 영문 <code>[Login]</code>, <code>[Sign Up]</code> 버튼을 전면 배치하여 사용자 유입 및 인증 동선 간소화.</li>
-                                <li><strong>충전 동선 분리</strong>: 캐시 충전은 메인 내비게이션 <code>TOP-UP</code> 및 하단 4대 퀵 액션 카드를 통해 명확히 유도하여 GNB 우측 영역의 심플함과 가독성 극대화.</li>
+                                <li><strong>충전 동선 분리</strong>: 캐시 충전은 메인 내비게이션 <code>TOP-UP</code> 및 퀵 메뉴를 통해 명확히 유도하여 GNB 우측 영역의 심플함과 가독성 극대화.</li>
+                                <li><strong>1,400px ~ 1,440px 중앙 그리드 컨테이너 규격</strong>: 배경(GNB, Hero, 푸터)은 1920 Full-bleed로 확장하되, 핵심 인터랙션 및 콘텐츠 영역은 <code>max-width: 1400px; margin: 0 auto;</code> 중앙 정렬하여 1920 FHD 대형 화면과 14~16인치 노트북(1440~1536) 전 환경에서 안정적인 황금 비율과 시각적 밀도 유지.</li>
                             </ul>
                         </div>
                     </div>
