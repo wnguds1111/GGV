@@ -21,10 +21,10 @@
             --text-heading: #0F172A;
             --text-body: #334155;
             --text-muted: #64748B;
-            --brand-primary: #E11D48;
-            --brand-subtle: #FFF1F2;
+            --brand-primary: #0F172A;
+            --brand-subtle: #F1F5F9;
             --accent-blue: #2563EB;
-            --pin-bg: #7C3AED;
+            --pin-bg: #4F46E5;
             --pin-text: #FFFFFF;
         }
 
@@ -65,14 +65,14 @@
         .brand-icon {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, var(--brand-primary), #BE123C);
+            background: #1E293B; border: 1px solid #334155;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 15px;
             color: white;
-            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+            box-shadow: none;
         }
         .brand-text h1 { font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; }
         .brand-text p { font-size: 11px; color: #94A3B8; }
@@ -126,10 +126,11 @@
         }
         .nav-item-btn:hover { background: #1E293B; color: #F8FAFC; }
         .nav-item-btn.active {
-            background: var(--brand-primary);
+            background: #1E293B;
             color: #FFFFFF;
             font-weight: 800;
-            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
+            box-shadow: none;
+            border-left: 3px solid #64748B;
         }
         .nav-item-left { display: flex; align-items: center; gap: 8px; }
         
@@ -163,7 +164,7 @@
             text-decoration: none;
         }
         .nav-sub-btn:hover { background: #1E293B; color: #FFFFFF; }
-        .nav-sub-btn.active { background: rgba(225, 29, 72, 0.2); color: #FDA4AF; font-weight: 700; }
+        .nav-sub-btn.active { background: #1E293B; color: #FFFFFF; font-weight: 700; }
 
         .sidebar-footer {
             padding: 16px 20px;
@@ -210,14 +211,14 @@
             cursor: pointer;
         }
         .page-badge {
-            background: var(--brand-subtle);
-            color: var(--brand-primary);
+            background: #F1F5F9;
+            color: #0F172A;
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             padding: 4px 10px;
             border-radius: 6px;
-            border: 1px solid #FECDD3;
+            border: 1px solid #CBD5E1;
         }
         .page-heading { font-size: 15px; font-weight: 800; color: var(--text-heading); }
 
@@ -340,7 +341,7 @@
             font-size: 13px;
             outline: none;
         }
-        .wf-input-wrap input:focus { border-color: var(--brand-primary); }
+        .wf-input-wrap input:focus { border-color: #0F172A; }
 
         /* Turnstile & Submit */
         .wf-turnstile-box {
@@ -366,7 +367,7 @@
             font-size: 14px;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+            box-shadow: none;
         }
 
         .wf-auth-links {
@@ -397,8 +398,8 @@
         }
         .spec-item-box.highlighted {
             border-color: var(--pin-bg);
-            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.25);
-            background: #FAF5FF;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+            background: #F8FAFC;
         }
         .spec-item-header {
             display: flex;
