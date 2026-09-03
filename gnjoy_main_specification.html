@@ -484,51 +484,72 @@
             cursor: pointer;
         }
 
-        /* [PIN 3] 4 Direct Action Strip */
-        .hub-action-strip {
+        /* [PIN 3] Sleek Floating Right Quick Menu */
+        .hub-floating-quick-menu {
+            position: absolute;
+            right: 24px;
+            top: 360px;
+            z-index: 50;
             background: #FFFFFF;
-            border-bottom: 1px solid var(--border-main);
-            padding: 14px 42px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            position: relative;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-        }
-        .hub-action-card {
+            border: 1px solid var(--border-main);
+            border-radius: 12px;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.15);
+            width: 80px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            background: #F8FAFC;
-            border: 1px solid #E2E8F0;
-            border-radius: 8px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s ease;
+            padding: 10px 6px;
+            gap: 6px;
         }
-        .hub-action-card:hover {
-            border-color: var(--brand-primary);
-            background: #FFF1F2;
-            transform: translateY(-2px);
+        .hub-quick-header {
+            font-size: 10px;
+            font-weight: 900;
+            color: #94A3B8;
+            letter-spacing: 0.8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #F1F5F9;
+            width: 100%;
+            text-align: center;
         }
-        .hub-action-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+        .hub-quick-item {
+            width: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            color: white;
-            flex-shrink: 0;
+            padding: 8px 4px;
+            border-radius: 8px;
+            color: #334155;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 800;
+            gap: 4px;
+            position: relative;
+            transition: all 0.15s ease;
         }
-        .hub-action-icon.red { background: linear-gradient(135deg, #E11D48, #BE123C); }
-        .hub-action-icon.blue { background: linear-gradient(135deg, #2563EB, #1D4ED8); }
-        .hub-action-icon.purple { background: linear-gradient(135deg, #7C3AED, #6D28D9); }
-        .hub-action-icon.green { background: linear-gradient(135deg, #059669, #047857); }
-        .hub-action-title { font-size: 12.5px; font-weight: 800; color: #0F172A; }
-        .hub-action-sub { font-size: 11px; color: #64748B; margin-top: 1px; }
+        .hub-quick-item i { font-size: 18px; }
+        .hub-quick-item:hover {
+            background: #F8FAFC;
+            color: var(--brand-primary);
+            transform: translateY(-2px);
+        }
+        .hub-quick-tag {
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            background: var(--brand-primary);
+            color: white;
+            font-size: 8px;
+            font-weight: 900;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+        .hub-quick-top {
+            border-top: 1px solid #F1F5F9;
+            margin-top: 4px;
+            padding-top: 6px;
+            color: #64748B;
+        }
 
         /* [PIN 4] Smart Game Matrix & Interactive Filter */
         .hub-section { padding: 34px 42px; border-bottom: 1px solid #F1F5F9; position: relative; }
@@ -1000,36 +1021,26 @@
                             </div>
                         </div>
 
-                        <!-- [PIN 3] 4-Direct Action Strip -->
-                        <div class="hub-action-strip">
-                            <span class="pin pin-abs" style="top: -12px; left: 20px;" onclick="highlightSpec('pin3')">3</span>
-                            <a href="javascript:void(0)" class="hub-action-card">
-                                <div class="hub-action-icon red"><i class="fa-solid fa-bolt"></i></div>
-                                <div>
-                                    <div class="hub-action-title">온라인 캐시 충전</div>
-                                    <div class="hub-action-sub">결제 시 +15% 보너스 다이아</div>
-                                </div>
+                        <!-- [PIN 3] Floating Right Quick Menu (우측 플로팅 퀵메뉴) -->
+                        <div class="hub-floating-quick-menu">
+                            <span class="pin pin-abs" style="top: -10px; left: -10px;" onclick="highlightSpec('pin3')">3</span>
+                            <div class="hub-quick-header">QUICK</div>
+                            <a href="javascript:void(0)" class="hub-quick-item" title="온라인 캐시 충전">
+                                <i class="fa-solid fa-bolt" style="color: var(--brand-primary);"></i>
+                                <span>캐시충전</span>
+                                <span class="hub-quick-tag">+15%</span>
                             </a>
-                            <a href="javascript:void(0)" class="hub-action-card">
-                                <div class="hub-action-icon blue"><i class="fa-solid fa-gift"></i></div>
-                                <div>
-                                    <div class="hub-action-title">쿠폰 시리얼 교환</div>
-                                    <div class="hub-action-sub">사전예약 &amp; 이벤트 보상 수령</div>
-                                </div>
+                            <a href="javascript:void(0)" class="hub-quick-item" title="쿠폰 시리얼 교환">
+                                <i class="fa-solid fa-gift" style="color: #2563EB;"></i>
+                                <span>쿠폰교환</span>
                             </a>
-                            <a href="javascript:void(0)" class="hub-action-card">
-                                <div class="hub-action-icon purple"><i class="fa-solid fa-share-nodes"></i></div>
-                                <div>
-                                    <div class="hub-action-title">소셜 미디어</div>
-                                    <div class="hub-action-sub">Discord / FB / 유튜브 / 인스타</div>
-                                </div>
+                            <a href="javascript:void(0)" class="hub-quick-item" title="고객지원 센터">
+                                <i class="fa-solid fa-headset" style="color: #059669;"></i>
+                                <span>고객지원</span>
                             </a>
-                            <a href="javascript:void(0)" class="hub-action-card">
-                                <div class="hub-action-icon green"><i class="fa-solid fa-headset"></i></div>
-                                <div>
-                                    <div class="hub-action-title">고객지원</div>
-                                    <div class="hub-action-sub">1:1 온라인 문의 &amp; FAQ</div>
-                                </div>
+                            <a href="javascript:void(0)" class="hub-quick-item hub-quick-top" title="맨 위로 이동">
+                                <i class="fa-solid fa-chevron-up"></i>
+                                <span>TOP</span>
                             </a>
                         </div>
 
@@ -1402,17 +1413,19 @@
                     <!-- PIN 3 SPEC -->
                     <div class="spec-item-box" id="spec-pin3">
                         <div class="spec-item-header">
-                            <div class="spec-pin-title"><span class="pin">3</span> <span>4대 원클릭 퀵 액션 스트립</span></div>
-                            <span class="spec-tag-type">Action Strip</span>
+                            <div class="spec-pin-title"><span class="pin">3</span> <span>우측 플로팅 퀵메뉴 (Wing Banner)</span></div>
+                            <span class="spec-tag-type">Floating Quick Menu</span>
                         </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>유저 필수 4대 목적을 1열 배치</strong>:
-                                    <br>• 온라인 캐시 충전 (+15% 보너스 다이아 캐시백 프로모션)
-                                    <br>• 쿠폰 시리얼 교환 (사전예약/이벤트 보상 즉시 수령)
-                                    <br>• 소셜 미디어 (Discord / FB / 유튜브 / 인스타 공식 채널)
-                                    <br>• 고객지원 (1:1 온라인 문의 및 FAQ 센터)
+                                <li><strong>화면 우측 상시 플로팅</strong>: 메인 컨텐츠 흐름(히어로 ➔ 게임 라이브러리)을 방해하지 않고 우측 날개에 깔끔하게 고정 배치되어 언제든 원클릭 접근 가능.</li>
+                                <li><strong>핵심 유틸리티 3종 + TOP 버튼 구성</strong>:
+                                    <br>• <strong>캐시충전</strong>: +15% 보너스 태그 부착 및 billing01(W) 직결
+                                    <br>• <strong>쿠폰교환</strong>: 시리얼 번호 입력 팝업 호출
+                                    <br>• <strong>고객지원</strong>: 1:1 온라인 문의 및 FAQ 센터 연결
+                                    <br>• <strong>TOP</strong>: 스크롤 최상단 스무스 이동
                                 </li>
+                                <li><strong>컨텐츠 몰입도 극대화</strong>: 가로 띠 배너를 제거하고 소셜미디어 중복을 정리하여 시선이 게임 그리드로 자연스럽게 이어지도록 최적화.</li>
                             </ul>
                         </div>
                     </div>
