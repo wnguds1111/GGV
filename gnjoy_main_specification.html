@@ -721,48 +721,158 @@
             transform: translateY(-1px);
         }
 
-        /* [PIN 5] News & Community Dual Feed */
+        /* [PIN 5] EVENT & NOTICE Dual Board */
         .hub-feed-grid {
             display: grid;
-            grid-template-columns: 1.3fr 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
         .hub-feed-box {
-            background: #F8FAFC;
+            background: #FFFFFF;
             border: 1px solid #E2E8F0;
             border-radius: 10px;
-            padding: 18px 20px;
+            padding: 20px 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
         }
-        .hub-feed-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .hub-feed-head h4 { font-size: 14px; font-weight: 800; color: #0F172A; }
-        .hub-feed-more { font-size: 11px; color: var(--brand-primary); font-weight: 700; text-decoration: none; }
-        
+        .hub-feed-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .hub-feed-head h4 {
+            font-size: 15px;
+            font-weight: 900;
+            color: #0F172A;
+            letter-spacing: 0.5px;
+        }
+        .hub-feed-more {
+            font-size: 11.5px;
+            color: var(--brand-primary);
+            font-weight: 800;
+            text-decoration: none;
+            transition: opacity 0.15s;
+        }
+        .hub-feed-more:hover { opacity: 0.8; }
+
+        /* Left: Event Thumbnail Cards */
+        .hub-event-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            flex: 1;
+        }
+        .hub-event-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            background: #FAFAFA;
+            transition: all 0.2s ease;
+        }
+        .hub-event-card:hover {
+            border-color: var(--brand-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.1);
+        }
+        .hub-event-thumb {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 10px;
+            text-align: center;
+        }
+        .hub-event-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: white;
+        }
+        .hub-event-badge.hot { background: #DC2626; }
+        .hub-event-badge.new { background: #059669; }
+        .hub-event-info {
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: #FFFFFF;
+            flex: 1;
+        }
+        .hub-event-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: #0F172A;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .hub-event-date {
+            font-size: 10.5px;
+            color: #94A3B8;
+            margin-top: auto;
+        }
+
+        /* Right: Notice Rows */
+        .hub-notice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+        }
         .hub-news-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed #E2E8F0;
-            font-size: 12px;
+            padding: 9px 6px;
+            border-bottom: 1px dashed #F1F5F9;
+            font-size: 12.5px;
+            text-decoration: none;
+            color: inherit;
+            border-radius: 4px;
+            transition: background 0.15s ease;
         }
         .hub-news-row:last-child { border-bottom: none; }
-        .hub-news-tag { font-size: 9.5px; font-weight: 800; padding: 2px 5px; border-radius: 3px; background: #E2E8F0; color: #475569; margin-right: 6px; }
+        .hub-news-row:hover { background: #F8FAFC; }
+        .hub-news-row:hover .hub-news-text { color: var(--brand-primary); }
+        .hub-news-title-box { display: flex; align-items: center; gap: 8px; overflow: hidden; }
+        .hub-news-tag {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background: #F1F5F9;
+            color: #475569;
+            flex-shrink: 0;
+        }
         .hub-news-tag.hot { background: #FEE2E2; color: #DC2626; }
-
-        .hub-sns-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
-        .hub-sns-btn {
-            background: #FFFFFF;
-            border: 1px solid #CBD5E1;
-            border-radius: 6px;
-            padding: 10px 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
+        .hub-news-text {
+            color: #1E293B;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color 0.15s ease;
+        }
+        .hub-news-date {
+            color: #94A3B8;
             font-size: 11px;
-            font-weight: 700;
-            color: #334155;
-            text-decoration: none;
+            flex-shrink: 0;
+            margin-left: 10px;
         }
 
         /* [PIN 6] Fast CS Search & Real GNJOY.HK Matching Footer */
@@ -1288,64 +1398,84 @@
                             </div>
                         </div>
 
-                        <!-- [PIN 5] News & Community Live Feed -->
+                        <!-- [PIN 5] EVENT & NOTICE Dual Board -->
                         <div class="hub-section">
                             <span class="pin pin-abs" style="top: 14px; left: 20px;" onclick="highlightSpec('pin5')">5</span>
                             <div class="hub-feed-grid">
-                                <!-- News Feed -->
+                                <!-- Left: EVENT Board -->
                                 <div class="hub-feed-box">
                                     <div class="hub-feed-head">
-                                        <h4><i class="fa-solid fa-bullhorn" style="color: var(--brand-primary);"></i> 최신 소식 &amp; 공지</h4>
-                                        <a href="javascript:void(0)" class="hub-feed-more">전체보기 +</a>
+                                        <h4>EVENT</h4>
+                                        <a href="javascript:void(0)" class="hub-feed-more">View All +</a>
                                     </div>
-                                    <div class="hub-news-row">
-                                        <div><span class="hub-news-tag hot">HOT</span> <strong>[이벤트]</strong> MyCard 충전 시 15% 보너스 다이아 캐시백</div>
-                                        <span style="color: #94A3B8; font-size: 10.5px;">09.02</span>
-                                    </div>
-                                    <div class="hub-news-row">
-                                        <div><span class="hub-news-tag">점검</span> <strong>[점검]</strong> RO Zero 정기 점검 및 서버 안정화 패치 안내</div>
-                                        <span style="color: #94A3B8; font-size: 10.5px;">09.01</span>
-                                    </div>
-                                    <div class="hub-news-row">
-                                        <div><span class="hub-news-tag">안내</span> <strong>[신규]</strong> 신규 라그나로크 IP 신작 사전예약 오픈</div>
-                                        <span style="color: #94A3B8; font-size: 10.5px;">08.28</span>
+                                    <div class="hub-event-grid">
+                                        <a href="javascript:void(0)" class="hub-event-card">
+                                            <div class="hub-event-thumb" style="background: linear-gradient(135deg, #1E1B4B, #312E81);">
+                                                <span class="hub-event-badge hot">ING</span>
+                                                <span style="color: #FDA4AF; font-size: 13px; font-weight: 800;">MyCard 충전 이벤트</span>
+                                            </div>
+                                            <div class="hub-event-info">
+                                                <div class="hub-event-title">MyCard 결제 시 15% 보너스 다이아 페이백 프로모션</div>
+                                                <div class="hub-event-date">2026.09.01 ~ 09.30</div>
+                                            </div>
+                                        </a>
+                                        <a href="javascript:void(0)" class="hub-event-card">
+                                            <div class="hub-event-thumb" style="background: linear-gradient(135deg, #064E3B, #047857);">
+                                                <span class="hub-event-badge new">NEW</span>
+                                                <span style="color: #A7F3D0; font-size: 13px; font-weight: 800;">RO Zero 사전등록</span>
+                                            </div>
+                                            <div class="hub-event-info">
+                                                <div class="hub-event-title">그랜드 오픈 기념 한정 코스튬 &amp; 특별 탈것 100% 지급</div>
+                                                <div class="hub-event-date">2026.08.25 ~ 오픈 전까지</div>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
 
-                                <!-- SNS Community Feed -->
+                                <!-- Right: NOTICE Board -->
                                 <div class="hub-feed-box">
                                     <div class="hub-feed-head">
-                                        <h4><i class="fa-solid fa-users" style="color: #2563EB;"></i> 공식 커뮤니티 직결</h4>
-                                        <span style="font-size: 11px; color: #64748B;">GGH Official Hub</span>
+                                        <h4>NOTICE</h4>
+                                        <a href="javascript:void(0)" class="hub-feed-more">View All +</a>
                                     </div>
-                                    <div class="hub-sns-buttons">
-                                        <a href="javascript:void(0)" class="hub-sns-btn">
-                                            <i class="fa-brands fa-discord" style="color: #5865F2; font-size: 18px;"></i>
-                                            <span>Discord</span>
+                                    <div class="hub-notice-list">
+                                        <a href="javascript:void(0)" class="hub-news-row">
+                                            <div class="hub-news-title-box">
+                                                <span class="hub-news-tag hot">이벤트</span>
+                                                <span class="hub-news-text">[이벤트] 9월 가을 맞이 특별 출석 보상 안내</span>
+                                            </div>
+                                            <span class="hub-news-date">09.02</span>
                                         </a>
-                                        <a href="javascript:void(0)" class="hub-sns-btn">
-                                            <i class="fa-brands fa-facebook" style="color: #1877F2; font-size: 18px;"></i>
-                                            <span>Facebook</span>
+                                        <a href="javascript:void(0)" class="hub-news-row">
+                                            <div class="hub-news-title-box">
+                                                <span class="hub-news-tag">점검</span>
+                                                <span class="hub-news-text">[점검] RO Zero 정기 점검 및 서버 안정화 패치 안내</span>
+                                            </div>
+                                            <span class="hub-news-date">09.01</span>
                                         </a>
-                                        <a href="javascript:void(0)" class="hub-sns-btn">
-                                            <i class="fa-brands fa-youtube" style="color: #FF0000; font-size: 18px;"></i>
-                                            <span>YouTube</span>
+                                        <a href="javascript:void(0)" class="hub-news-row">
+                                            <div class="hub-news-title-box">
+                                                <span class="hub-news-tag">공지</span>
+                                                <span class="hub-news-text">[공지] GNJOY 통합 보안 인증 시스템 업데이트 안내</span>
+                                            </div>
+                                            <span class="hub-news-date">08.30</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="hub-news-row">
+                                            <div class="hub-news-title-box">
+                                                <span class="hub-news-tag">안내</span>
+                                                <span class="hub-news-text">[안내] 신규 라그나로크 IP 신작 글로벌 사전예약 오픈</span>
+                                            </div>
+                                            <span class="hub-news-date">08.28</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="hub-news-row">
+                                            <div class="hub-news-title-box">
+                                                <span class="hub-news-tag">안내</span>
+                                                <span class="hub-news-text">[안내] 해외 결제 수단 추가 및 무이자 할부 혜택 안내</span>
+                                            </div>
+                                            <span class="hub-news-date">08.25</span>
                                         </a>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- [PIN 6] Fast CS & Real gnjoy.hk Matching Footer -->
-                        <div class="hub-cs-strip">
-                            <span class="pin pin-abs" style="top: 14px; left: 16px;" onclick="highlightSpec('pin6')">6</span>
-                            <div class="hub-cs-left">
-                                <h3>도움이 필요하신가요? 고객지원 센터</h3>
-                                <p>계정 보안, 결제 오류, 쿠폰 교환 문의를 신속하게 해결해 드립니다.</p>
-                            </div>
-                            <div class="hub-search-box">
-                                <input type="text" class="hub-search-input" placeholder="궁금한 질문을 검색하세요 (예: 비밀번호 변경)...">
-                                <button class="hub-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </div>
 
@@ -1449,13 +1579,14 @@
                     <!-- PIN 5 SPEC -->
                     <div class="spec-item-box" id="spec-pin5">
                         <div class="spec-item-header">
-                            <div class="spec-pin-title"><span class="pin">5</span> <span>새소식 &amp; 공식 커뮤니티</span></div>
-                            <span class="spec-tag-type">News &amp; Feed</span>
+                            <div class="spec-pin-title"><span class="pin">5</span> <span>이벤트 &amp; 공지사항 듀얼 보드</span></div>
+                            <span class="spec-tag-type">EVENT &amp; NOTICE</span>
                         </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>공지사항 &amp; 이벤트 피드</strong>: 최신 뉴스 3건 컴팩트 노출.</li>
-                                <li><strong>공식 커뮤니티 퀵 채널</strong>: Discord, Facebook, YouTube 공식 채널 바로가기 버튼 제공.</li>
+                                <li><strong>좌측 EVENT 썸네일 게시판</strong>: 영문 <code>EVENT</code> 헤더와 2단 이벤트 비주얼 썸네일 카드 배치를 통해 주요 프로모션 및 혜택 집중 노출.</li>
+                                <li><strong>우측 NOTICE 공지사항 게시판</strong>: 영문 <code>NOTICE</code> 헤더와 5개 카테고리별(이벤트, 점검, 공지, 안내) 최신 공지 리스트로 게임 운영 정보 전달.</li>
+                                <li><strong>클린 텍스트 헤더</strong>: 불필요한 이모티콘을 배제하고 글로벌 포털 스타일에 맞춘 심플한 영문 헤더 적용.</li>
                             </ul>
                         </div>
                     </div>
@@ -1463,14 +1594,13 @@
                     <!-- PIN 6 SPEC -->
                     <div class="spec-item-box" id="spec-pin6">
                         <div class="spec-item-header">
-                            <div class="spec-pin-title"><span class="pin">6</span> <span>실제 gnjoy.hk 공식 푸터 &amp; 고객지원</span></div>
+                            <div class="spec-pin-title"><span class="pin">6</span> <span>실제 gnjoy.hk 공식 푸터</span></div>
                             <span class="spec-tag-type">gnjoy.hk Footer</span>
                         </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>실제 gnjoy.hk 푸터 100% 일치</strong>: <code>服務條款 (이용약관)</code>, <code>隱私權政策 (개인정보처리방침)</code>, <code>客服中心 (고객센터)</code> 3대 핵심 정책 링크 및 공식 저작권(Copyright) 단독 구성.</li>
-                                <li><strong>단순하고 명확한 브랜드 표기</strong>: Gravity 공식 로고와 저작권(Gravity Co., Ltd. &amp; Lee MyoungJin studio DTDS) 표기로 법적 요건 충족 및 가독성 극대화.</li>
-                                <li><strong>원클릭 고객지원 검색</strong>: 상단 CS 스트립에서 FAQ 검색 및 1:1 온라인 문의 바로가기 제공.</li>
+                                <li><strong>실제 gnjoy.hk 공식 푸터 100% 일치</strong>: <code>服務條款 (이용약관)</code>, <code>隱私權政策 (개인정보처리방침)</code>, <code>客服中心 (고객센터)</code> 3대 핵심 정책 링크 및 Gravity 공식 저작권(Copyright) 단독 배치.</li>
+                                <li><strong>복잡한 검색바 제거</strong>: 하단 CS 검색 스트립을 제거하고 공식 푸터로 직결하여 군더더기 없는 페이지 마감 제공.</li>
                             </ul>
                         </div>
                     </div>
@@ -1497,10 +1627,6 @@
                                 <a href="javascript:void(0)" class="hub-btn-play-primary" style="padding: 8px 18px; font-size: 12px;"><i class="fa-solid fa-play"></i> GAME START</a>
                             </div>
                         </div>
-                        <div class="hub-action-strip" style="grid-template-columns: repeat(2, 1fr); padding: 14px 20px;">
-                            <div class="hub-action-card"><div class="hub-action-title">온라인 캐시 충전</div></div>
-                            <div class="hub-action-card"><div class="hub-action-title">쿠폰 시리얼 교환</div></div>
-                        </div>
                     </div>
 
                     <!-- Mobile -->
@@ -1516,10 +1642,6 @@
                         <div class="hub-hero" style="padding: 24px 16px;">
                             <div class="hub-hero-title" style="font-size: 18px;">Ragnarok Zero<br><span style="color: #FDA4AF; font-size: 13px;">GRAND OPEN</span></div>
                             <a href="javascript:void(0)" class="hub-btn-play-primary" style="padding: 6px 14px; font-size: 11px; margin-top: 10px;"><i class="fa-solid fa-play"></i> GAME START</a>
-                        </div>
-                        <div class="hub-action-strip" style="grid-template-columns: 1fr; padding: 10px 14px;">
-                            <div class="hub-action-card"><div class="hub-action-title">온라인 캐시 충전 (+15%)</div></div>
-                            <div class="hub-action-card"><div class="hub-action-title">쿠폰 번호 즉시 등록</div></div>
                         </div>
                     </div>
                 </div>
@@ -1544,32 +1666,27 @@
             const pcView = document.getElementById('pc-spec-view');
             const respView = document.getElementById('responsive-spec-view');
             const btnPc = document.getElementById('btn-pc');
-            const btnResp = document.getElementById('btn-responsive');
+            const btnMo = document.getElementById('btn-mo');
 
             if (mode === 'pc') {
                 pcView.style.display = 'grid';
                 respView.style.display = 'none';
                 btnPc.classList.add('active');
-                btnResp.classList.remove('active');
+                btnMo.classList.remove('active');
             } else {
                 pcView.style.display = 'none';
                 respView.style.display = 'block';
+                btnMo.classList.add('active');
                 btnPc.classList.remove('active');
-                btnResp.classList.add('active');
             }
         }
 
         function highlightSpec(pinId) {
-            const specEl = document.getElementById('spec-' + pinId);
-            if (specEl) {
-                specEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                specEl.style.transition = 'all 0.3s ease';
-                specEl.style.boxShadow = '0 0 0 3px #A855F7';
-                specEl.style.borderColor = '#7C3AED';
-                setTimeout(() => {
-                    specEl.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)';
-                    specEl.style.borderColor = 'var(--border-main)';
-                }, 2000);
+            document.querySelectorAll('.spec-item-box').forEach(el => el.classList.remove('highlighted'));
+            const target = document.getElementById('spec-' + pinId);
+            if (target) {
+                target.classList.add('highlighted');
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
     </script>
