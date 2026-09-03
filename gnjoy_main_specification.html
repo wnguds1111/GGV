@@ -642,41 +642,70 @@
             transform: translateY(-2px);
         }
 
-        /* Clickable Thumbnail (Height 160px) */
+        /* Clickable Thumbnail (Wireframe 16:9 Placeholder Format) */
         .hub-thumb-link {
             position: relative;
             display: block;
-            height: 160px;
-            background: #0F172A;
-            color: white;
+            height: 135px;
+            background: #F1F5F9;
+            color: #334155;
             text-decoration: none;
             overflow: hidden;
+            border-bottom: 1px solid #E2E8F0;
         }
         .hub-thumb-img-box {
             width: 100%;
             height: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 4px;
+            background: #F1F5F9;
+            transition: all 0.2s ease;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .hub-thumb-img-box i {
+            font-size: 26px;
+            color: #94A3B8;
+            margin-bottom: 2px;
+            transition: color 0.2s ease;
+        }
+        .hub-thumb-title {
+            font-size: 13.5px;
             font-weight: 800;
-            font-size: 14px;
+            color: #0F172A;
             letter-spacing: -0.2px;
-            transition: transform 0.25s ease;
+            text-align: center;
+            line-height: 1.2;
+        }
+        .hub-thumb-sub {
+            font-size: 10.5px;
+            font-weight: 500;
+            color: #94A3B8;
+            text-align: center;
         }
         .hub-thumb-link:hover .hub-thumb-img-box {
-            transform: scale(1.08);
+            background: #E2E8F0;
+        }
+        .hub-thumb-link:hover .hub-thumb-img-box i {
+            color: #475569;
+        }
+        .hub-thumb-link:hover .hub-thumb-title {
+            color: #000000;
         }
         .hub-thumb-hover-badge {
             position: absolute;
             inset: 0;
-            background: rgba(15, 23, 42, 0.78);
+            background: rgba(15, 23, 42, 0.75);
             color: #FFFFFF;
+            font-size: 11.5px;
+            font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            font-size: 12px;
-            font-weight: 800;
             opacity: 0;
             transition: opacity 0.2s ease;
         }
@@ -1304,7 +1333,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://rozero.gnjoy.com.tw" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status open">OPEN</span>
-                                        <div class="hub-thumb-img-box"><i class="fa-regular fa-image"></i><span>RO ZERO</span></div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">RO ZERO</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1323,7 +1356,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://roglobal.com" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status hot">HOT</span>
-                                        <div class="hub-thumb-img-box"><i class="fa-regular fa-image"></i><span>RO ORIGIN</span></div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">RO ORIGIN</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1342,7 +1379,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://rorebirth.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status obt">OBT</span>
-                                        <div class="hub-thumb-img-box">RO 重生</div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">RO 重生</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1361,7 +1402,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://landverse.maxion.gg/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status open">OPEN</span>
-                                        <div class="hub-thumb-img-box"><i class="fa-regular fa-image"></i><span>LANDVERSE</span></div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">LANDVERSE</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1380,7 +1425,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://rom.gnjoy.hk/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status open">OPEN</span>
-                                        <div class="hub-thumb-img-box"><i class="fa-regular fa-image"></i><span>RO M</span></div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">RO M</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1399,7 +1448,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://rox.gnjoy.hk/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status open">OPEN</span>
-                                        <div class="hub-thumb-img-box"><i class="fa-regular fa-image"></i><span>ROX</span></div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">ROX</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1418,7 +1471,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://roorigin.gnjoy.com.tw/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status open">OPEN</span>
-                                        <div class="hub-thumb-img-box">初心之戰</div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">初心之戰</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1437,7 +1494,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://www.gnjoy.hk/" target="_blank" class="hub-thumb-link" title="사전예약 새창 이동">
                                         <span class="hub-badge-status prereg">PRE-REG</span>
-                                        <div class="hub-thumb-img-box">RO 曙光</div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">RO 曙光</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 사전예약</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1456,7 +1517,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://www.gnjoy.hk/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status open">OPEN</span>
-                                        <div class="hub-thumb-img-box"><i class="fa-regular fa-image"></i><span>RO CRUSH</span></div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">RO CRUSH</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1475,7 +1540,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://ro2.gnjoy.com/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status open">OPEN</span>
-                                        <div class="hub-thumb-img-box"><i class="fa-regular fa-image"></i><span>RO 2</span></div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">RO ONLINE 2</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1494,7 +1563,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://gunbound.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status open">OPEN</span>
-                                        <div class="hub-thumb-img-box"><i class="fa-regular fa-image"></i><span>GUNBOUND</span></div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">GUNBOUND</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
@@ -1513,7 +1586,11 @@
                                 <div class="hub-game-card">
                                     <a href="https://dragonica.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
                                         <span class="hub-badge-status open">OPEN</span>
-                                        <div class="hub-thumb-img-box"><i class="fa-regular fa-image"></i><span>DRAGONICA</span></div>
+                                        <div class="hub-thumb-img-box">
+                                            <i class="fa-regular fa-image"></i>
+                                            <span class="hub-thumb-title">DRAGONICA</span>
+                                            <span class="hub-thumb-sub">16:9 Image Placeholder</span>
+                                        </div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
