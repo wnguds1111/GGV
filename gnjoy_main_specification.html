@@ -459,8 +459,8 @@
 
         /* Hero Right: Game Keyart Video / Carousel Preview */
         .hub-hero-preview-box {
-            width: 380px;
-            height: 220px;
+            width: 320px;
+            height: 200px;
             background: #1E293B;
             border-radius: 12px;
             border: 2px solid rgba(255,255,255,0.15);
@@ -472,35 +472,33 @@
             justify-content: center;
         }
         .hub-play-video-icon {
-            width: 54px;
-            height: 54px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: rgba(225, 29, 72, 0.9);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             box-shadow: 0 0 20px rgba(225, 29, 72, 0.6);
             cursor: pointer;
         }
 
-        /* [PIN 3] Sleek Floating Quick Menu (Fixed Bottom-Right) */
+        /* [PIN 3] Pinned Quick Menu (Fixed inside Hero Section) */
         .hub-floating-quick-menu {
-            position: fixed;
-            bottom: 28px;
-            right: 360px;
-            z-index: 100;
+            position: relative;
             background: #FFFFFF;
             border: 1px solid var(--border-main);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
-            width: 76px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            width: 72px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 10px 6px;
-            gap: 6px;
+            padding: 8px 4px;
+            gap: 4px;
+            flex-shrink: 0;
         }
         .hub-quick-header {
             font-size: 10px;
@@ -1120,7 +1118,7 @@
                             </div>
                         </div>
 
-                        <!-- [PIN 2] Hero Banner with Live Video & GAME START CTA -->
+                        <!-- [PIN 2 & 3] Hero Banner with Live Video & Pinned Quick Menu -->
                         <div class="hub-hero">
                             <span class="pin pin-abs" style="top: 20px; left: 20px;" onclick="highlightSpec('pin2')">2</span>
                             <div class="hub-hero-left">
@@ -1134,31 +1132,33 @@
                                 </div>
                             </div>
 
-                            <div class="hub-hero-preview-box">
-                                <div class="hub-play-video-icon"><i class="fa-solid fa-play"></i></div>
-                            </div>
-                        </div>
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <div class="hub-hero-preview-box">
+                                    <div class="hub-play-video-icon"><i class="fa-solid fa-play"></i></div>
+                                </div>
 
-                        <!-- [PIN 3] Floating Right Quick Menu (우측 플로팅 퀵메뉴) -->
-                        <div class="hub-floating-quick-menu">
-                            <span class="pin pin-abs" style="top: -10px; left: -10px;" onclick="highlightSpec('pin3')">3</span>
-                            <div class="hub-quick-header">QUICK</div>
-                            <a href="javascript:void(0)" class="hub-quick-item" title="온라인 캐시 충전">
-                                <i class="fa-solid fa-bolt" style="color: var(--brand-primary);"></i>
-                                <span>캐시충전</span>
-                            </a>
-                            <a href="javascript:void(0)" class="hub-quick-item" title="쿠폰 시리얼 교환">
-                                <i class="fa-solid fa-gift" style="color: #2563EB;"></i>
-                                <span>쿠폰교환</span>
-                            </a>
-                            <a href="javascript:void(0)" class="hub-quick-item" title="고객지원 센터">
-                                <i class="fa-solid fa-headset" style="color: #059669;"></i>
-                                <span>고객지원</span>
-                            </a>
-                            <a href="javascript:void(0)" class="hub-quick-item hub-quick-top" title="맨 위로 이동">
-                                <i class="fa-solid fa-chevron-up"></i>
-                                <span>TOP</span>
-                            </a>
+                                <!-- [PIN 3] Pinned Quick Menu (기획서 화면 내 고정) -->
+                                <div class="hub-floating-quick-menu">
+                                    <span class="pin pin-abs" style="top: -10px; left: -10px;" onclick="highlightSpec('pin3')">3</span>
+                                    <div class="hub-quick-header">QUICK</div>
+                                    <a href="javascript:void(0)" class="hub-quick-item" title="온라인 캐시 충전">
+                                        <i class="fa-solid fa-bolt" style="color: var(--brand-primary);"></i>
+                                        <span>캐시충전</span>
+                                    </a>
+                                    <a href="javascript:void(0)" class="hub-quick-item" title="쿠폰 시리얼 교환">
+                                        <i class="fa-solid fa-gift" style="color: #2563EB;"></i>
+                                        <span>쿠폰교환</span>
+                                    </a>
+                                    <a href="javascript:void(0)" class="hub-quick-item" title="고객지원 센터">
+                                        <i class="fa-solid fa-headset" style="color: #059669;"></i>
+                                        <span>고객지원</span>
+                                    </a>
+                                    <a href="javascript:void(0)" class="hub-quick-item hub-quick-top" title="맨 위로 이동">
+                                        <i class="fa-solid fa-chevron-up"></i>
+                                        <span>TOP</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- [PIN 4] Game Matrix with PC & MO Separation -->
@@ -1550,19 +1550,19 @@
                     <!-- PIN 3 SPEC -->
                     <div class="spec-item-box" id="spec-pin3">
                         <div class="spec-item-header">
-                            <div class="spec-pin-title"><span class="pin">3</span> <span>우측 플로팅 퀵메뉴 (Wing Banner)</span></div>
-                            <span class="spec-tag-type">Floating Quick Menu</span>
+                            <div class="spec-pin-title"><span class="pin">3</span> <span>화면 고정 퀵메뉴 (Quick Utility Bar)</span></div>
+                            <span class="spec-tag-type">Quick Utility</span>
                         </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>화면 우측 상시 플로팅</strong>: 메인 컨텐츠 흐름(히어로 ➔ 게임 라이브러리)을 방해하지 않고 우측 날개에 깔끔하게 고정 배치되어 언제든 원클릭 접근 가능.</li>
+                                <li><strong>메인 비주얼 우측 정적 고정</strong>: 화면 스크롤 시 따라다니지 않고 메인 비주얼 우측 영상 영역 옆에 깔끔하게 고정되어, 우측 디스크립션 패널 및 게임 본문 텍스트 겹침 완벽 차단.</li>
                                 <li><strong>핵심 유틸리티 3종 + TOP 버튼 구성</strong>:
                                     <br>• <strong>캐시충전</strong>: 온라인 결제 센터 billing01(W) 직결
                                     <br>• <strong>쿠폰교환</strong>: 시리얼 번호 입력 팝업 호출
                                     <br>• <strong>고객지원</strong>: 1:1 온라인 문의 및 FAQ 센터 연결
                                     <br>• <strong>TOP</strong>: 스크롤 최상단 스무스 이동
                                 </li>
-                                <li><strong>컨텐츠 몰입도 극대화</strong>: 가로 띠 배너를 제거하고 소셜미디어 중복을 정리하여 시선이 게임 그리드로 자연스럽게 이어지도록 최적화.</li>
+                                <li><strong>직관적 가독성</strong>: 화이트 카드 배경과 선명한 컬러 아이콘을 적용하여 다크 히어로 영역에서 명확한 시인성 확보.</li>
                             </ul>
                         </div>
                     </div>
