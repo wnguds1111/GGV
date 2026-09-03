@@ -3,30 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCR-MAIN-01 메인 화면 기획서 (올인원 허브형) | GNJOY.HK 포털</title>
+    <title>메인 페이지 신규 구성안 (Player-Centric Hub) | GGV 기획서</title>
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    
     <style>
         :root {
+            /* Balanced Storyboard Tokens */
             --sidebar-width: 280px;
             --topbar-height: 60px;
+            
             --canvas-bg: #F1F5F9;
             --panel-bg: #FFFFFF;
             --border-main: #CBD5E1;
             --border-subtle: #F1F5F9;
+            
+            /* Text Palette */
             --text-heading: #0F172A;
             --text-body: #334155;
             --text-muted: #64748B;
-            --brand-primary: #E11D48; /* GNJOY Coral Red */
+            
+            /* Accent & Brand Colors */
+            --brand-primary: #E11D48; /* GNJOY Red */
             --brand-subtle: #FFF1F2;
-            --pin-color: #7C3AED;     /* Storyboard Purple Pin */
+            --pin-color: #7C3AED;    /* Storyboard Purple Pin */
             --accent-blue: #2563EB;
             --accent-green: #059669;
             --accent-amber: #D97706;
+            --accent-purple: #9333EA;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,7 +47,7 @@
             display: flex;
         }
 
-        /* Sidebar Navigation */
+        /* ================= 1. LEFT SIDEBAR ================= */
         .app-sidebar {
             width: var(--sidebar-width);
             background: #0F172A;
@@ -52,8 +59,13 @@
             user-select: none;
             z-index: 100;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
-        .app-sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-width)); opacity: 0; pointer-events: none; }
+        .app-sidebar.collapsed {
+            margin-left: calc(-1 * var(--sidebar-width));
+            opacity: 0;
+            pointer-events: none;
+        }
         .sidebar-brand {
             padding: 16px 20px;
             display: flex;
@@ -74,9 +86,11 @@
             font-size: 15px;
             color: white;
             box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+            flex-shrink: 0;
         }
-        .brand-text h1 { font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; }
-        .brand-text p { font-size: 11px; color: #94A3B8; }
+        .brand-text h1 { font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; white-space: nowrap; }
+        .brand-text p { font-size: 11px; color: #94A3B8; white-space: nowrap; }
+
         .sidebar-collapse-btn {
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.1);
@@ -88,8 +102,10 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: all 0.15s ease;
         }
         .sidebar-collapse-btn:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+
         .sidebar-nav {
             flex: 1;
             padding: 18px 12px;
@@ -108,6 +124,7 @@
             margin-bottom: 6px;
         }
         .nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        
         .nav-item-btn {
             width: 100%;
             display: flex;
@@ -120,9 +137,12 @@
             color: #F1F5F9;
             font-size: 13.5px;
             font-weight: 800;
-            text-decoration: none;
             cursor: pointer;
+            text-align: left;
             transition: all 0.15s ease;
+            font-family: inherit;
+            text-decoration: none;
+            letter-spacing: -0.2px;
         }
         .nav-item-btn:hover { background: #1E293B; color: #F8FAFC; }
         .nav-item-btn.active {
@@ -132,15 +152,6 @@
             box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
         }
         .nav-item-left { display: flex; align-items: center; gap: 8px; }
-        .nav-item-badge {
-            font-size: 10px;
-            font-family: 'JetBrains Mono', monospace;
-            padding: 2px 6px;
-            border-radius: 4px;
-            background: rgba(255,255,255,0.12);
-            color: #E2E8F0;
-        }
-        .nav-item-btn.active .nav-item-badge { background: rgba(0,0,0,0.25); color: #FFFFFF; }
 
         .nav-sub-tree {
             list-style: none;
@@ -151,7 +162,7 @@
             flex-direction: column;
             gap: 2px;
             margin-top: 2px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
         .nav-sub-btn {
             width: 100%;
@@ -185,8 +196,14 @@
             color: #64748B;
         }
 
-        /* Main Workspace */
-        .app-main { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        /* ================= 2. MAIN WORKSPACE ================= */
+        .app-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
         .app-topbar {
             height: var(--topbar-height);
             background: var(--panel-bg);
@@ -212,279 +229,256 @@
             cursor: pointer;
         }
         .page-badge {
-            background: #FFF1F2;
+            background: var(--brand-subtle);
             color: var(--brand-primary);
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
-            font-weight: 800;
+            font-weight: 700;
             padding: 4px 10px;
             border-radius: 6px;
             border: 1px solid #FECDD3;
         }
         .page-heading { font-size: 15px; font-weight: 800; color: var(--text-heading); }
-        .topbar-view-tabs { display: flex; background: #F1F5F9; padding: 4px; border-radius: 8px; gap: 4px; }
-        .view-tab-btn {
+
+        .device-toggle-group {
+            display: flex;
+            background: #F1F5F9;
+            padding: 4px;
+            border-radius: 8px;
+            gap: 4px;
+            border: 1px solid var(--border-main);
+        }
+        .device-btn {
             background: transparent;
             border: none;
-            padding: 6px 14px;
+            padding: 6px 16px;
+            border-radius: 6px;
             font-size: 12px;
             font-weight: 700;
-            color: #64748B;
-            border-radius: 6px;
+            color: var(--text-muted);
             cursor: pointer;
-            transition: all 0.15s ease;
             display: flex;
             align-items: center;
             gap: 6px;
+            transition: all 0.15s ease;
         }
-        .view-tab-btn.active {
+        .device-btn.active {
             background: #FFFFFF;
-            color: var(--text-heading);
+            color: var(--brand-primary);
             font-weight: 800;
             box-shadow: 0 2px 6px rgba(0,0,0,0.06);
         }
 
-        /* Specification Split Layout */
-        .app-content-body { flex: 1; overflow-y: auto; padding: 24px 28px; }
-        .spec-split-container {
-            display: grid;
-            grid-template-columns: minmax(840px, 1.35fr) minmax(380px, 0.85fr);
-            gap: 24px;
-            align-items: start;
+        .app-content-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 32px 60px;
+            display: flex;
+            justify-content: center;
         }
 
-        /* Wireframe Container */
-        .wf-container {
-            background: #FFFFFF;
-            border: 1px solid var(--border-main);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            position: relative;
+        /* ================= 3. SCREEN SPECIFICATION GRID ================= */
+        .screen-spec-grid {
+            display: grid;
+            grid-template-columns: 1fr 370px;
+            gap: 28px;
+            align-items: start;
+            width: 100%;
         }
-        .wf-browser-bar {
+
+        .canvas-card {
+            background: var(--panel-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-main);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            overflow: hidden;
+        }
+        .canvas-header {
+            padding: 12px 22px;
             background: #F8FAFC;
-            border-bottom: 1px solid #E2E8F0;
-            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-main);
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-        .wf-traffic-lights { display: flex; gap: 6px; }
-        .wf-light { width: 10px; height: 10px; border-radius: 50%; }
-        .wf-light.red { background: #EF4444; }
-        .wf-light.yellow { background: #F59E0B; }
-        .wf-light.green { background: #10B981; }
-        .wf-url-pill {
-            background: #FFFFFF;
-            border: 1px solid #CBD5E1;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-family: 'JetBrains Mono', monospace;
-            color: #64748B;
-            width: 320px;
-            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
         }
 
-        /* Storyboard Pin Styling */
+        /* Pin Callout Badge */
         .pin {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
+            width: 24px;
+            height: 24px;
             background: var(--pin-color);
-            color: white;
+            color: #FFFFFF;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
-            font-weight: 900;
+            font-weight: 800;
+            border-radius: 50%;
+            border: 2px solid #FFFFFF;
             box-shadow: 0 2px 6px rgba(124, 58, 237, 0.4);
             cursor: pointer;
-            z-index: 40;
-            border: 2px solid #FFFFFF;
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.15s ease;
+            z-index: 10;
         }
-        .pin:hover { transform: scale(1.25); background: #6D28D9; }
-        .pin.pin-abs { position: absolute; }
+        .pin:hover { transform: scale(1.2); }
+        .pin-abs { position: absolute; }
 
-        /* [PIN 1] GNB Header (No Lang, No Cash, with Login & Sign-Up & Top-up) */
-        .hub-gnb {
+        /* ================= WIREFRAME CANVAS (PROPOSAL B: ALL-IN-ONE HUB) ================= */
+        .wf-hub-canvas {
             background: #FFFFFF;
-            border-bottom: 1px solid #E2E8F0;
-            padding: 0 32px;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-        .hub-gnb-left { display: flex; align-items: center; gap: 32px; }
-        .hub-logo-img { height: 28px; width: auto; object-fit: contain; }
-        .hub-gnb-menu { display: flex; gap: 24px; list-style: none; }
-        .hub-gnb-menu a {
-            font-size: 13.5px;
-            font-weight: 800;
-            color: #0F172A;
-            text-decoration: none;
-            padding: 8px 0;
-            transition: color 0.15s ease;
-        }
-        .hub-gnb-menu a:hover, .hub-gnb-menu a.active { color: var(--brand-primary); }
-        .hub-gnb-right { display: flex; align-items: center; gap: 10px; }
-        .hub-btn-auth {
-            font-size: 12.5px;
-            font-weight: 700;
-            color: #334155;
-            text-decoration: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            background: #F8FAFC;
-            border: 1px solid #E2E8F0;
-            transition: all 0.15s ease;
-        }
-        .hub-btn-auth:hover { background: #F1F5F9; color: #0F172A; border-color: #CBD5E1; }
-        .hub-btn-signup {
-            font-size: 12.5px;
-            font-weight: 800;
-            color: #FFFFFF;
-            background: #0F172A;
-            border: 1px solid #0F172A;
-            text-decoration: none;
-            padding: 6px 14px;
-            border-radius: 6px;
-            transition: all 0.15s ease;
-        }
-        .hub-btn-signup:hover { background: #1E293B; }
-        .hub-btn-topup {
-            background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
-            color: white;
-            font-weight: 800;
-            font-size: 12.5px;
-            padding: 7px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 3px 10px rgba(225, 29, 72, 0.3);
-            margin-left: 4px;
+            position: relative;
+            font-size: 12px;
+            color: #1F2937;
         }
 
-        /* [PIN 2] Hero Banner (Mobile Game Ragnarok Rebirth, GAME START, No Trailer) */
-        .hub-hero {
-            background: linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #334155 100%);
+        /* [PIN 1] Hub GNB */
+        .hub-gnb {
+            background: #0F172A;
             color: white;
-            padding: 40px 48px;
+            padding: 14px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: relative;
-            min-height: 280px;
+            border-bottom: 1px solid #1E293B;
         }
-        .hub-hero-left { max-width: 520px; display: flex; flex-direction: column; gap: 10px; z-index: 10; }
-        .hub-hero-tag-row { display: flex; gap: 8px; align-items: center; }
-        .hub-badge-live {
+        .hub-logo { display: flex; align-items: center; gap: 10px; }
+        .hub-nav-links { display: flex; gap: 24px; font-weight: 700; font-size: 13px; color: #E2E8F0; }
+        .hub-nav-links span { cursor: pointer; transition: color 0.15s; }
+        .hub-nav-links span:hover, .hub-nav-links span.active { color: var(--brand-primary); }
+        .hub-gnb-right { display: flex; align-items: center; gap: 14px; }
+        
+        .hub-user-wallet {
+            background: #1E293B;
+            border: 1px solid #334155;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+        }
+        .hub-cash-val { color: #F59E0B; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+
+        .hub-btn-topup {
+            background: linear-gradient(135deg, var(--brand-primary), #BE123C);
+            color: white;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 7px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.4);
+        }
+
+        /* [PIN 2] Immersive Hero Showcase with Live Media & Countdown */
+        .hub-hero {
+            background: linear-gradient(135deg, #0B1120 0%, #1E1B4B 50%, #4C0519 100%);
+            color: white;
+            padding: 56px 42px 42px;
+            position: relative;
+            min-height: 320px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .hub-hero-left { max-width: 540px; }
+        .hub-hero-tag-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .hub-badge-live { background: #DC2626; color: white; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; animation: pulse 2s infinite; }
+        .hub-badge-timer { background: rgba(255,255,255,0.12); color: #FDE047; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(253, 224, 71, 0.3); }
+
+        .hub-hero-title { font-size: 32px; font-weight: 900; line-height: 1.2; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .hub-hero-desc { font-size: 13px; color: #CBD5E1; margin-bottom: 24px; line-height: 1.6; }
+        .hub-hero-cta-group { display: flex; gap: 12px; align-items: center; }
+        .hub-btn-play-primary {
             background: var(--brand-primary);
             color: white;
-            font-size: 10.5px;
-            font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-        }
-        .hub-badge-mo {
-            background: #7C3AED;
-            color: white;
-            font-size: 10px;
             font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 4px;
-        }
-        .hub-hero-title {
-            font-size: 28px;
-            font-weight: 900;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-            color: #FFFFFF;
-        }
-        .hub-hero-desc { font-size: 12.5px; color: #CBD5E1; line-height: 1.55; }
-        .hub-hero-cta-group { display: flex; gap: 10px; margin-top: 6px; }
-        .hub-btn-gamestart {
-            background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
-            color: white;
-            font-weight: 900;
-            font-size: 13.5px;
-            padding: 10px 24px;
+            font-size: 13px;
+            padding: 11px 26px;
             border-radius: 6px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4);
-            transition: transform 0.15s ease;
         }
-        .hub-btn-gamestart:hover { transform: translateY(-2px); }
+        .hub-btn-trailer {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-        /* Hero Preview Right Box */
+        /* Hero Right: Game Keyart Video / Carousel Preview */
         .hub-hero-preview-box {
-            width: 280px;
-            height: 170px;
-            background: #020617;
-            border: 2px solid #334155;
+            width: 380px;
+            height: 220px;
+            background: #1E293B;
             border-radius: 12px;
+            border: 2px solid rgba(255,255,255,0.15);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            overflow: hidden;
         }
         .hub-play-video-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(225, 29, 72, 0.9);
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
+            background: rgba(225, 29, 72, 0.9);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            color: white;
+            font-size: 20px;
+            box-shadow: 0 0 20px rgba(225, 29, 72, 0.6);
             cursor: pointer;
-            transition: transform 0.2s ease;
         }
-        .hub-play-video-icon:hover { transform: scale(1.15); }
 
-        /* [PIN 3] 4 Direct Action Strip (Social Media replacing PC Launcher) */
+        /* [PIN 3] 4 Direct Action Strip */
         .hub-action-strip {
             background: #FFFFFF;
-            border-bottom: 1px solid #E2E8F0;
-            padding: 18px 48px;
+            border-bottom: 1px solid var(--border-main);
+            padding: 14px 42px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
             position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
         .hub-action-card {
-            background: #F8FAFC;
-            border: 1px solid #E2E8F0;
-            border-radius: 8px;
-            padding: 12px 16px;
             display: flex;
             align-items: center;
             gap: 12px;
+            padding: 10px 14px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
             text-decoration: none;
-            color: #0F172A;
-            transition: all 0.15s ease;
+            color: inherit;
+            transition: all 0.2s ease;
         }
         .hub-action-card:hover {
-            background: #FFFFFF;
-            border-color: #CBD5E1;
+            border-color: var(--brand-primary);
+            background: #FFF1F2;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
         .hub-action-icon {
             width: 36px;
@@ -493,76 +487,61 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 15px;
+            font-size: 16px;
+            color: white;
             flex-shrink: 0;
         }
-        .hub-action-icon.red { background: #FFF1F2; color: #E11D48; }
-        .hub-action-icon.blue { background: #EFF6FF; color: #2563EB; }
-        .hub-action-icon.purple { background: #F5F3FF; color: #7C3AED; }
-        .hub-action-icon.green { background: #ECFDF5; color: #059669; }
+        .hub-action-icon.red { background: linear-gradient(135deg, #E11D48, #BE123C); }
+        .hub-action-icon.blue { background: linear-gradient(135deg, #2563EB, #1D4ED8); }
+        .hub-action-icon.purple { background: linear-gradient(135deg, #7C3AED, #6D28D9); }
+        .hub-action-icon.green { background: linear-gradient(135deg, #059669, #047857); }
         .hub-action-title { font-size: 12.5px; font-weight: 800; color: #0F172A; }
-        .hub-action-sub { font-size: 10.5px; color: #64748B; margin-top: 1px; }
+        .hub-action-sub { font-size: 11px; color: #64748B; margin-top: 1px; }
 
-        /* [PIN 4] Game Matrix with 160px Height Thumbnails & OPEN/OBT/PRE-REG Badges */
-        .hub-section { padding: 32px 48px; position: relative; background: #FFFFFF; }
+        /* [PIN 4] Smart Game Matrix & Interactive Filter */
+        .hub-section { padding: 34px 42px; border-bottom: 1px solid #F1F5F9; position: relative; }
         .hub-section-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 20px;
         }
-        .hub-section-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 18px;
-            font-weight: 900;
-            color: #0F172A;
-            letter-spacing: -0.3px;
-        }
-        .hub-filter-tabs { display: flex; gap: 6px; }
+        .hub-section-title { font-size: 17px; font-weight: 900; color: #0F172A; display: flex; align-items: center; gap: 8px; }
+        .hub-filter-tabs { display: flex; background: #F1F5F9; padding: 3px; border-radius: 6px; gap: 3px; }
         .hub-filter-btn {
-            background: #F1F5F9;
-            border: 1px solid #E2E8F0;
-            color: #475569;
-            font-size: 11.5px;
-            font-weight: 800;
-            padding: 6px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.15s ease;
+            background: transparent; border: none; padding: 6px 16px; border-radius: 4px;
+            font-size: 12px; font-weight: 700; color: #64748B; cursor: pointer; transition: all 0.15s;
         }
-        .hub-filter-btn:hover { background: #E2E8F0; color: #0F172A; }
-        .hub-filter-btn.active {
-            background: #0F172A;
-            color: #FFFFFF;
-            border-color: #0F172A;
-        }
+        .hub-filter-btn.active { background: #FFFFFF; color: var(--brand-primary); font-weight: 800; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
 
-        /* 12-Card Grid with 160px height */
         .hub-game-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
+            gap: 16px;
         }
         .hub-game-card {
             background: #FFFFFF;
             border: 1px solid #E2E8F0;
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-            transition: all 0.2s ease;
         }
         .hub-game-card:hover {
-            border-color: #CBD5E1;
+            border-color: var(--brand-primary);
+            box-shadow: 0 8px 20px rgba(225, 29, 72, 0.12);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px -6px rgba(0, 0, 0, 0.08);
         }
+
+        /* Clickable Thumbnail with Hover Overlay */
         .hub-thumb-link {
             position: relative;
-            height: 160px; /* Enhanced height */
-            background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
             display: block;
+            height: 110px;
+            background: #0F172A;
+            color: white;
             text-decoration: none;
             overflow: hidden;
         }
@@ -572,33 +551,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 15px;
-            color: #475569;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: -0.2px;
             transition: transform 0.25s ease;
         }
-        .hub-thumb-link:hover .hub-thumb-img-box { transform: scale(1.08); }
-        .hub-status-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 10px;
-            font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 4px;
-            color: white;
-            z-index: 5;
-            letter-spacing: 0.5px;
+        .hub-thumb-link:hover .hub-thumb-img-box {
+            transform: scale(1.08);
         }
-        .hub-status-badge.open { background: #10B981; }
-        .hub-status-badge.obt { background: #F59E0B; }
-        .hub-status-badge.prereg { background: #E11D48; }
-        .hub-status-badge.hot { background: #DC2626; }
         .hub-thumb-hover-badge {
             position: absolute;
             inset: 0;
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(15, 23, 42, 0.78);
             color: #FFFFFF;
             display: flex;
             align-items: center;
@@ -609,30 +573,43 @@
             opacity: 0;
             transition: opacity 0.2s ease;
         }
-        .hub-thumb-link:hover .hub-thumb-hover-badge { opacity: 1; }
+        .hub-thumb-link:hover .hub-thumb-hover-badge {
+            opacity: 1;
+        }
+
+        .hub-badge-platform {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 9.5px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.2);
+            z-index: 5;
+        }
+        .hub-badge-platform.pc { background: #2563EB; border-color: #3B82F6; }
+        .hub-badge-platform.mo { background: #7C3AED; border-color: #8B5CF6; }
 
         .hub-card-body { padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
-        .hub-card-title {
-            font-size: 13px;
-            font-weight: 800;
-            color: #0F172A;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .hub-card-genre { font-size: 11px; color: #64748B; margin-bottom: 2px; }
+        .hub-card-title { font-size: 13px; font-weight: 800; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .hub-card-genre { font-size: 11px; color: #64748B; margin-bottom: 6px; }
 
-        /* Platform Download Icon Row (No text label) */
+        /* Platform Download Button Group */
         .hub-platform-dl-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: #F8FAFC;
-            padding: 5px 8px;
+            padding: 6px 10px;
             border-radius: 6px;
             border: 1px solid #EEF2F6;
-            margin: 4px 0 6px;
+            margin-top: auto;
         }
+        .hub-platform-dl-lbl { font-size: 10px; font-weight: 700; color: #64748B; }
         .hub-platform-dl-icons { display: flex; gap: 4px; }
         .hub-dl-icon-btn {
             display: inline-flex;
@@ -649,226 +626,173 @@
             transition: all 0.15s ease;
         }
         .hub-dl-icon-btn:hover { background: var(--brand-primary); color: #FFFFFF; border-color: var(--brand-primary); }
-        .hub-dl-icon-btn.pc-btn { width: auto; padding: 0 6px; font-size: 10px; font-weight: 800; gap: 3px; }
+        .hub-dl-icon-btn.pc-btn { width: auto; padding: 0 7px; font-size: 10px; font-weight: 800; gap: 3px; }
 
-        /* Dual Action Buttons */
-        .hub-card-footer { display: flex; gap: 6px; margin-top: auto; }
-        .hub-btn-quick-site {
-            flex: 1;
-            background: #0F172A;
-            color: #FFFFFF;
-            font-weight: 800;
-            font-size: 11px;
-            padding: 6px 0;
-            border-radius: 4px;
-            text-decoration: none;
-            text-align: center;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            transition: background 0.15s ease;
-        }
-        .hub-btn-quick-site:hover { background: #1E293B; }
-        .hub-btn-quick-store {
-            background: #FFF1F2;
-            border: 1px solid #FECDD3;
-            color: var(--brand-primary);
-            font-weight: 800;
-            font-size: 11px;
-            padding: 6px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-            text-align: center;
-            transition: all 0.15s ease;
-        }
-        .hub-btn-quick-store:hover { background: var(--brand-primary); color: #FFFFFF; border-color: var(--brand-primary); }
-
-        /* [PIN 5] News 5-Row Section & Support / Community */
-        .hub-news-section {
-            background: #F8FAFC;
-            border-top: 1px solid #E2E8F0;
-            padding: 32px 48px;
-            position: relative;
-        }
-        .hub-news-card {
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 10px;
-            padding: 20px 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-        }
-        .hub-news-head {
+        .hub-card-footer {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #F1F5F9;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 14px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #F1F5F9;
         }
-        .hub-news-title { font-size: 16px; font-weight: 900; color: #0F172A; }
-        .hub-news-list { display: flex; flex-direction: column; gap: 8px; }
+        .hub-btn-quick-play { font-size: 11px; font-weight: 800; color: var(--brand-primary); text-decoration: none; display: flex; align-items: center; gap: 3px; }
+        .hub-btn-quick-topup { font-size: 10.5px; font-weight: 700; background: #FFF1F2; color: var(--brand-primary); border: 1px solid #FECDD3; padding: 2px 8px; border-radius: 4px; text-decoration: none; }
+
+        /* [PIN 5] News & Community Dual Feed */
+        .hub-feed-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 20px;
+        }
+        .hub-feed-box {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 18px 20px;
+        }
+        .hub-feed-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .hub-feed-head h4 { font-size: 14px; font-weight: 800; color: #0F172A; }
+        .hub-feed-more { font-size: 11px; color: var(--brand-primary); font-weight: 700; text-decoration: none; }
+        
         .hub-news-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px dashed #F1F5F9;
-            font-size: 12.5px;
+            border-bottom: 1px dashed #E2E8F0;
+            font-size: 12px;
         }
         .hub-news-row:last-child { border-bottom: none; }
-        .hub-news-tag {
-            font-size: 10.5px;
-            font-weight: 800;
-            padding: 2px 6px;
-            border-radius: 4px;
-            background: #EFF6FF;
-            color: #2563EB;
-            margin-right: 8px;
-        }
-        .hub-news-tag.event { background: #FFF1F2; color: #E11D48; }
-        .hub-news-tag.notice { background: #F1F5F9; color: #475569; }
+        .hub-news-tag { font-size: 9.5px; font-weight: 800; padding: 2px 5px; border-radius: 3px; background: #E2E8F0; color: #475569; margin-right: 6px; }
+        .hub-news-tag.hot { background: #FEE2E2; color: #DC2626; }
 
-        /* Customer Support Banner */
-        .hub-cs-strip {
-            margin-top: 24px;
+        .hub-sns-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+        .hub-sns-btn {
             background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 10px;
-            padding: 20px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .hub-cs-left h3 { font-size: 15px; font-weight: 900; color: #0F172A; }
-        .hub-cs-left p { font-size: 11.5px; color: #64748B; margin-top: 2px; }
-        .hub-cs-actions { display: flex; gap: 8px; }
-        .hub-btn-cs {
-            background: #2563EB;
-            color: white;
-            font-weight: 800;
-            font-size: 12px;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .hub-btn-faq {
-            background: #F8FAFC;
             border: 1px solid #CBD5E1;
-            color: #334155;
-            font-weight: 800;
-            font-size: 12px;
-            padding: 8px 14px;
             border-radius: 6px;
-            text-decoration: none;
-        }
-
-        /* Community SNS Bar (Below Support) */
-        .hub-sns-strip {
-            margin-top: 14px;
-            background: #FFFFFF;
-            border: 1px solid #E2E8F0;
-            border-radius: 10px;
-            padding: 14px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .hub-sns-title { font-size: 12.5px; font-weight: 800; color: #0F172A; }
-        .hub-sns-icons { display: flex; gap: 8px; }
-        .hub-sns-icon-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 6px;
-            background: #F8FAFC;
-            border: 1px solid #E2E8F0;
-            color: #334155;
-            font-size: 11.5px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.15s ease;
-        }
-        .hub-sns-icon-btn:hover { background: #F1F5F9; border-color: #CBD5E1; }
-
-        /* [PIN 6] Simple gnjoy.asia Style Footer */
-        .hub-asia-footer {
-            background: #0B1120;
-            color: #94A3B8;
-            padding: 32px 48px;
-            font-size: 11px;
+            padding: 10px 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            gap: 12px;
-            border-top: 1px solid #1E293B;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #334155;
+            text-decoration: none;
+        }
+
+        /* [PIN 6] Fast CS Search & Real GNJOY.HK Matching Footer */
+        .hub-cs-strip {
+            background: #0F172A;
+            color: white;
+            padding: 24px 42px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             position: relative;
         }
-        .hub-asia-footer-links {
+        .hub-cs-left h3 { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+        .hub-cs-left p { font-size: 11.5px; color: #94A3B8; }
+        .hub-search-box {
             display: flex;
-            gap: 18px;
-            font-weight: 800;
-            color: #CBD5E1;
-            flex-wrap: wrap;
-            justify-content: center;
+            background: #1E293B;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            overflow: hidden;
+            width: 320px;
         }
-        .hub-asia-footer-links a { color: #CBD5E1; text-decoration: none; }
-        .hub-asia-footer-links a:hover { color: #FFFFFF; }
-        .hub-asia-corp { color: #64748B; font-size: 10.5px; line-height: 1.6; max-width: 780px; }
+        .hub-search-input { background: transparent; border: none; padding: 8px 12px; color: white; font-size: 11.5px; flex: 1; outline: none; }
+        .hub-search-btn { background: var(--brand-primary); border: none; color: white; padding: 0 14px; cursor: pointer; font-size: 12px; }
 
-        /* Spec Panel */
-        .spec-scroll-panel { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 0; }
-        .spec-item-box { background: white; border: 1px solid var(--border-main); border-radius: 10px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-        .spec-item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); }
+        /* 100% Real gnjoy.hk Matching Footer */
+        .hub-real-footer {
+            background: #0B1120;
+            color: #94A3B8;
+            padding: 32px 42px 36px;
+            font-size: 11px;
+            border-top: 1px solid #1E293B;
+            position: relative;
+            line-height: 1.7;
+        }
+        .hub-footer-links-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 14px;
+            color: #CBD5E1;
+            font-weight: 800;
+            flex-wrap: wrap;
+        }
+        .hub-footer-links-row a { color: #CBD5E1; text-decoration: none; transition: color 0.15s; }
+        .hub-footer-links-row a:hover { color: #FFFFFF; }
+        .hub-footer-corp-info {
+            color: #64748B;
+            font-size: 10.5px;
+            margin-bottom: 14px;
+        }
+        .hub-footer-rating-container {
+            background: #111827;
+            border: 1px solid #1F2937;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-top: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .hub-rating-badge-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .hub-rate-pill {
+            background: #1E293B;
+            border: 1px solid #334155;
+            padding: 3px 9px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #E2E8F0;
+            font-weight: 800;
+        }
+        .hub-warning-text {
+            font-size: 10px;
+            color: #94A3B8;
+            line-height: 1.5;
+        }
+
+        /* Storyboard Spec Panel */
+        .spec-scroll-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: sticky;
+            top: 0;
+        }
+        .spec-item-box {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-main);
+            border-radius: 10px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+        .spec-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
         .spec-pin-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--text-heading); }
         .spec-tag-type { font-size: 10px; font-weight: 700; background: #F1F5F9; color: #475569; padding: 2px 6px; border-radius: 4px; }
-        .spec-content { font-size: 12px; color: var(--text-body); display: flex; flex-direction: column; gap: 4px; line-height: 1.55; }
+        .spec-content { font-size: 12px; color: var(--text-body); display: flex; flex-direction: column; gap: 5px; line-height: 1.55; }
+        .spec-content strong { color: var(--text-heading); font-weight: 700; }
         .spec-bullet-list { list-style: none; padding-left: 0; }
         .spec-bullet-list li { position: relative; padding-left: 11px; margin-bottom: 4px; }
         .spec-bullet-list li::before { content: '•'; position: absolute; left: 0; color: var(--pin-color); font-weight: bold; }
-    
-        .nav-sub-tree {
-            list-style: none;
-            padding-left: 12px;
-            margin-left: 14px;
-            border-left: 1px solid #334155;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            margin-top: 2px;
-            margin-bottom: 6px;
-        }
-        .nav-sub-btn {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6px 10px;
-            border-radius: 5px;
-            background: transparent;
-            border: none;
-            color: #94A3B8;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.15s ease;
-            font-family: inherit;
-            text-decoration: none;
-        }
-        .nav-sub-btn:hover { background: #1E293B; color: #FFFFFF; }
-        .nav-sub-btn.active { background: rgba(225, 29, 72, 0.2); color: #FDA4AF; font-weight: 700; }
-
     </style>
 </head>
 <body>
 
-            <!-- Sidebar -->
+    <!-- ================= 1. LEFT SIDEBAR ================= -->
+        <!-- Sidebar -->
     <aside class="app-sidebar" id="app-sidebar">
         <div class="sidebar-brand">
             <div class="brand-content">
@@ -885,9 +809,9 @@
             <div>
                 <div class="nav-group-title">DOCUMENT INFO</div>
                 <ul class="nav-list">
-                    <li><a href="index.html" class="nav-item-btn "><div class="nav-item-left"><span>00. 표지 &amp; 개정이력</span></div></a></li>
-                    <li><a href="sitemap.html" class="nav-item-btn "><div class="nav-item-left"><span>01. IA</span></div></a></li>
-                    <li><a href="benchmark.html" class="nav-item-btn "><div class="nav-item-left"><span>02. 중화권 시장 분석 &amp; 벤치마킹</span></div></a></li>
+                    <li><a href="index.html" class="nav-item-btn"><div class="nav-item-left"><span>00. 표지 &amp; 개정이력</span></div></a></li>
+                    <li><a href="sitemap.html" class="nav-item-btn"><div class="nav-item-left"><span>01. IA</span></div></a></li>
+                    <li><a href="benchmark.html" class="nav-item-btn"><div class="nav-item-left"><span>02. 중화권 시장 분석 &amp; 벤치마킹</span></div></a></li>
                 </ul>
             </div>
 
@@ -946,190 +870,162 @@
         </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- ================= 2. MAIN WORKSPACE ================= -->
     <main class="app-main">
         <header class="app-topbar">
             <div class="topbar-left-zone">
-                <button class="sidebar-toggle-trigger" id="sidebar-toggle-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <button class="sidebar-toggle-trigger" id="sidebar-toggle-btn" title="메뉴 열기" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <span class="page-badge">SCR-MAIN-01</span>
-                <span class="page-heading">메인 페이지 기획서: 올인원 플레이어 허브형 (All-in-One Hub)</span>
+                <span class="page-heading">메인 화면 기획서: 올인원 플레이어 허브형 (All-in-One Hub)</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 14px;">
-                <a href="sitemap.html" style="font-size: 12px; font-weight: 700; color: #475569; text-decoration: none; display: flex; align-items: center; gap: 4px;"><i class="fa-solid fa-arrow-left"></i> 이전: 01. 사이트맵</a>
-                <div class="topbar-view-tabs">
-                    <button class="view-tab-btn active" onclick="switchView('pc')"><i class="fa-solid fa-desktop"></i> PC 와이드 (1440px+)</button>
-                    <button class="view-tab-btn" onclick="switchView('resp')"><i class="fa-solid fa-mobile-screen"></i> 반응형 뷰 (MO/Tablet)</button>
-                </div>
+
+            <div class="device-toggle-group">
+                <button class="device-btn active" id="btn-pc" onclick="switchDevice('pc')">
+                    <i class="fa-solid fa-desktop"></i> PC View (와이어프레임 + 디스크립션)
+                </button>
+                <button class="device-btn" id="btn-responsive" onclick="switchDevice('responsive')">
+                    <i class="fa-solid fa-mobile-screen-button"></i> Tablet &amp; MO View (반응형)
+                </button>
             </div>
         </header>
 
         <div class="app-content-body">
-            <div class="spec-split-container" id="pc-spec-view">
+            
+            <!-- PC View Grid -->
+            <div id="pc-spec-view" class="screen-spec-grid">
                 
-                <!-- Left: Wireframe View -->
-                <div class="wf-container">
-                    <div class="wf-browser-bar">
-                        <div class="wf-traffic-lights">
-                            <span class="wf-light red"></span>
-                            <span class="wf-light yellow"></span>
-                            <span class="wf-light green"></span>
-                        </div>
-                        <div class="wf-url-pill">https://www.gnjoy.hk/ (GNJOY Portal Home)</div>
-                        <div style="font-size: 11px; color: #94A3B8;"><i class="fa-solid fa-lock"></i> 100% SSL Secure</div>
+                <!-- Left: Wireframe Canvas -->
+                <div class="canvas-card">
+                    <div class="canvas-header">
+                        <span><i class="fa-solid fa-desktop"></i> 신규 제안안 [Type B] 와이어프레임 (플레이어 허브형)</span>
+                        <span style="font-weight: 800; color: #4F46E5;">개선 제안안 v2.0</span>
                     </div>
 
-                    <div style="position: relative;">
-
-                        <!-- [PIN 1] GNB Header (No Lang, No Cash, Login + Sign-up + Top-up) -->
+                    <div class="wf-hub-canvas">
+                        
+                        <!-- [PIN 1] Hub GNB -->
                         <div class="hub-gnb">
-                            <span class="pin pin-abs" style="top: 18px; left: 10px;" onclick="highlightSpec('pin1')">1</span>
-                            <div class="hub-gnb-left">
-                                <a href="gnjoy_main_specification.html" style="display: flex; align-items: center;">
-                                    <img src="./_레이어_1-2.png" alt="GNJOY LOGO" class="hub-logo-img">
-                                </a>
-                                <ul class="hub-gnb-menu">
-                                    <li><a href="javascript:void(0)" class="active">HOME</a></li>
-                                    <li><a href="javascript:void(0)">GAMES</a></li>
-                                    <li><a href="javascript:void(0)">TOP-UP</a></li>
-                                    <li><a href="javascript:void(0)">COMMUNITY</a></li>
-                                    <li><a href="javascript:void(0)">SUPPORT</a></li>
-                                </ul>
+                            <span class="pin pin-abs" style="top: 14px; left: 16px;" onclick="highlightSpec('pin1')">1</span>
+                            <div class="hub-logo">
+                                <img src="./_레이어_1-2.png" alt="GNJOY" style="height: 28px; object-fit: contain; vertical-align: middle;">
+                            </div>
+                            <div class="hub-nav-links">
+                                <span class="active">HOME</span>
+                                <span>GAMES</span>
+                                <span>TOP-UP</span>
+                                <span>COMMUNITY</span>
+                                <span>SUPPORT</span>
                             </div>
                             <div class="hub-gnb-right">
-                                <a href="javascript:void(0)" class="hub-btn-auth">로그인 (Login)</a>
-                                <a href="javascript:void(0)" class="hub-btn-signup">회원가입</a>
-                                <a href="javascript:void(0)" class="hub-btn-topup"><i class="fa-solid fa-bolt"></i> 線上儲值</a>
+                                <!-- Live User Wallet Mini Card -->
+                                <div class="hub-user-wallet">
+                                    <i class="fa-solid fa-coins" style="color: #F59E0B;"></i>
+                                    <span>GNJOY Cash:</span>
+                                    <span class="hub-cash-val">1,250 P</span>
+                                </div>
+                                <div style="font-size: 11px; color: #94A3B8;">EN <i class="fa-solid fa-chevron-down" style="font-size: 8px;"></i></div>
+                                <span class="pin pin-abs" style="top: 14px; right: 10px;" onclick="highlightSpec('pin1')">1</span>
+                                <a href="javascript:void(0)" class="hub-btn-topup"><i class="fa-solid fa-bolt"></i> Top-up</a>
                             </div>
                         </div>
 
-                        <!-- [PIN 2] Hero Banner (Mobile Game Ragnarok Rebirth, GAME START, No Date, No Trailer) -->
+                        <!-- [PIN 2] Hero Banner with Live Video & Dual CTA -->
                         <div class="hub-hero">
-                            <span class="pin pin-abs" style="top: 20px; left: 16px;" onclick="highlightSpec('pin2')">2</span>
-                            
-                            <!-- Hero Content Left -->
+                            <span class="pin pin-abs" style="top: 20px; left: 20px;" onclick="highlightSpec('pin2')">2</span>
                             <div class="hub-hero-left">
                                 <div class="hub-hero-tag-row">
-                                    <span class="hub-badge-live">GRAND LAUNCH</span>
-                                    <span class="hub-badge-mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> 3D MOBILE MMORPG</span>
+                                    <span class="hub-badge-live">GRAND OPEN</span>
+                                    <span class="hub-badge-timer"><i class="fa-regular fa-clock"></i> 런칭 이벤트: D-3 14:22:05</span>
                                 </div>
-                                <h1 class="hub-hero-title">RO仙境傳說：重生<br><span style="color: #FDA4AF; font-size: 24px;">RAGNAROK REBIRTH</span></h1>
-                                <p class="hub-hero-desc">라그나로크의 감동을 그대로 담아낸 3D 모바일 대작! 신규 서버 대규모 오픈 및 접속 유저 전원 한정 코스튬 증정 이벤트 진행 중.</p>
+                                <div class="hub-hero-title">Ragnarok Online Zero<br><span style="color: #FDA4AF; font-size: 26px;">Classic Reborn in Midgard</span></div>
+                                <div class="hub-hero-desc">라그나로크 클래식 본연의 재미와 최신 편의 시스템이 결합된 공식 서버! 지금 바로 미드가르드 대륙으로 모험을 떠나보세요.</div>
                                 <div class="hub-hero-cta-group">
-                                    <a href="https://rorebirth.gnjoy.hk" target="_blank" class="hub-btn-gamestart">
-                                        <i class="fa-solid fa-play"></i> GAME START
-                                    </a>
+                                    <a href="javascript:void(0)" class="hub-btn-play-primary"><i class="fa-solid fa-play"></i> 즉시 시작 (Play Now)</a>
+                                    <a href="javascript:void(0)" class="hub-btn-trailer"><i class="fa-solid fa-circle-play"></i> 트레일러 영상 보기</a>
                                 </div>
                             </div>
 
-                            <!-- Hero Video Box Right -->
                             <div class="hub-hero-preview-box">
                                 <div class="hub-play-video-icon"><i class="fa-solid fa-play"></i></div>
-                                <span style="position: absolute; bottom: 12px; font-size: 10.5px; color: #94A3B8;">Gameplay Showcase Video</span>
+                                <span style="position: absolute; bottom: 10px; font-size: 10.5px; color: #94A3B8;">Official Gameplay Teaser HD</span>
                             </div>
                         </div>
 
-                        <!-- [PIN 3] 4-Direct Action Strip (Social Media Included) -->
+                        <!-- [PIN 3] 4-Direct Action Strip -->
                         <div class="hub-action-strip">
-                            <span class="pin pin-abs" style="top: -10px; left: 20px;" onclick="highlightSpec('pin3')">3</span>
-                            
+                            <span class="pin pin-abs" style="top: -12px; left: 20px;" onclick="highlightSpec('pin3')">3</span>
                             <a href="javascript:void(0)" class="hub-action-card">
                                 <div class="hub-action-icon red"><i class="fa-solid fa-bolt"></i></div>
                                 <div>
-                                    <div class="hub-action-title">線上儲值 (Top-up)</div>
-                                    <div class="hub-action-sub">+15% 보너스 다이아 충전</div>
+                                    <div class="hub-action-title">온라인 캐시 충전</div>
+                                    <div class="hub-action-sub">결제 시 +15% 보너스 다이아</div>
                                 </div>
                             </a>
-
                             <a href="javascript:void(0)" class="hub-action-card">
                                 <div class="hub-action-icon blue"><i class="fa-solid fa-gift"></i></div>
                                 <div>
-                                    <div class="hub-action-title">序號兌換 (Redeem)</div>
-                                    <div class="hub-action-sub">쿠폰 시리얼 번호 즉시 등록</div>
+                                    <div class="hub-action-title">쿠폰 시리얼 교환</div>
+                                    <div class="hub-action-sub">사전예약 &amp; 이벤트 보상 수령</div>
                                 </div>
                             </a>
-
                             <a href="javascript:void(0)" class="hub-action-card">
-                                <div class="hub-action-icon purple"><i class="fa-solid fa-share-nodes"></i></div>
+                                <div class="hub-action-icon purple"><i class="fa-solid fa-desktop"></i></div>
                                 <div>
-                                    <div class="hub-action-title">소셜 미디어 (SNS)</div>
-                                    <div class="hub-action-sub">Discord / FB / 유튜브 / 인스타</div>
+                                    <div class="hub-action-title">PC 통합 런처</div>
+                                    <div class="hub-action-sub">원클릭 초고속 클라이언트 설치</div>
                                 </div>
                             </a>
-
                             <a href="javascript:void(0)" class="hub-action-card">
-                                <div class="hub-action-icon green"><i class="fa-solid fa-headset"></i></div>
+                                <div class="hub-action-icon green"><i class="fa-solid fa-comments"></i></div>
                                 <div>
-                                    <div class="hub-action-title">고객지원 (Support)</div>
-                                    <div class="hub-action-sub">1:1 온라인 문의 &amp; FAQ 안내</div>
+                                    <div class="hub-action-title">공식 커뮤니티</div>
+                                    <div class="hub-action-sub">Discord / FB / 공략 허브</div>
                                 </div>
                             </a>
                         </div>
 
-                        <!-- [PIN 4] Game Matrix with 160px Height Thumbnails & OPEN/OBT/PRE-REG Badges -->
+                        <!-- [PIN 4] Game Matrix with PC & MO Separation -->
                         <div class="hub-section">
-                            <span class="pin pin-abs" style="top: 20px; left: 18px;" onclick="highlightSpec('pin4')">4</span>
-                            
+                            <span class="pin pin-abs" style="top: 14px; left: 20px;" onclick="highlightSpec('pin4')">4</span>
                             <div class="hub-section-header">
-                                <div class="hub-section-title">GRAVITY GAME LIBRARY</div>
+                                <div class="hub-section-title"><i class="fa-solid fa-gamepad" style="color: var(--brand-primary);"></i> GRAVITY GAME LIBRARY</div>
                                 <div class="hub-filter-tabs">
                                     <button class="hub-filter-btn active">전체 (12)</button>
-                                    <button class="hub-filter-btn">PC (5)</button>
-                                    <button class="hub-filter-btn">MO (7)</button>
+                                    <button class="hub-filter-btn"><i class="fa-brands fa-windows"></i> PC 온라인 (5)</button>
+                                    <button class="hub-filter-btn"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> 모바일 (7)</button>
                                 </div>
                             </div>
 
                             <div class="hub-game-grid">
-                                
-                                <!-- 1. RO Zero (PC) -->
+                                <!-- Card 1: RO Zero (PC) -->
                                 <div class="hub-game-card">
                                     <a href="https://rozero.gnjoy.com.tw" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge open">OPEN</span>
+                                        <span class="hub-badge-platform pc"><i class="fa-brands fa-windows"></i> PC</span>
                                         <div class="hub-thumb-img-box">RO ZERO</div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">Ragnarok Online Zero</div>
-                                        <div class="hub-card-genre">PC Classic MMORPG</div>
+                                        <div class="hub-card-genre">PC Classic MMORPG • Official Server</div>
                                         <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
                                             <div class="hub-platform-dl-icons">
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC 클라이언트 다운로드"><i class="fa-brands fa-windows"></i> PC</a>
                                             </div>
-                                            <span style="font-size: 10px; color: #10B981; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 정상 운영</span>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://rozero.gnjoy.com.tw" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">충전소</a>
+                                            <a href="https://rozero.gnjoy.com.tw" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">충전소</a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- 2. RO 2 (PC) -->
-                                <div class="hub-game-card">
-                                    <a href="https://ro2.gnjoy.com" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge open">OPEN</span>
-                                        <div class="hub-thumb-img-box">RO 2</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
-                                    </a>
-                                    <div class="hub-card-body">
-                                        <div class="hub-card-title">Ragnarok Online 2</div>
-                                        <div class="hub-card-genre">PC 3D Global MMORPG</div>
-                                        <div class="hub-platform-dl-row">
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
-                                            </div>
-                                            <span style="font-size: 10px; color: #10B981; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 정상 운영</span>
-                                        </div>
-                                        <div class="hub-card-footer">
-                                            <a href="https://ro2.gnjoy.com" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">충전소</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 3. RO Origin (MO) -->
+                                <!-- Card 2: RO Origin (MO) -->
                                 <div class="hub-game-card">
                                     <a href="https://roglobal.com" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge hot">HOT</span>
+                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
                                         <div class="hub-thumb-img-box">RO ORIGIN</div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
                                     </a>
@@ -1137,48 +1033,48 @@
                                         <div class="hub-card-title">Ragnarok Origin</div>
                                         <div class="hub-card-genre">Open World 3D Mobile RPG</div>
                                         <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
                                             <div class="hub-platform-dl-icons">
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="APK 직접 다운로드"><i class="fa-solid fa-android"></i></a>
+                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="공식 APK 직접 다운로드"><i class="fa-solid fa-android"></i></a>
                                             </div>
-                                            <span style="font-size: 10px; color: #10B981; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 정상 운영</span>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://roglobal.com" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">웹스토어</a>
+                                            <a href="https://roglobal.com" target="_blank" class="hub-btn-quick-play">스토어 이동 <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">웹스토어</a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- 4. RO Rebirth (MO) -->
+                                <!-- Card 3: RO Rebirth (MO) -->
                                 <div class="hub-game-card">
                                     <a href="https://rorebirth.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge obt">OBT</span>
+                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
                                         <div class="hub-thumb-img-box">RO 重生</div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">RO仙境傳說：重生</div>
-                                        <div class="hub-card-genre">3D MMORPG New Gen Mobile</div>
+                                        <div class="hub-card-genre">3D MMORPG • New Gen Mobile</div>
                                         <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
                                             <div class="hub-platform-dl-icons">
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
                                             </div>
-                                            <span style="font-size: 10px; color: #F59E0B; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 혼잡</span>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://rorebirth.gnjoy.hk" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">공식몰</a>
+                                            <a href="https://rorebirth.gnjoy.hk" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">공식몰</a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- 5. Landverse (PC) -->
+                                <!-- Card 4: RO Landverse (PC) -->
                                 <div class="hub-game-card">
                                     <a href="https://landverse.maxion.gg/" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge open">OPEN</span>
+                                        <span class="hub-badge-platform pc"><i class="fa-brands fa-windows"></i> PC Web</span>
                                         <div class="hub-thumb-img-box">LANDVERSE</div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
                                     </a>
@@ -1186,72 +1082,22 @@
                                         <div class="hub-card-title">Ragnarok Landverse</div>
                                         <div class="hub-card-genre">Maxion Blockchain Web3 Classic</div>
                                         <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
                                             <div class="hub-platform-dl-icons">
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
                                             </div>
-                                            <span style="font-size: 10px; color: #10B981; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 정상 운영</span>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://landverse.maxion.gg/" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">Market</a>
+                                            <a href="https://landverse.maxion.gg/" target="_blank" class="hub-btn-quick-play">Web3 Play <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">Market</a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- 6. ROM (MO & PC) -->
-                                <div class="hub-game-card">
-                                    <a href="https://rom.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge open">OPEN</span>
-                                        <div class="hub-thumb-img-box">RO M</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
-                                    </a>
-                                    <div class="hub-card-body">
-                                        <div class="hub-card-title">Ragnarok M: Eternal Love</div>
-                                        <div class="hub-card-genre">Mobile MMORPG Global</div>
-                                        <div class="hub-platform-dl-row">
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="PC"><i class="fa-brands fa-windows"></i> PC</a>
-                                            </div>
-                                            <span style="font-size: 10px; color: #10B981; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 정상 운영</span>
-                                        </div>
-                                        <div class="hub-card-footer">
-                                            <a href="https://rom.gnjoy.hk" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">웹스토어</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 7. ROX (MO & PC) -->
-                                <div class="hub-game-card">
-                                    <a href="https://rox.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge open">OPEN</span>
-                                        <div class="hub-thumb-img-box">ROX</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
-                                    </a>
-                                    <div class="hub-card-body">
-                                        <div class="hub-card-title">Ragnarok X: Next Generation</div>
-                                        <div class="hub-card-genre">3D Mobile MMORPG</div>
-                                        <div class="hub-platform-dl-row">
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="PC"><i class="fa-brands fa-windows"></i> PC</a>
-                                            </div>
-                                            <span style="font-size: 10px; color: #10B981; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 정상 운영</span>
-                                        </div>
-                                        <div class="hub-card-footer">
-                                            <a href="https://rox.gnjoy.hk" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">공식몰</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 8. RO 初心之戰 (MO) -->
+                                <!-- Card 5: RO 初心之戰 (MO) -->
                                 <div class="hub-game-card">
                                     <a href="https://roorigin.gnjoy.com.tw" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge open">OPEN</span>
+                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
                                         <div class="hub-thumb-img-box">初心之戰</div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
                                     </a>
@@ -1259,72 +1105,145 @@
                                         <div class="hub-card-title">RO仙境傳說：初心之戰</div>
                                         <div class="hub-card-genre">Classic Mobile RPG</div>
                                         <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
                                             <div class="hub-platform-dl-icons">
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="APK 직다운"><i class="fa-solid fa-android"></i></a>
+                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="공식 APK 직접 다운로드"><i class="fa-solid fa-android"></i></a>
                                             </div>
-                                            <span style="font-size: 10px; color: #10B981; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 정상 운영</span>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://roorigin.gnjoy.com.tw" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">웹스토어</a>
+                                            <a href="https://roorigin.gnjoy.com.tw" target="_blank" class="hub-btn-quick-play">스토어 이동 <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">웹스토어</a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- 9. RO 曙光 (MO) -->
+                                <!-- Card 6: RO 曙光 (MO) -->
                                 <div class="hub-game-card">
                                     <a href="https://www.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge prereg">PRE-REG</span>
+                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
                                         <div class="hub-thumb-img-box">曙光</div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">RO仙境傳說：曙光</div>
-                                        <div class="hub-card-genre">MMORPG New Arrival</div>
+                                        <div class="hub-card-genre">MMORPG • New Arrival</div>
                                         <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
                                             <div class="hub-platform-dl-icons">
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
                                             </div>
-                                            <span style="font-size: 10px; color: #3B82F6; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 사전예약</span>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://www.gnjoy.hk" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">사전예약</a>
+                                            <a href="https://www.gnjoy.hk" target="_blank" class="hub-btn-quick-play">사전예약 <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">공식몰</a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- 10. Ragnarok Crush (MO) -->
+                                <!-- Card 7: RO 2 (PC) -->
+                                <div class="hub-game-card">
+                                    <a href="https://ro2.gnjoy.com" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="hub-badge-platform pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                        <div class="hub-thumb-img-box">RO 2 ONLINE</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="hub-card-body">
+                                        <div class="hub-card-title">Ragnarok Online 2</div>
+                                        <div class="hub-card-genre">PC 3D MMORPG • Global Server</div>
+                                        <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
+                                            <div class="hub-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                        <div class="hub-card-footer">
+                                            <a href="https://ro2.gnjoy.com" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">충전소</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 8: RO M (MO & PC) -->
+                                <div class="hub-game-card">
+                                    <a href="https://rom.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
+                                        <div class="hub-thumb-img-box">RO M</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="hub-card-body">
+                                        <div class="hub-card-title">Ragnarok M: Eternal Love</div>
+                                        <div class="hub-card-genre">Mobile MMORPG • Global</div>
+                                        <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
+                                            <div class="hub-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                        <div class="hub-card-footer">
+                                            <a href="https://rom.gnjoy.hk" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">웹스토어</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 9: ROX (MO & PC) -->
+                                <div class="hub-game-card">
+                                    <a href="https://rox.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
+                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
+                                        <div class="hub-thumb-img-box">ROX</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                    </a>
+                                    <div class="hub-card-body">
+                                        <div class="hub-card-title">Ragnarok X: Next Generation</div>
+                                        <div class="hub-card-genre">3D Mobile MMORPG</div>
+                                        <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
+                                            <div class="hub-platform-dl-icons">
+                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
+                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
+                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="PC Client"><i class="fa-brands fa-windows"></i> PC</a>
+                                            </div>
+                                        </div>
+                                        <div class="hub-card-footer">
+                                            <a href="https://rox.gnjoy.hk" target="_blank" class="hub-btn-quick-play">스토어 이동 <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">공식몰</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 10: Ragnarok Crush (MO) -->
                                 <div class="hub-game-card">
                                     <a href="https://www.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge open">OPEN</span>
+                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
                                         <div class="hub-thumb-img-box">RO CRUSH</div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">Ragnarok Crush</div>
-                                        <div class="hub-card-genre">Casual Match-3 RPG</div>
+                                        <div class="hub-card-genre">Casual Match-3 Puzzle RPG</div>
                                         <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
                                             <div class="hub-platform-dl-icons">
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
                                             </div>
-                                            <span style="font-size: 10px; color: #10B981; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 정상 운영</span>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://www.gnjoy.hk" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">충전소</a>
+                                            <a href="https://www.gnjoy.hk" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">충전소</a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- 11. Gunbound (PC) -->
+                                <!-- Card 11: Gunbound (PC) -->
                                 <div class="hub-game-card">
                                     <a href="https://gunbound.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge open">OPEN</span>
+                                        <span class="hub-badge-platform pc"><i class="fa-brands fa-windows"></i> PC</span>
                                         <div class="hub-thumb-img-box">GUNBOUND</div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
                                     </a>
@@ -1332,22 +1251,22 @@
                                         <div class="hub-card-title">GUNBOUND</div>
                                         <div class="hub-card-genre">Turn-Based Artillery Shooter</div>
                                         <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
                                             <div class="hub-platform-dl-icons">
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
                                             </div>
-                                            <span style="font-size: 10px; color: #10B981; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 정상 운영</span>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://gunbound.gnjoy.hk" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">충전소</a>
+                                            <a href="https://gunbound.gnjoy.hk" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">충전소</a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- 12. Dragonica (PC) -->
+                                <!-- Card 12: Dragonica (PC) -->
                                 <div class="hub-game-card">
                                     <a href="https://dragonica.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-status-badge open">OPEN</span>
+                                        <span class="hub-badge-platform pc"><i class="fa-brands fa-windows"></i> PC</span>
                                         <div class="hub-thumb-img-box">DRAGONICA</div>
                                         <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
                                     </a>
@@ -1355,14 +1274,14 @@
                                         <div class="hub-card-title">Dragonica (드라고니카)</div>
                                         <div class="hub-card-genre">3D Side-Scrolling Action RPG</div>
                                         <div class="hub-platform-dl-row">
+                                            <span class="hub-platform-dl-lbl">다운로드</span>
                                             <div class="hub-platform-dl-icons">
                                                 <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
                                             </div>
-                                            <span style="font-size: 10px; color: #10B981; font-weight: 800;"><i class="fa-solid fa-circle" style="font-size: 7px;"></i> 정상 운영</span>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://dragonica.gnjoy.hk" target="_blank" class="hub-btn-quick-site"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-store">충전소</a>
+                                            <a href="https://dragonica.gnjoy.hk" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">충전소</a>
                                         </div>
                                     </div>
                                 </div>
@@ -1370,238 +1289,250 @@
                             </div>
                         </div>
 
-                        <!-- [PIN 5] News 5-Row Section & Support / Community -->
-                        <div class="hub-news-section">
-                            <span class="pin pin-abs" style="top: 18px; left: 20px;" onclick="highlightSpec('pin5')">5</span>
-                            
-                            <!-- News Box (5 Items) -->
-                            <div class="hub-news-card">
-                                <div class="hub-news-head">
-                                    <div class="hub-news-title">새소식 (LATEST NEWS)</div>
-                                    <a href="javascript:void(0)" style="font-size: 12px; font-weight: 800; color: #2563EB; text-decoration: none;">더보기 +</a>
+                        <!-- [PIN 5] News & Community Live Feed -->
+                        <div class="hub-section">
+                            <span class="pin pin-abs" style="top: 14px; left: 20px;" onclick="highlightSpec('pin5')">5</span>
+                            <div class="hub-feed-grid">
+                                <!-- News Feed -->
+                                <div class="hub-feed-box">
+                                    <div class="hub-feed-head">
+                                        <h4><i class="fa-solid fa-bullhorn" style="color: var(--brand-primary);"></i> 최신 소식 &amp; 공지</h4>
+                                        <a href="javascript:void(0)" class="hub-feed-more">전체보기 +</a>
+                                    </div>
+                                    <div class="hub-news-row">
+                                        <div><span class="hub-news-tag hot">HOT</span> <strong>[이벤트]</strong> MyCard 충전 시 15% 보너스 다이아 캐시백</div>
+                                        <span style="color: #94A3B8; font-size: 10.5px;">09.02</span>
+                                    </div>
+                                    <div class="hub-news-row">
+                                        <div><span class="hub-news-tag">점검</span> <strong>[점검]</strong> RO Zero 정기 점검 및 서버 안정화 패치 안내</div>
+                                        <span style="color: #94A3B8; font-size: 10.5px;">09.01</span>
+                                    </div>
+                                    <div class="hub-news-row">
+                                        <div><span class="hub-news-tag">안내</span> <strong>[신규]</strong> 신규 라그나로크 IP 신작 사전예약 오픈</div>
+                                        <span style="color: #94A3B8; font-size: 10.5px;">08.28</span>
+                                    </div>
                                 </div>
-                                <div class="hub-news-list">
-                                    <div class="hub-news-row">
-                                        <div><span class="hub-news-tag notice">공지</span> <strong>[점검]</strong> 9월 정기 서버 점검 및 보안 패치 안내</div>
-                                        <span style="color: #94A3B8; font-size: 11px;">2026.09.02</span>
+
+                                <!-- SNS Community Feed -->
+                                <div class="hub-feed-box">
+                                    <div class="hub-feed-head">
+                                        <h4><i class="fa-solid fa-users" style="color: #2563EB;"></i> 공식 커뮤니티 직결</h4>
+                                        <span style="font-size: 11px; color: #64748B;">GGH Official Hub</span>
                                     </div>
-                                    <div class="hub-news-row">
-                                        <div><span class="hub-news-tag event">이벤트</span> <strong>[이벤트]</strong> MyCard / GASH 충전 시 15% 보너스 인게임 다이아 증정</div>
-                                        <span style="color: #94A3B8; font-size: 11px;">2026.09.01</span>
-                                    </div>
-                                    <div class="hub-news-row">
-                                        <div><span class="hub-news-tag notice">업데이트</span> <strong>[업데이트]</strong> RO仙境傳說：重生 신규 길드 레이드 던전 오픈</div>
-                                        <span style="color: #94A3B8; font-size: 11px;">2026.08.28</span>
-                                    </div>
-                                    <div class="hub-news-row">
-                                        <div><span class="hub-news-tag event">이벤트</span> <strong>[이벤트]</strong> 신작 사전예약 달성 보상 및 시리얼 쿠폰 지급 안내</div>
-                                        <span style="color: #94A3B8; font-size: 11px;">2026.08.25</span>
-                                    </div>
-                                    <div class="hub-news-row">
-                                        <div><span class="hub-news-tag notice">안내</span> <strong>[안내]</strong> 홍콩/대만 결제 수단 추가 및 시스템 최적화 완료 안내</div>
-                                        <span style="color: #94A3B8; font-size: 11px;">2026.08.20</span>
+                                    <div class="hub-sns-buttons">
+                                        <a href="javascript:void(0)" class="hub-sns-btn">
+                                            <i class="fa-brands fa-discord" style="color: #5865F2; font-size: 18px;"></i>
+                                            <span>Discord</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="hub-sns-btn">
+                                            <i class="fa-brands fa-facebook" style="color: #1877F2; font-size: 18px;"></i>
+                                            <span>Facebook</span>
+                                        </a>
+                                        <a href="javascript:void(0)" class="hub-sns-btn">
+                                            <i class="fa-brands fa-youtube" style="color: #FF0000; font-size: 18px;"></i>
+                                            <span>YouTube</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Customer Support Banner (No Search Box) -->
-                            <div class="hub-cs-strip">
-                                <div class="hub-cs-left">
-                                    <h3>도움이 필요하신가요? GNJOY 고객지원 센터</h3>
-                                    <p>계정 보안, 결제 오류, 쿠폰 등록 문의를 신속하게 해결해 드립니다.</p>
-                                </div>
-                                <div class="hub-cs-actions">
-                                    <a href="javascript:void(0)" class="hub-btn-cs"><i class="fa-solid fa-headset"></i> 1:1 온라인 문의하기</a>
-                                    <a href="javascript:void(0)" class="hub-btn-faq">FAQ 자주 묻는 질문</a>
-                                </div>
-                            </div>
-
-                            <!-- Community SNS Strip (Directly Below Support) -->
-                            <div class="hub-sns-strip">
-                                <div class="hub-sns-title">공식 커뮤니티 (Official Social Media)</div>
-                                <div class="hub-sns-icons">
-                                    <a href="javascript:void(0)" class="hub-sns-icon-btn"><i class="fa-brands fa-discord" style="color: #5865F2;"></i> Discord</a>
-                                    <a href="javascript:void(0)" class="hub-sns-icon-btn"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i> Facebook</a>
-                                    <a href="javascript:void(0)" class="hub-sns-icon-btn"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i> YouTube</a>
-                                    <a href="javascript:void(0)" class="hub-sns-icon-btn"><i class="fa-brands fa-instagram" style="color: #E4405F;"></i> Instagram</a>
-                                    <a href="javascript:void(0)" class="hub-sns-icon-btn"><i class="fa-brands fa-tiktok" style="color: #000000;"></i> TikTok</a>
-                                </div>
-                            </div>
-
                         </div>
 
-                        <!-- [PIN 6] Clean & Simple gnjoy.asia Style Footer -->
-                        <div class="hub-asia-footer">
+                        <!-- [PIN 6] Fast CS & Real gnjoy.hk Matching Footer -->
+                        <div class="hub-cs-strip">
                             <span class="pin pin-abs" style="top: 14px; left: 16px;" onclick="highlightSpec('pin6')">6</span>
-                            
-                            <div class="hub-asia-footer-links">
-                                <a href="javascript:void(0)">服務條款 (Terms of Service)</a>
+                            <div class="hub-cs-left">
+                                <h3>도움이 필요하신가요? 고객지원 센터</h3>
+                                <p>계정 보안, 결제 오류, 쿠폰 교환 문의를 신속하게 해결해 드립니다.</p>
+                            </div>
+                            <div class="hub-search-box">
+                                <input type="text" class="hub-search-input" placeholder="궁금한 질문을 검색하세요 (예: 비밀번호 변경)...">
+                                <button class="hub-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Real gnjoy.hk Matching Footer -->
+                        <div class="hub-real-footer">
+                            <span class="pin pin-abs" style="top: 14px; left: 16px;" onclick="highlightSpec('pin6')">6</span>
+                            <div class="hub-footer-links-row">
+                                <a href="javascript:void(0)">服務條款 (이용약관)</a>
                                 <span>•</span>
-                                <a href="javascript:void(0)">隱私權政策 (Privacy Policy)</a>
+                                <a href="javascript:void(0)">隱私權政策 (개인정보처리방침)</a>
                                 <span>•</span>
-                                <a href="javascript:void(0)">遊戲管理規章 (Game Rules)</a>
+                                <a href="javascript:void(0)">遊戲管理規章 (운영정책)</a>
                                 <span>•</span>
-                                <a href="javascript:void(0)">客服中心 (Support)</a>
+                                <a href="javascript:void(0)">個人資料暨退費申請 (환불신청)</a>
                                 <span>•</span>
-                                <a href="javascript:void(0)">聯絡我們 (Contact Us)</a>
+                                <a href="javascript:void(0)">聯絡我們 (고객센터)</a>
                             </div>
 
-                            <div class="hub-asia-corp">
-                                <div>© Gravity Co., LTD &amp; Lee MyoungJin(studio DTDS). All Rights Reserved. Published by Gravity Game Hub (GGH) Pte. Ltd.</div>
-                                <div>GRAVITY GAME HUB PTE. LTD. | 格雷維蒂互動股份有限公司 (代表人: 金珍煥 | 統一編號: 52458428)</div>
-                                <div style="margin-top: 2px;">Customer Support: <span style="color: #93C5FD;">service@gravity.com.tw</span></div>
+                            <div class="hub-footer-corp-info">
+                                <div><strong>GRAVITY GAME HUB PTE. LTD. | 格雷維蒂互動股份有限公司</strong> (代表人: 金珍煥 | 統一編號: 52458428)</div>
+                                <div>地址: 台北市中山區南京東路二段167號10樓 | 客服信箱: <span style="color: #93C5FD;">service@gravity.com.tw</span></div>
+                                <div style="margin-top: 4px; color: #475569;">© GRAVITY GAME HUB PTE. LTD. &amp; GRAVITY COMMUNICATIONS CO., LTD. ALL RIGHTS RESERVED.</div>
+                            </div>
+
+                            <div class="hub-footer-rating-container">
+                                <div class="hub-rating-badge-row">
+                                    <span class="hub-rate-pill" style="border-color: #10B981; color: #34D399;">普遍級 (All)</span>
+                                    <span class="hub-rate-pill" style="border-color: #3B82F6; color: #60A5FA;">保護級 (6+)</span>
+                                    <span class="hub-rate-pill" style="border-color: #F59E0B; color: #FBBF24;">輔導級 (12+)</span>
+                                    <span class="hub-rate-pill" style="border-color: #F97316; color: #FB923C;">輔導級 (15+)</span>
+                                    <span class="hub-rate-pill" style="border-color: #EF4444; color: #F87171;">限制級 (18+)</span>
+                                    <span style="color: #94A3B8; font-size: 10px; margin-left: 6px;">대만 디지털발전부(數發部) 법정 등급제 규정 준수</span>
+                                </div>
+                                <div class="hub-warning-text">
+                                    【溫馨提醒】注意使用時間，避免沉迷於遊戲。遊戲虛擬貨幣及物品一經購買恕不退換。本遊戲部分內容涉及暴力、戀愛交友、性情節，請依遊戲分級進行體驗。
+                                </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-                <!-- Right: Spec Panel -->
+                <!-- Right: Detailed Spec Description Panel -->
                 <div class="spec-scroll-panel">
+                    
                     <div style="padding-bottom: 10px; border-bottom: 1px solid var(--border-main);">
-                        <h2 style="font-size: 14.5px; font-weight: 800; color: #0F172A;">메인 페이지 기획 명세서 (올인원 허브형)</h2>
-                        <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">플레이어 중심 통합 접근성 및 결제 CVR 최적화 모델</p>
+                        <h2 style="font-size: 14.5px; font-weight: 800; color: #0F172A;">[Type B] 신규 구성안 기획 사양</h2>
+                        <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">플레이어 중심 올인원 허브형</p>
                     </div>
 
+                    <!-- PIN 1 SPEC -->
                     <div class="spec-item-box" id="spec-pin1">
-                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">1</span> <span>상단 GNB 헤더</span></div><span class="spec-tag-type">Sticky GNB</span></div>
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">1</span> <span>스마트 GNB &amp; 유저 지갑</span></div>
+                            <span class="spec-tag-type">Header</span>
+                        </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>직관적 계정 및 결제 네비게이션</strong>: 언어 선택 및 불필요한 캐시 위젯을 제외하고, <code>[로그인]</code>, <code>[회원가입]</code>, <code>[線上儲值 (Top-up)]</code> 버튼을 깔끔하게 배치.</li>
-                                <li><strong>고정형 헤더 (Sticky)</strong>: 스크롤 다운 시 상단에 고정되어 항시 주요 서비스 및 결제 바로가기 제공.</li>
+                                <li><strong>보유 캐시(GNJOY Cash) 실시간 표출</strong>: 로그인 유저의 충전 잔액을 GNB에 상시 노출하여 잔액 부족 시 즉각적인 충전 유도.</li>
+                                <li><strong>Top-up 고정 CTA</strong>: GNJOY 시그니처 레드 버튼 유지 ➔ <code>billing01(W)</code> 직접 연결.</li>
                             </ul>
                         </div>
                     </div>
 
+                    <!-- PIN 2 SPEC -->
                     <div class="spec-item-box" id="spec-pin2">
-                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">2</span> <span>모바일 대표작 히어로 배너</span></div><span class="spec-tag-type">Hero Banner</span></div>
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">2</span> <span>몰입형 히어로 &amp; 비디오 프리뷰</span></div>
+                            <span class="spec-tag-type">Hero Showcase</span>
+                        </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>모바일 타이틀 전면 배치</strong>: <code>RO仙境傳說：重生 (Ragnarok Rebirth)</code> 3D 모바일 대작 타이틀 표출.</li>
-                                <li><strong>원클릭 실행 액션</strong>: 런칭 날짜와 트레일러 버튼을 정리하고, 강력한 <code>[GAME START]</code> 단일 행동 유도 버튼 적용.</li>
-                                <li><strong>우측 실시간 인게임 쇼케이스</strong>: 플레이 영상 및 대표 비주얼 영역 유지.</li>
+                                <li><strong>카운트다운 타이머</strong>: 신규 오픈/기간 한정 이벤트 마감 시간을 실시간 초 단위로 노출하여 전환율 극대화.</li>
+                                <li><strong>트레일러 영상 모달</strong>: <code>트레일러 영상 보기</code> 클릭 시 인게임 플레이 영상 레이어 팝업 재생.</li>
+                                <li><strong>Play Now</strong>: PC 클라이언트 자동 실행 또는 공식 사전예약 페이지 이동.</li>
                             </ul>
                         </div>
                     </div>
 
+                    <!-- PIN 3 SPEC -->
                     <div class="spec-item-box" id="spec-pin3">
-                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">3</span> <span>4대 다이렉트 밸류 허브</span></div><span class="spec-tag-type">Action Strip</span></div>
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">3</span> <span>4대 원클릭 퀵 액션 스트립</span></div>
+                            <span class="spec-tag-type">Action Strip</span>
+                        </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>소셜 미디어 통합</strong>: PC 런처를 제외하고 게이머 소통을 위한 <code>[소셜 미디어 (Discord/FB/유튜브/인스타)]</code> 바로가기 배치.</li>
-                                <li><strong>핵심 서비스 4종</strong>: 캐시 충전(+15% 프로모션), 쿠폰 시리얼 등록, 소셜 미디어, 1:1 고객지원.</li>
+                                <li><strong>유저 필수 4대 목적을 1열 배치</strong>:
+                                    <br>• 충전소(+15% 보너스 프로모션 태그)
+                                    <br>• 쿠폰 교환(시리얼 번호 즉시 입력 팝업)
+                                    <br>• PC 통합 런처 원클릭 다운로드
+                                    <br>• 공식 커뮤니티(FB/Discord/공략)
+                                </li>
                             </ul>
                         </div>
                     </div>
 
+                    <!-- PIN 4 SPEC -->
                     <div class="spec-item-box" id="spec-pin4">
-                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">4</span> <span>12종 게임 라이브러리 (높이 160px &amp; 상태 뱃지)</span></div><span class="spec-tag-type">Game Matrix</span></div>
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">4</span> <span>PC / MO 게임 라이브러리</span></div>
+                            <span class="spec-tag-type">Game Library</span>
+                        </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>타이틀 및 탭 아이콘 정리</strong>: <code>GRAVITY GAME LIBRARY</code> 타이틀 및 <code>[전체 (12)]</code>, <code>[PC (5)]</code>, <code>[MO (7)]</code> 텍스트 탭으로 심플화.</li>
-                                <li><strong>썸네일 높이 확대 (160px)</strong>: 비주얼 몰입도를 높이고, 좌측 상단에 <code>OPEN</code>, <code>OBT</code>, <code>PRE-REG</code> 서비스 상태 뱃지 부착.</li>
-                                <li><strong>정돈된 액션 레이아웃</strong>: 다운로드 텍스트 레이블을 제거하고, <code>[공식 사이트 ↗]</code>, 플랫폼 다운로드 아이콘, <code>[웹스토어/충전소]</code> 버튼을 질서 있게 배치.</li>
+                                <li><strong>PC / MO 플랫폼 탭 분리</strong>: <code>[전체]</code>, <code>[PC 온라인 (5종)]</code>, <code>[모바일 (7종)]</code>으로 탭 분기.</li>
+                                <li><strong>썸네일 클릭 시 공식홈페이지 이동</strong>: 썸네일 호버 시 <code>[공식 홈페이지 바로가기]</code> 오버레이 표시 및 클릭 시 공식 사이트 새창(<code>target="_blank"</code>) 연결.</li>
+                                <li><strong>플랫폼별 다운로드 아이콘</strong>: 각 게임이 지원하는 플랫폼에 맞추어 <code>Apple (iOS)</code>, <code>Google Play (AOS)</code>, <code>APK 직접 다운로드</code>, <code>Windows PC 클라이언트</code> 아이콘 버튼 제공.</li>
+                                <li><strong>충전소 직결 듀얼 버튼</strong>: 카드 하단에 <code>Play Now</code>와 <code>충전소/웹스토어</code> 링크를 동시에 제공.</li>
                             </ul>
                         </div>
                     </div>
 
+                    <!-- PIN 5 SPEC -->
                     <div class="spec-item-box" id="spec-pin5">
-                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">5</span> <span>새소식 5종 &amp; 고객지원 &amp; SNS</span></div><span class="spec-tag-type">News &amp; CS</span></div>
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">5</span> <span>소식 &amp; SNS 라이브 피드</span></div>
+                            <span class="spec-tag-type">Live Feed</span>
+                        </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>새소식 5종 표출</strong>: <code>[공지]</code>, <code>[이벤트]</code>, <code>[점검]</code>, <code>[업데이트]</code>, <code>[안내]</code> 등 5개 최신 게시글 노출.</li>
-                                <li><strong>고객지원 &amp; SNS 직결</strong>: 불필요한 검색창을 제거하고, 1:1 문의/FAQ 버튼 아래 공식 SNS 채널(Discord, FB, YouTube, Insta, TikTok) 배치.</li>
+                                <li><strong>공지사항 &amp; 이벤트 피드</strong>: 최신 뉴스 3건 컴팩트 노출.</li>
+                                <li><strong>공식 커뮤니티 퀵 채널</strong>: Discord, Facebook, YouTube 공식 채널 바로가기 버튼 제공.</li>
                             </ul>
                         </div>
                     </div>
 
+                    <!-- PIN 6 SPEC -->
                     <div class="spec-item-box" id="spec-pin6">
-                        <div class="spec-item-header"><div class="spec-pin-title"><span class="pin">6</span> <span>심플 gnjoy.asia 스타일 푸터</span></div><span class="spec-tag-type">Simple Footer</span></div>
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">6</span> <span>실제 gnjoy.hk 공식 푸터</span></div>
+                            <span class="spec-tag-type">gnjoy.hk Footer</span>
+                        </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>미니멀 푸터 레이아웃</strong>: gnjoy.asia와 동일한 심플하고 정제된 디자인 적용.</li>
-                                <li><strong>핵심 법정 약관 &amp; 사업자 정보</strong>: 이용약관, 개인정보처리방침, 운영규장, 고객지원, 법인 정보 및 CS 이메일 명시.</li>
+                                <li><strong>공식 약관 및 정책 링크</strong>: 服務條款(이용약관), 隱私權政策(개인정보처리방침), 遊戲管理規章(운영정책), 個人資料暨退費申請(환불신청), 聯絡我們(고객센터).</li>
+                                <li><strong>공식 법인 사업자 정보</strong>: GRAVITY GAME HUB PTE. LTD. / 格雷維蒂互動股份有限公司 (대표자: 金珍煥, 주소: 台北市中山區南京東路二段167號10樓, 고객센터: service@gravity.com.tw).</li>
+                                <li><strong>대만 디지털발전부 5대 등급 &amp; 법정 경고문</strong>: 普遍(0+), 保護(6+), 輔12, 輔15, 限制(18+) 뱃지 및 과몰입 방지 법정 경고문 완비.</li>
                             </ul>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
 
-            <!-- Responsive Spec View -->
+                </div>
+            </div>
+
+            <!-- Responsive View (Tablet & MO) -->
             <div id="responsive-spec-view" style="display: none; width: 100%;">
-                <div style="display: flex; gap: 36px; justify-content: center; flex-wrap: wrap; padding: 20px 0;">
-                    
-                    <!-- Tablet Device (768px) -->
-                    <div style="width: 768px; background: white; border-radius: 16px; border: 8px solid #0F172A; box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden;">
-                        <div style="background: #0F172A; color: white; padding: 10px 16px; font-size: 11px; font-weight: 800; display: flex; justify-content: space-between;">
-                            <span><i class="fa-solid fa-tablet-screen-button"></i> Tablet View (768px)</span>
-                            <span>GNJOY.HK All-in-One Hub</span>
+                <div style="display: flex; gap: 36px; justify-content: center; flex-wrap: wrap;">
+                    <!-- Tablet -->
+                    <div style="width: 768px; background: white; border-radius: 16px; border: 8px solid #1E293B; overflow: hidden;">
+                        <div class="hub-gnb" style="padding: 12px 20px;">
+                            <img src="./_레이어_1-2.png" alt="GNJOY" style="height: 24px;">
+                            <div class="hub-nav-links" style="font-size: 11.5px; gap: 14px;"><span>HOME</span><span>GAMES</span><span>TOP-UP</span><span>SUPPORT</span></div>
+                            <a href="javascript:void(0)" class="hub-btn-topup" style="padding: 5px 12px; font-size: 11px;">Top-up</a>
                         </div>
-                        <div style="padding: 20px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 12px; margin-bottom: 16px;">
-                                <img src="./_레이어_1-2.png" alt="logo" style="height: 22px;">
-                                <div style="display: flex; gap: 6px;">
-                                    <span style="background: #F1F5F9; color: #334155; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 4px;">로그인</span>
-                                    <span style="background: #E11D48; color: white; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 4px;">線上儲值</span>
-                                </div>
+                        <div class="hub-hero" style="padding: 32px 24px; flex-direction: column; gap: 20px; align-items: flex-start;">
+                            <div class="hub-hero-title" style="font-size: 24px;">Ragnarok Online Zero</div>
+                            <div class="hub-hero-cta-group">
+                                <a href="javascript:void(0)" class="hub-btn-play-primary" style="padding: 8px 18px; font-size: 12px;">Play Now</a>
                             </div>
-                            <div style="background: #0F172A; color: white; border-radius: 8px; padding: 20px; margin-bottom: 16px;">
-                                <div style="font-size: 10px; font-weight: 800; color: #FDA4AF;">GRAND LAUNCH</div>
-                                <div style="font-size: 18px; font-weight: 900; margin: 4px 0;">RO仙境傳說：重生</div>
-                                <button style="background: #E11D48; color: white; border: none; padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 800; margin-top: 8px;">GAME START</button>
-                            </div>
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 12px;">
-                                    <span style="background: #10B981; color: white; font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 3px;">OPEN</span>
-                                    <div style="font-size: 12px; font-weight: 800; margin-top: 4px;">RO Zero</div>
-                                </div>
-                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 12px;">
-                                    <span style="background: #DC2626; color: white; font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 3px;">HOT</span>
-                                    <div style="font-size: 12px; font-weight: 800; margin-top: 4px;">Ragnarok Origin</div>
-                                </div>
-                            </div>
+                        </div>
+                        <div class="hub-action-strip" style="grid-template-columns: repeat(2, 1fr); padding: 14px 20px;">
+                            <div class="hub-action-card"><div class="hub-action-title">온라인 캐시 충전</div></div>
+                            <div class="hub-action-card"><div class="hub-action-title">쿠폰 시리얼 교환</div></div>
                         </div>
                     </div>
 
-                    <!-- Mobile Device (390px) -->
-                    <div style="width: 390px; background: white; border-radius: 28px; border: 10px solid #0F172A; box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden;">
-                        <div style="background: #0F172A; color: white; padding: 12px 16px; font-size: 11px; font-weight: 800; text-align: center;">
-                            <span><i class="fa-solid fa-mobile-screen"></i> Mobile View (390px)</span>
+                    <!-- Mobile -->
+                    <div style="width: 390px; background: white; border-radius: 24px; border: 8px solid #1E293B; overflow: hidden;">
+                        <div style="height: 20px; background: #1E293B;"></div>
+                        <div class="hub-gnb" style="padding: 10px 14px;">
+                            <img src="./_레이어_1-2.png" alt="GNJOY" style="height: 20px;">
+                            <a href="javascript:void(0)" class="hub-btn-topup" style="padding: 4px 10px; font-size: 10px;">Top-up</a>
                         </div>
-                        <div style="padding: 16px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                                <img src="./_레이어_1-2.png" alt="logo" style="height: 18px;">
-                                <div style="display: flex; gap: 4px; align-items: center;">
-                                    <span style="font-size: 10.5px; font-weight: 800; color: #334155;">로그인</span>
-                                    <span style="background: #E11D48; color: white; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 4px;">충전</span>
-                                </div>
-                            </div>
-                            <div style="background: linear-gradient(135deg, #0F172A, #1E293B); color: white; border-radius: 10px; padding: 16px; margin-bottom: 14px;">
-                                <div style="font-size: 9px; color: #FDA4AF; font-weight: 800;">3D MOBILE MMORPG</div>
-                                <div style="font-size: 15px; font-weight: 900; margin: 4px 0;">RO仙境傳說：重生</div>
-                                <button style="background: #E11D48; color: white; border: none; padding: 7px 12px; border-radius: 4px; font-size: 11px; font-weight: 900; width: 100%;">GAME START</button>
-                            </div>
-                            <div style="font-weight: 800; font-size: 13px; margin-bottom: 8px;">GRAVITY GAME LIBRARY</div>
-                            <div style="display: flex; flex-direction: column; gap: 8px;">
-                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <span style="background: #10B981; color: white; font-size: 8.5px; font-weight: 800; padding: 1px 4px; border-radius: 2px;">OPEN</span>
-                                        <div style="font-size: 11.5px; font-weight: 800; margin-top: 2px;">Ragnarok Zero</div>
-                                    </div>
-                                    <span style="font-size: 10px; color: #2563EB; font-weight: 800;">공식 사이트 &gt;</span>
-                                </div>
-                                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <span style="background: #DC2626; color: white; font-size: 8.5px; font-weight: 800; padding: 1px 4px; border-radius: 2px;">HOT</span>
-                                        <div style="font-size: 11.5px; font-weight: 800; margin-top: 2px;">Ragnarok Origin</div>
-                                    </div>
-                                    <span style="font-size: 10px; color: #2563EB; font-weight: 800;">공식 사이트 &gt;</span>
-                                </div>
-                            </div>
+                        <div class="hub-hero" style="padding: 24px 16px;">
+                            <div class="hub-hero-title" style="font-size: 18px;">Ragnarok Zero</div>
+                            <a href="javascript:void(0)" class="hub-btn-play-primary" style="padding: 6px 14px; font-size: 11px; margin-top: 10px;">Play Now</a>
+                        </div>
+                        <div class="hub-action-strip" style="grid-template-columns: 1fr; padding: 10px 14px;">
+                            <div class="hub-action-card"><div class="hub-action-title">온라인 캐시 충전 (+15%)</div></div>
+                            <div class="hub-action-card"><div class="hub-action-title">쿠폰 번호 즉시 등록</div></div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -1611,45 +1542,46 @@
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('app-sidebar');
-            const trigger = document.getElementById('sidebar-toggle-btn');
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
             sidebar.classList.toggle('collapsed');
             if (sidebar.classList.contains('collapsed')) {
-                trigger.style.display = 'inline-flex';
+                toggleBtn.style.display = 'flex';
             } else {
-                trigger.style.display = 'none';
+                toggleBtn.style.display = 'none';
             }
         }
 
-        function switchView(mode) {
+        function switchDevice(mode) {
             const pcView = document.getElementById('pc-spec-view');
             const respView = document.getElementById('responsive-spec-view');
-            const buttons = document.querySelectorAll('.view-tab-btn');
-            
-            buttons.forEach(btn => btn.classList.remove('active'));
+            const btnPc = document.getElementById('btn-pc');
+            const btnResp = document.getElementById('btn-responsive');
 
             if (mode === 'pc') {
                 pcView.style.display = 'grid';
                 respView.style.display = 'none';
-                buttons[0].classList.add('active');
+                btnPc.classList.add('active');
+                btnResp.classList.remove('active');
             } else {
                 pcView.style.display = 'none';
                 respView.style.display = 'block';
-                buttons[1].classList.add('active');
+                btnPc.classList.remove('active');
+                btnResp.classList.add('active');
             }
         }
 
         function highlightSpec(pinId) {
-            const target = document.getElementById('spec-' + pinId);
-            if (!target) return;
-            
-            document.querySelectorAll('.spec-item-box').forEach(el => {
-                el.style.borderColor = 'var(--border-main)';
-                el.style.backgroundColor = 'white';
-            });
-
-            target.style.borderColor = 'var(--pin-color)';
-            target.style.backgroundColor = '#FAF5FF';
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const specEl = document.getElementById('spec-' + pinId);
+            if (specEl) {
+                specEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                specEl.style.transition = 'all 0.3s ease';
+                specEl.style.boxShadow = '0 0 0 3px #A855F7';
+                specEl.style.borderColor = '#7C3AED';
+                setTimeout(() => {
+                    specEl.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)';
+                    specEl.style.borderColor = 'var(--border-main)';
+                }, 2000);
+            }
         }
     </script>
 </body>
