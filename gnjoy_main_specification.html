@@ -788,11 +788,44 @@
         .spec-bullet-list { list-style: none; padding-left: 0; }
         .spec-bullet-list li { position: relative; padding-left: 11px; margin-bottom: 4px; }
         .spec-bullet-list li::before { content: '•'; position: absolute; left: 0; color: var(--pin-color); font-weight: bold; }
+    
+        .nav-sub-tree {
+            list-style: none;
+            padding-left: 12px;
+            margin-left: 14px;
+            border-left: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 2px;
+            margin-bottom: 6px;
+        }
+        .nav-sub-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-radius: 5px;
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            text-decoration: none;
+        }
+        .nav-sub-btn:hover { background: #1E293B; color: #FFFFFF; }
+        .nav-sub-btn.active { background: rgba(225, 29, 72, 0.2); color: #FDA4AF; font-weight: 700; }
+
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
+        <!-- Sidebar -->
     <aside class="app-sidebar" id="app-sidebar">
         <div class="sidebar-brand">
             <div class="brand-content">
@@ -807,29 +840,66 @@
 
         <nav class="sidebar-nav">
             <div>
-                <div class="nav-group-title">Document Info</div>
+                <div class="nav-group-title">DOCUMENT INFO</div>
                 <ul class="nav-list">
-                    <li><a href="index.html" class="nav-item-btn"><div class="nav-item-left"><span>00. 표지 &amp; 개정이력</span></div></a></li>
-                    <li><a href="sitemap.html" class="nav-item-btn"><div class="nav-item-left"><span>01. 사이트맵 &amp; 인덱스</span></div></a></li>
+                    <li><a href="index.html" class="nav-item-btn "><div class="nav-item-left"><span>00. 표지 &amp; 개정이력</span></div></a></li>
+                    <li><a href="sitemap.html" class="nav-item-btn "><div class="nav-item-left"><span>01. IA</span></div></a></li>
+                    <li><a href="benchmark.html" class="nav-item-btn "><div class="nav-item-left"><span>02. 중화권 시장 분석 &amp; 벤치마킹</span></div></a></li>
                 </ul>
             </div>
 
             <div>
-                <div class="nav-group-title">Specification</div>
+                <div class="nav-group-title">SCREEN STORYBOARD</div>
                 <ul class="nav-list">
-                    <li><a href="gnjoy_main_specification.html" class="nav-item-btn active"><div class="nav-item-left"><span>02. 메인 페이지 기획서</span></div></a></li>
-                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>회원</span></div></a></li>
-                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>게임</span></div></a></li>
-                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>캐시 충전</span></div></a></li>
-                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>고객 지원 센터</span></div></a></li>
-                    <li><a href="javascript:void(0)" class="nav-item-btn" style="opacity: 0.6;"><div class="nav-item-left"><span>마이페이지</span></div></a></li>
+                    <!-- 메인 페이지 (올인원 허브형) -->
+                    <li>
+                        <a href="gnjoy_main_specification.html" class="nav-item-btn active">
+                            <div class="nav-item-left"><span>메인 페이지</span></div>
+                        </a>
+                    </li>
+
+                    <!-- 캐시충전 -->
+                    <li>
+                        <div class="nav-item-btn" style="cursor: default;"><div class="nav-item-left"><span>캐시충전</span></div></div>
+                        <ul class="nav-sub-tree">
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>온라인 캐시 충전</span></a></li>
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>거래 및 결제내역</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 새소식 -->
+                    <li>
+                        <div class="nav-item-btn" style="cursor: default;"><div class="nav-item-left"><span>새소식</span></div></div>
+                        <ul class="nav-sub-tree">
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>공지사항 &amp; 이벤트</span></a></li>
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>공지 상세</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 고객지원 -->
+                    <li>
+                        <div class="nav-item-btn" style="cursor: default;"><div class="nav-item-left"><span>고객지원</span></div></div>
+                        <ul class="nav-sub-tree">
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>FAQ 자주 묻는 질문</span></a></li>
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>1:1 온라인 문의</span></a></li>
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>의견 피드백</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 로그인 회원가입 -->
+                    <li>
+                        <div class="nav-item-btn" style="cursor: default;"><div class="nav-item-left"><span>로그인 회원가입</span></div></div>
+                        <ul class="nav-sub-tree">
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>소셜 &amp; 일반 로그인</span></a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </nav>
 
         <div class="sidebar-footer">
-            <span>Status: 확정 기획안</span>
-            <span style="background: #ECFDF5; color: #059669; font-weight: 800; padding: 2px 7px; border-radius: 4px; font-size: 10.5px;">허브형 v2.0</span>
+            <span>Status: 작성 완료</span>
+            <span style="background: #ECFDF5; color: #059669; font-weight: 800; padding: 2px 7px; border-radius: 4px; font-size: 10.5px;">v2.0.0</span>
         </div>
     </aside>
 

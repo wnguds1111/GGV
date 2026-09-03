@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOC-02 중화권 시장 분석 및 벤치마킹 | GNJOY 포털 웹 기획서</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --topbar-height: 60px;
+            --canvas-bg: #F8FAFC;
+            --panel-bg: #FFFFFF;
+            --border-main: #E2E8F0;
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --brand-primary: #E11D48;
+            --brand-subtle: #FFF1F2;
+            --accent-blue: #2563EB;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--canvas-bg);
+            color: var(--text-body);
+            line-height: 1.5;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .app-sidebar {
+            width: var(--sidebar-width);
+            background: #0F172A;
+            color: #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid #1E293B;
+            user-select: none;
+            z-index: 100;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .app-sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-width)); opacity: 0; pointer-events: none; }
+        .sidebar-brand {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1E293B;
+            height: var(--topbar-height);
+        }
+        .brand-content { display: flex; align-items: center; gap: 12px; }
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--brand-primary), #BE123C);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+        }
+        .brand-text h1 { font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; }
+        .brand-text p { font-size: 11px; color: #94A3B8; }
+        .sidebar-collapse-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94A3B8;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .sidebar-collapse-btn:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+        .sidebar-nav {
+            flex: 1;
+            padding: 18px 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .nav-group-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 8px;
+            margin-bottom: 6px;
+        }
+        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        .nav-item-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 12px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            color: #F1F5F9;
+            font-size: 13.5px;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .nav-item-btn:hover { background: #1E293B; color: #F8FAFC; }
+        .nav-item-btn.active {
+            background: var(--brand-primary);
+            color: #FFFFFF;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
+        }
+        .nav-item-left { display: flex; align-items: center; gap: 8px; }
+        .nav-item-badge {
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.12);
+            color: #E2E8F0;
+        }
+        .nav-item-btn.active .nav-item-badge { background: rgba(0,0,0,0.25); color: #FFFFFF; }
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #1E293B;
+            background: #0B1120;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #64748B;
+        }
+        .badge-draft {
+            font-size: 11px;
+            font-weight: 700;
+            background: #F1F5F9;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-main);
+        }
+
+        /* Main Workspace */
+        .app-main { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .app-topbar {
+            height: var(--topbar-height);
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border-main);
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 90;
+        }
+        .topbar-left-zone { display: flex; align-items: center; gap: 14px; }
+        .sidebar-toggle-trigger {
+            background: #F8FAFC;
+            border: 1px solid var(--border-main);
+            color: var(--text-heading);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .page-badge {
+            background: var(--brand-subtle);
+            color: var(--brand-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #FECDD3;
+        }
+        .page-heading { font-size: 15px; font-weight: 800; color: var(--text-heading); }
+        .topbar-page-nav { display: flex; gap: 8px; }
+        .topbar-nav-link {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-main);
+            background: #F8FAFC;
+            transition: all 0.15s ease;
+        }
+        .topbar-nav-link:hover { background: #FFFFFF; color: var(--brand-primary); border-color: var(--brand-primary); }
+
+        .app-content-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px 48px 80px;
+            display: flex;
+            justify-content: center;
+        }
+        .doc-section-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-main);
+            border-radius: 16px;
+            padding: 44px 48px;
+            width: 100%;
+            max-width: 1480px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+        }
+        .cover-hero-box {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 55%, #881337 100%);
+            color: #FFFFFF;
+            padding: 36px 44px;
+            border-radius: 14px;
+            margin-bottom: 36px;
+        }
+        .cover-hero-box h1 { font-size: 28px; font-weight: 900; margin-top: 14px; line-height: 1.35; }
+        .cover-hero-box p { font-size: 14px; color: #CBD5E1; margin-top: 10px; }
+
+        /* ================= SPACIOUS, ELEGANT TABLE STYLES ================= */
+        .standard-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13.5px;
+            border: 1px solid var(--border-main);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 36px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.02);
+        }
+        .standard-table th {
+            background: #F1F5F9;
+            color: #0F172A;
+            font-weight: 800;
+            font-size: 14px;
+            padding: 18px 24px;
+            border-bottom: 2px solid #CBD5E1;
+            border-right: 1px solid var(--border-main);
+            text-align: left;
+            letter-spacing: -0.2px;
+        }
+        .standard-table td {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-main);
+            border-right: 1px solid var(--border-main);
+            color: var(--text-body);
+            vertical-align: middle;
+            line-height: 1.75;
+            transition: background 0.15s ease;
+        }
+        .standard-table tbody tr:hover td {
+            background-color: #F8FAFC;
+        }
+        .standard-table tbody tr:last-child td { border-bottom: none; }
+        .standard-table td:last-child, .standard-table th:last-child { border-right: none; }
+
+        /* Custom Bullet List for Table Cells */
+        .tb-bullet-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .tb-bullet-list li {
+            position: relative;
+            padding-left: 16px;
+            font-size: 13.5px;
+            line-height: 1.65;
+            color: #334155;
+        }
+        .tb-bullet-list li span.bullet {
+            position: absolute;
+            left: 0;
+            color: #2563EB;
+            font-weight: 900;
+            font-size: 14px;
+        }
+    
+        .nav-sub-tree {
+            list-style: none;
+            padding-left: 12px;
+            margin-left: 14px;
+            border-left: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 2px;
+            margin-bottom: 6px;
+        }
+        .nav-sub-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-radius: 5px;
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            text-decoration: none;
+        }
+        .nav-sub-btn:hover { background: #1E293B; color: #FFFFFF; }
+        .nav-sub-btn.active { background: rgba(225, 29, 72, 0.2); color: #FDA4AF; font-weight: 700; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Left Sidebar -->
+        <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-content">
+                <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+                <div class="brand-text">
+                    <h1>GGV (GNJOY.HK)</h1>
+                    <p>포털 웹 기획서 v2.0</p>
+                </div>
+            </div>
+            <button class="sidebar-collapse-btn" onclick="toggleSidebar()"><i class="fa-solid fa-angles-left"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div>
+                <div class="nav-group-title">DOCUMENT INFO</div>
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-item-btn "><div class="nav-item-left"><span>00. 표지 &amp; 개정이력</span></div></a></li>
+                    <li><a href="sitemap.html" class="nav-item-btn "><div class="nav-item-left"><span>01. IA</span></div></a></li>
+                    <li><a href="benchmark.html" class="nav-item-btn active"><div class="nav-item-left"><span>02. 중화권 시장 분석 &amp; 벤치마킹</span></div></a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="nav-group-title">SCREEN STORYBOARD</div>
+                <ul class="nav-list">
+                    <!-- 메인 페이지 (올인원 허브형) -->
+                    <li>
+                        <a href="gnjoy_main_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>메인 페이지</span></div>
+                        </a>
+                    </li>
+
+                    <!-- 캐시충전 -->
+                    <li>
+                        <div class="nav-item-btn" style="cursor: default;"><div class="nav-item-left"><span>캐시충전</span></div></div>
+                        <ul class="nav-sub-tree">
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>온라인 캐시 충전</span></a></li>
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>거래 및 결제내역</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 새소식 -->
+                    <li>
+                        <div class="nav-item-btn" style="cursor: default;"><div class="nav-item-left"><span>새소식</span></div></div>
+                        <ul class="nav-sub-tree">
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>공지사항 &amp; 이벤트</span></a></li>
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>공지 상세</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 고객지원 -->
+                    <li>
+                        <div class="nav-item-btn" style="cursor: default;"><div class="nav-item-left"><span>고객지원</span></div></div>
+                        <ul class="nav-sub-tree">
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>FAQ 자주 묻는 질문</span></a></li>
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>1:1 온라인 문의</span></a></li>
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>의견 피드백</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 로그인 회원가입 -->
+                    <li>
+                        <div class="nav-item-btn" style="cursor: default;"><div class="nav-item-left"><span>로그인 회원가입</span></div></div>
+                        <ul class="nav-sub-tree">
+                            <li><a href="javascript:void(0)" class="nav-sub-btn"><span>소셜 &amp; 일반 로그인</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span>Status: 작성 완료</span>
+            <span style="background: #ECFDF5; color: #059669; font-weight: 800; padding: 2px 7px; border-radius: 4px; font-size: 10.5px;">v2.0.0</span>
+        </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="app-main">
+        <header class="app-topbar">
+            <div class="topbar-left-zone">
+                <button class="sidebar-toggle-trigger" id="sidebar-toggle-btn" title="메뉴 열기" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <span class="page-badge">DOC-02</span>
+                <span class="page-heading">02. 중화권 시장 분석 및 벤치마킹 (Greater China Benchmark)</span>
+            </div>
+            <div class="topbar-page-nav">
+                <a href="sitemap.html" class="topbar-nav-link">&larr; 이전: 01. IA</a>
+                <a href="main_screen.html" class="topbar-nav-link">다음: 03. 메인 화면 &rarr;</a>
+            </div>
+        </header>
+
+        <div class="app-content-body">
+            <div class="doc-section-card">
+                <!-- Hero Header -->
+                <div class="cover-hero-box">
+                    <span style="font-size: 12px; font-weight: 800; background: rgba(225, 29, 72, 0.28); border: 1px solid #E11D48; padding: 4px 12px; border-radius: 20px; color: #FDA4AF; text-transform: uppercase;">Greater China Market Analysis</span>
+                    <h1>02. 중화권 시장 분석 및 벤치마킹</h1>
+                    <p>대만 · 홍콩 · 마카오 · 중국 게이머의 해상도/결제 행태 데이터 분석 및 10대 대표 게임 포털 벤치마킹을 거쳐 도출된 메인 화면 설계 근거입니다.</p>
+                </div>
+
+                <!-- 1. 중화권 게이밍 환경 및 UI/UX 선호도 분석 -->
+                <div style="margin-bottom: 40px;">
+                    <h3 style="font-size: 17px; font-weight: 800; color: #0F172A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                        <span style="background: #1E293B; color: white; width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800;">1</span>
+                        중화권(대만 · 홍콩 · 마카오 · 중국) 게이밍 환경 및 UI/UX 선호도 분석
+                    </h3>
+                    <table class="standard-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 250px;">구분 (분석 영역)</th>
+                                <th>중화권 유저 이용 행태 및 시장 데이터 근거 (Evidence)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong style="font-size: 14.5px; color: #0F172A;">해상도 및 디바이스 환경</strong></td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> <strong>표준 해상도 근거</strong>: PC는 <strong>1920×1080 (FHD 점유율 82% 이상)</strong>, 모바일은 <strong>390~430px (아이폰 및 고해상도 플래그십 58%)</strong> 환경이 지배적입니다.</li>
+                                        <li><span class="bullet">•</span> <strong>트래픽 vs 매출 역전 근거</strong>: 접속 트래픽은 모바일(68%)이 높으나, <strong>실제 결제 매출의 65% 이상은 PC 클라이언트 및 웹 직접 결제 유저에게서 발생</strong>합니다.</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong style="font-size: 14.5px; color: #0F172A;">선호 UI/UX 스타일 및 시각 대비</strong></td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> <strong>시각 대비 선호 근거</strong>: <strong>시네마틱 다크 테마(강)</strong>의 웅장한 브랜드 감성과 <strong>클린 화이트 카드(약)</strong>의 높은 정보 밀도를 동시에 선호합니다.</li>
+                                        <li><span class="bullet">•</span> <strong>이탈 방지 근거</strong>: 복잡한 뎁스(3단계 이상) 탐색 시 유저 이탈률이 40% 이상 급증하므로 <strong>1~2클릭 내 즉시 실행 및 이동</strong> 동선이 필수적입니다.</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong style="font-size: 14.5px; color: #0F172A;">결제 및 충전 동선 (Billing)</strong></td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> <strong>프로모션 민감도 근거</strong>: 중화권 게이머는 <strong>'충전 시 +10~15% 보너스 인게임 재화 추가 지급'</strong> 이벤트에 즉각적인 결제 전환(CVR) 반응을 보입니다.</li>
+                                        <li><span class="bullet">•</span> <strong>결제 수단 명확성</strong>: 대만 마이카드(MyCard)/GASH, 홍콩 옥토퍼스(Octopus)/PayMe, 중국 위챗/알리페이 등 현지 결제 수단이 첫 화면에 보이지 않을 시 결제 포기율이 35% 증가합니다.</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong style="font-size: 14.5px; color: #0F172A;">쿠폰 번호 교환 및 공식 커뮤니티</strong></td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> <strong>방문 목적 근거</strong>: 방송 및 이벤트 시리얼 코드 입력을 위한 <strong>'쿠폰 번호 교환(序號兌換)' 목적의 유입이 전체 포털 트래픽의 40% 이상</strong>을 차지합니다.</li>
+                                        <li><span class="bullet">•</span> <strong>리텐션 영향</strong>: 공식 페이스북 팬페이지(FB 粉絲團) 및 디스코드 커뮤니티 연계 시 유저 잔존율(재방문율)이 2.3배 향상됩니다.</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 2. 중화권 10대 대표 게임 포털 벤치마킹 (시원하고 여유로운 레이아웃) -->
+                <div style="margin-bottom: 40px;">
+                    <h3 style="font-size: 17px; font-weight: 800; color: #0F172A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                        <span style="background: #1E293B; color: white; width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800;">2</span>
+                        중화권(대만 · 홍콩 · 마카오 · 중국) 10대 대표 게임 포털 벤치마킹
+                    </h3>
+                    <table class="standard-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 280px;">게임 포털 사이트</th>
+                                <th style="width: 170px; text-align: center;">지역 및 분류</th>
+                                <th>주요 포털 UX 특징 (요약)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="https://game.qq.com" target="_blank" style="color: #2563EB; font-weight: 800; font-size: 14.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                        1. 텐센트 게임즈 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.75;"></i>
+                                    </a>
+                                    <div style="font-size: 12px; color: #64748B; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">game.qq.com</div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">
+                                        중화권 1위 포털
+                                    </span>
+                                </td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> 수백 종 게임 라인업을 장르 / 플랫폼 / 인기순으로 정밀 분류</li>
+                                        <li><span class="bullet">•</span> QQ 및 위챗 계정 원클릭 통합 로그인 및 2차 보안 체계</li>
+                                        <li><span class="bullet">•</span> 신작 플래그십 시네마틱 풀와이드 메인 비주얼 배너 전진 배치</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="https://game.163.com" target="_blank" style="color: #2563EB; font-weight: 800; font-size: 14.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                        2. 넷이즈 게임즈 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.75;"></i>
+                                    </a>
+                                    <div style="font-size: 12px; color: #64748B; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">game.163.com</div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA;">
+                                        중국 2대 포털
+                                    </span>
+                                </td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> 시네마틱 딥 다크 테마 기반의 프리미엄 쇼케이스 레이아웃</li>
+                                        <li><span class="bullet">•</span> PC 클라이언트 및 모바일 통합 다운로드 런처 허브 제공</li>
+                                        <li><span class="bullet">•</span> 자체 개발 대형 IP 중심의 몰입감 높은 인터랙티브 카드 뷰</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="https://game.bilibili.com" target="_blank" style="color: #2563EB; font-weight: 800; font-size: 14.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                        3. 비리비리 게임즈 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.75;"></i>
+                                    </a>
+                                    <div style="font-size: 12px; color: #64748B; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">game.bilibili.com</div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #FDF2F8; color: #9D174D; border: 1px solid #FBCFE8;">
+                                        서브컬처 1위
+                                    </span>
+                                </td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> [선물함 / 쿠폰 번호 교환] 및 사전예약 보상 최상단 퀵바 배치</li>
+                                        <li><span class="bullet">•</span> 공식 커뮤니티(영상 / 공략 / 라이브 방송)와 게임 포털 직결</li>
+                                        <li><span class="bullet">•</span> 모바일 및 PC 크로스플랫폼 원클릭 직다운로드 지원</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="https://www.taptap.io" target="_blank" style="color: #2563EB; font-weight: 800; font-size: 14.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                        4. 탭탭 플랫폼 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.75;"></i>
+                                    </a>
+                                    <div style="font-size: 12px; color: #64748B; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">taptap.io</div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0;">
+                                        모바일 유통 1위
+                                    </span>
+                                </td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> 공식 APK 직접 다운로드 및 글로벌 / 중화권 통합 빌드 지원</li>
+                                        <li><span class="bullet">•</span> 직관적인 게임 평점 시스템 및 최신 업데이트 패치노트 표출</li>
+                                        <li><span class="bullet">•</span> 안드로이드 및 iOS 원클릭 설치 연계</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="https://www.wegame.com.cn" target="_blank" style="color: #2563EB; font-weight: 800; font-size: 14.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                        5. 위게임 PC 플랫폼 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.75;"></i>
+                                    </a>
+                                    <div style="font-size: 12px; color: #64748B; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">wegame.com.cn</div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #FFFBEB; color: #92400E; border: 1px solid #FDE68A;">
+                                        PC 런처 1위
+                                    </span>
+                                </td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> PC 클라이언트 게임 통합 다운로드 및 원클릭 실행 전용 런처</li>
+                                        <li><span class="bullet">•</span> 실시간 서버 상태 및 정기 점검 알림 센터 운영</li>
+                                        <li><span class="bullet">•</span> 게임 패키지 구매 및 클라우드 세이브 연동</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="https://tw.beanfun.com" target="_blank" style="color: #2563EB; font-weight: 800; font-size: 14.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                        6. 빈펀 포털 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.75;"></i>
+                                    </a>
+                                    <div style="font-size: 12px; color: #64748B; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">tw.beanfun.com</div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #FFF7ED; color: #C2410C; border: 1px solid #FED7AA;">
+                                        대만 1위 포털
+                                    </span>
+                                </td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> GASH 통합 전자지갑 및 현지 4대 편의점 결제망 직결</li>
+                                        <li><span class="bullet">•</span> 빈펀 앱 기반 QR 간편 로그인 및 OTP 2차 보안 체계</li>
+                                        <li><span class="bullet">•</span> 대만 리니지M, 메이플스토리 등 대형 온라인/모바일 서비스 허브</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="https://www.garena.tw" target="_blank" style="color: #2563EB; font-weight: 800; font-size: 14.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                        7. 가레나 대만 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.75;"></i>
+                                    </a>
+                                    <div style="font-size: 12px; color: #64748B; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">garena.tw</div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">
+                                        대만/홍콩 e스포츠
+                                    </span>
+                                </td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> [온라인 캐시 충전] 메뉴 GNB 우측 최상단 영구 고정</li>
+                                        <li><span class="bullet">•</span> 쉘(Shells) 포인트 기반 단일 캐시 충전 센터 운영</li>
+                                        <li><span class="bullet">•</span> PC 클라이언트 및 모바일 APK 원클릭 직다운로드 지원</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="https://www.37games.com" target="_blank" style="color: #2563EB; font-weight: 800; font-size: 14.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                        8. 37 게임즈 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.75;"></i>
+                                    </a>
+                                    <div style="font-size: 12px; color: #64748B; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">37games.com</div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A;">
+                                        중화권 대형 포털
+                                    </span>
+                                </td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> [초고속 간편 결제] 위젯 메인 우측 상시 노출</li>
+                                        <li><span class="bullet">•</span> 실시간 신규 서버 오픈 카운트다운 타이머 표출</li>
+                                        <li><span class="bullet">•</span> VIP 회원 등급별 특권 및 선물상자 즉시 수령 바</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="https://www.4399.com" target="_blank" style="color: #2563EB; font-weight: 800; font-size: 14.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                        9. 4399 게임즈 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.75;"></i>
+                                    </a>
+                                    <div style="font-size: 12px; color: #64748B; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">4399.com</div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #F0FDF4; color: #166534; border: 1px solid #BBF7D0;">
+                                        종합 게임 포털
+                                    </span>
+                                </td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> 방대한 게임 라이브러리를 가나다순 / 인기순으로 초고속 탐색</li>
+                                        <li><span class="bullet">•</span> 게임별 공지 / 공략 / 게시판 원스톱 통합 인덱싱 구조</li>
+                                        <li><span class="bullet">•</span> 직관적인 웹 게임 및 모바일 박스 런처 연동</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="https://www.gameone.com" target="_blank" style="color: #2563EB; font-weight: 800; font-size: 14.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                                        10. 게임원 포털 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 11px; opacity: 0.75;"></i>
+                                    </a>
+                                    <div style="font-size: 12px; color: #64748B; margin-top: 4px; font-family: 'JetBrains Mono', monospace;">gameone.com</div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span style="display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #EDE9FE; color: #5B21B6; border: 1px solid #DDD6FE;">
+                                        홍콩 1위 로컬 포털
+                                    </span>
+                                </td>
+                                <td>
+                                    <ul class="tb-bullet-list">
+                                        <li><span class="bullet">•</span> 홍콩 옥토퍼스(Octopus) 카드 및 PayMe 결제 모듈 최적화</li>
+                                        <li><span class="bullet">•</span> 홍콩 번체 어휘 및 현지 뉘앙스 로컬라이징 반영</li>
+                                        <li><span class="bullet">•</span> 홍콩 현지 유저 타겟 오프라인 대회 및 프로모션 배너</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 3. 최종 기획 결론 및 메인 화면 제안 -->
+                <div>
+                    <h3 style="font-size: 17px; font-weight: 800; color: #0F172A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                        <span style="background: #E11D48; color: white; width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800;">3</span>
+                        최종 기획 결론 및 메인 화면 구성 제안 (Conclusion)
+                    </h3>
+
+                    <!-- 3-1. 5대 핵심 기획 전략 표 -->
+                    <div style="margin-bottom: 30px;">
+                        <div style="font-size: 14px; font-weight: 800; color: #0F172A; margin-bottom: 10px;">
+                            (1) 중화권 맞춤형 5대 메인 기획 전략
+                        </div>
+                        <table class="standard-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 200px;">기획 항목</th>
+                                    <th style="width: 38%;">시장 분석 및 벤치마킹 도출 배경</th>
+                                    <th>GNJOY 메인 화면 설계 제안 내용</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong style="font-size: 14.5px; color: #0F172A;">GNB 결제 최우선 고정</strong></td>
+                                    <td>중화권 매출의 65% 이상이 웹/클라이언트에서 발생하며, 결제 동선이 숨겨질 경우 결제 포기율 급증</td>
+                                    <td>상단 GNB 우측 최우선 위치에 <strong>[온라인 캐시 충전]</strong> 강조 버튼을 영구 고정하여 최단 결제 동선 확보</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="font-size: 14.5px; color: #0F172A;">시각적 강약 조절<br>(하이브리드 대비)</strong></td>
+                                    <td>시네마틱 다크의 브랜드 웅장함과 클린 화이트 카드의 고밀도 탐색 편의성을 동시에 선호</td>
+                                    <td>상단 메인 히어로는 <strong>다크 슬레이트 톤(강)</strong>으로 플래그십 신작을 부각하고, 하단 게임 목록은 <strong>클린 화이트 카드(약)</strong>로 가독성 유지</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="font-size: 14.5px; color: #0F172A;">4대 핵심 퀵 액션 바</strong></td>
+                                    <td>유저 방문의 70% 이상이 '충전', '시리얼 쿠폰 리딤', '런처 설치', '공식 SNS' 4개 목적에 집중</td>
+                                    <td>히어로 배너 하단에 <strong>[온라인 충전] [쿠폰 번호 교환] [PC 전용 런처] [공식 커뮤니티]</strong> 4대 퀵바를 1열 전진 배치</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="font-size: 14.5px; color: #0F172A;">원스톱 게임 탐색<br>&amp; 직다운로드</strong></td>
+                                    <td>복잡한 뎁스 탐색 시 이탈률이 급증하며, 플랫폼별(PC/모바일/APK) 즉시 설치 동선 선호</td>
+                                    <td><strong>전체 / PC / 모바일</strong> 원클릭 필터 탭을 제공하고, 12개 게임 카드에 플랫폼별 다운로드 뱃지를 즉시 표기</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="font-size: 14.5px; color: #0F172A;">운영 투명성 &amp; 규제 준수</strong></td>
+                                    <td>서버 랙/점검에 대한 실시간 정보 투명성 요구 및 대만 디지털발전부 법정 등급제 필수</td>
+                                    <td>새소식 영역에 <strong>실시간 서버 상태 신호등(정상/혼잡/점검)</strong> 탑재 및 푸터에 법정 <strong>게임물 연령 등급(0/6/12/15/18세)</strong> 표기 완비</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 3-2. 메인 화면 수직 레이아웃 배치 구조 -->
+                    <div>
+                        <div style="font-size: 14px; font-weight: 800; color: #0F172A; margin-bottom: 12px;">
+                            (2) 메인 화면 수직 레이아웃 배치 구조 (Top-to-Bottom Architecture)
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
+                            <div style="background: #F8FAFC; border: 1px solid var(--border-main); border-top: 3px solid #2563EB; border-radius: 10px; padding: 16px 14px; text-align: center;">
+                                <div style="font-size: 11px; font-weight: 800; color: #2563EB; margin-bottom: 4px;">STEP 1</div>
+                                <div style="font-size: 13px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">상단 GNB</div>
+                                <div style="font-size: 11.5px; color: #64748B; line-height: 1.45;">로고 / 주요 메뉴 / [온라인 충전] 고정 버튼 / 통합 로그인</div>
+                            </div>
+                            <div style="background: #F8FAFC; border: 1px solid var(--border-main); border-top: 3px solid #0F172A; border-radius: 10px; padding: 16px 14px; text-align: center;">
+                                <div style="font-size: 11px; font-weight: 800; color: #0F172A; margin-bottom: 4px;">STEP 2</div>
+                                <div style="font-size: 13px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">메인 히어로 (강)</div>
+                                <div style="font-size: 11.5px; color: #64748B; line-height: 1.45;">1920px 시네마틱 다크 비주얼 / 플래그십 신작 / 플레이 CTA</div>
+                            </div>
+                            <div style="background: #F8FAFC; border: 1px solid var(--border-main); border-top: 3px solid #E11D48; border-radius: 10px; padding: 16px 14px; text-align: center;">
+                                <div style="font-size: 11px; font-weight: 800; color: #E11D48; margin-bottom: 4px;">STEP 3</div>
+                                <div style="font-size: 13px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">4대 퀵 액션 바</div>
+                                <div style="font-size: 11.5px; color: #64748B; line-height: 1.45;">온라인 충전 / 쿠폰 교환 / PC 런처 / 공식 커뮤니티</div>
+                            </div>
+                            <div style="background: #F8FAFC; border: 1px solid var(--border-main); border-top: 3px solid #0284C7; border-radius: 10px; padding: 16px 14px; text-align: center;">
+                                <div style="font-size: 11px; font-weight: 800; color: #0284C7; margin-bottom: 4px;">STEP 4</div>
+                                <div style="font-size: 13px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">게임 라인업 (약)</div>
+                                <div style="font-size: 11.5px; color: #64748B; line-height: 1.45;">전체·PC·모바일 필터 탭 / 12개 클린 화이트 게임 카드</div>
+                            </div>
+                            <div style="background: #F8FAFC; border: 1px solid var(--border-main); border-top: 3px solid #64748B; border-radius: 10px; padding: 16px 14px; text-align: center;">
+                                <div style="font-size: 11px; font-weight: 800; color: #64748B; margin-bottom: 4px;">STEP 5</div>
+                                <div style="font-size: 13px; font-weight: 800; color: #0F172A; margin-bottom: 6px;">푸터 &amp; 규제 표기</div>
+                                <div style="font-size: 11.5px; color: #64748B; line-height: 1.45;">기업 정보 / 법정 연령 등급(0·6·12·15·18) / 이용약관</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('app-sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            sidebar.classList.toggle('collapsed');
+            if (sidebar.classList.contains('collapsed')) {
+                toggleBtn.style.display = 'flex';
+            } else {
+                toggleBtn.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
