@@ -368,7 +368,7 @@
         .hub-gnb {
             background: #0F172A;
             color: white;
-            padding: 14px 28px;
+            padding: 14px 60px;
             position: relative;
             border-bottom: 1px solid #1E293B;
         }
@@ -441,7 +441,7 @@
             background: linear-gradient(135deg, #0B1120 0%, #0F172A 50%, #1E293B 100%);
             border-bottom: 1px solid #1E293B;
             color: white;
-            padding: 48px 28px 40px;
+            padding: 50px 60px 42px;
             position: relative;
             min-height: 320px;
         }
@@ -575,7 +575,7 @@
 
         /* [PIN 4] Smart Game Matrix & Interactive Filter */
         .hub-section {
-            padding: 36px 28px;
+            padding: 40px 60px;
             border-bottom: 1px solid #F1F5F9;
             position: relative;
             background: #FFFFFF;
@@ -908,7 +908,7 @@
         .hub-cs-strip {
             background: #0F172A;
             color: white;
-            padding: 24px 42px;
+            padding: 24px 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -1008,6 +1008,24 @@
         .spec-bullet-list { list-style: none; padding-left: 0; }
         .spec-bullet-list li { position: relative; padding-left: 11px; margin-bottom: 4px; }
         .spec-bullet-list li::before { content: '•'; position: absolute; left: 0; color: var(--pin-color); font-weight: bold; }
+    
+        /* Responsive adjustments for narrow canvas */
+        @media (max-width: 1400px) {
+            .hub-gnb, .hub-hero, .hub-section, .hub-cs-strip, .hub-hk-footer {
+                padding-left: 48px;
+                padding-right: 48px;
+            }
+        }
+        @media (max-width: 1100px) {
+            .hub-gnb, .hub-hero, .hub-section, .hub-cs-strip, .hub-hk-footer {
+                padding-left: 36px;
+                padding-right: 36px;
+            }
+            .hub-game-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -1151,7 +1169,7 @@
                         <!-- [PIN 1] Hub GNB (1400px Centered Container) -->
                         <div class="hub-gnb">
                             <div class="hub-container hub-gnb-inner">
-                                <span class="pin pin-abs" style="top: 8px; left: -12px;" onclick="highlightSpec('pin1')">1</span>
+                                <span class="pin" style="margin-right: 12px; cursor: pointer;" onclick="highlightSpec('pin1')">1</span>
                                 <div class="hub-logo">
                                     <img src="./gnjoy_logo_white.png" alt="GNJOY" style="height: 28px; object-fit: contain; vertical-align: middle;">
                                 </div>
@@ -1165,7 +1183,7 @@
                                 <div class="hub-gnb-right">
                                     <a href="javascript:void(0)" class="hub-btn-auth">Login</a>
                                     <a href="javascript:void(0)" class="hub-btn-signup">Sign Up</a>
-                                    <span class="pin pin-abs" style="top: 8px; right: -12px;" onclick="highlightSpec('pin1')">1</span>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -1173,10 +1191,10 @@
                         <!-- [PIN 2 & 3] Hero Banner with Live Video & Pinned Quick Menu (1400px Centered Container) -->
                         <div class="hub-hero">
                             <div class="hub-container hub-hero-inner">
-                                <span class="pin pin-abs" style="top: -10px; left: -12px;" onclick="highlightSpec('pin2')">2</span>
+                                
                                 <div class="hub-hero-left">
                                     <div class="hub-hero-tag-row">
-                                        <span class="hub-badge-live">FEATURED TITLE</span>
+                                        <span class="pin" style="margin-right: 8px; cursor: pointer;" onclick="highlightSpec('pin2')">2</span><span class="hub-badge-live">FEATURED TITLE</span>
                                     </div>
                                     <div class="hub-hero-title">Ragnarok Online Zero<br><span style="color: #FDA4AF; font-size: 26px;">GRAND OPEN</span></div>
                                     <div class="hub-hero-desc">정통 라그나로크의 감동과 진화된 시스템의 완벽한 조화! 지금 바로 미드가르드 대륙으로 새로운 모험을 떠나보세요.</div>
@@ -1218,9 +1236,8 @@
                         <!-- [PIN 4] Game Matrix with PC & MO Separation (1400px Centered Container) -->
                         <div class="hub-section">
                             <div class="hub-container">
-                                <span class="pin pin-abs" style="top: -8px; left: -12px;" onclick="highlightSpec('pin4')">4</span>
                                 <div class="hub-section-header">
-                                <div class="hub-section-title">GRAVITY GAME LIBRARY</div>
+                                <div class="hub-section-title"><span class="pin" style="margin-right: 8px; cursor: pointer;" onclick="highlightSpec('pin4')">4</span> GRAVITY GAME LIBRARY</div>
                                 <div class="hub-filter-tabs">
                                     <button class="hub-filter-btn active">전체 (12)</button>
                                     <button class="hub-filter-btn">PC (5)</button>
@@ -1464,12 +1481,11 @@
                         <!-- [PIN 5] EVENT & NOTICE Dual Board (1400px Centered Container) -->
                         <div class="hub-section">
                             <div class="hub-container">
-                                <span class="pin pin-abs" style="top: -8px; left: -12px;" onclick="highlightSpec('pin5')">5</span>
                                 <div class="hub-feed-grid">
                                 <!-- Left: EVENT Board -->
                                 <div class="hub-feed-box">
                                     <div class="hub-feed-head">
-                                        <h4>EVENT</h4>
+                                        <h4><span class="pin" style="margin-right: 8px; cursor: pointer;" onclick="highlightSpec('pin5')">5</span> EVENT</h4>
                                         <a href="javascript:void(0)" class="hub-feed-more">View All +</a>
                                     </div>
                                     <div class="hub-event-grid">
@@ -1547,7 +1563,7 @@
                         <!-- Real gnjoy.hk Official Footer (1400px Centered Container) -->
                         <div class="hub-hk-footer" style="background: #0B1120; color: #94A3B8; padding: 28px 24px; font-size: 11.5px; position: relative; text-align: center; border-top: 1px solid #1E293B;">
                             <div class="hub-container hub-footer-inner">
-                                <span class="pin pin-abs" style="top: 8px; left: -12px;" onclick="highlightSpec('pin6')">6</span>
+                                <div style="margin-bottom: 8px;"><span class="pin" style="cursor: pointer;" onclick="highlightSpec('pin6')">6</span></div>
                                 <div>
                                     <img src="./gnjoy_logo_white.png" alt="GRAVITY" style="height: 22px; opacity: 0.85;">
                                 </div>
