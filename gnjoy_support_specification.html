@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCR-CS-01 고객지원 화면 설계서 | GNJOY 포털 웹 기획서</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --topbar-height: 60px;
+            --spec-panel-width: 380px;
+            --canvas-bg: #F8FAFC;
+            --panel-bg: #FFFFFF;
+            --border-main: #E2E8F0;
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --brand-primary: #E11D48;
+            --brand-subtle: #FFF1F2;
+            --accent-blue: #2563EB;
+            --pin-bg: #7C3AED;
+            --pin-text: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--canvas-bg);
+            color: var(--text-body);
+            line-height: 1.5;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .app-sidebar {
+            width: var(--sidebar-width);
+            background: #0F172A;
+            color: #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid #1E293B;
+            user-select: none;
+            z-index: 100;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .app-sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-width)); opacity: 0; pointer-events: none; }
+        .sidebar-brand {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1E293B;
+            height: var(--topbar-height);
+        }
+        .brand-content { display: flex; align-items: center; gap: 12px; }
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--brand-primary), #BE123C);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+        }
+        .brand-text h1 { font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; }
+        .brand-text p { font-size: 11px; color: #94A3B8; }
+        .sidebar-collapse-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94A3B8;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .sidebar-collapse-btn:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+        .sidebar-nav {
+            flex: 1;
+            padding: 18px 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .nav-group-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 8px;
+            margin-bottom: 6px;
+        }
+        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        .nav-item-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        .nav-item-btn:hover { background: #1E293B; color: #F8FAFC; }
+        .nav-item-btn.active {
+            background: var(--brand-primary);
+            color: #FFFFFF;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
+        }
+        .nav-item-left { display: flex; align-items: center; gap: 8px; }
+        
+        .nav-sub-tree {
+            list-style: none;
+            padding-left: 12px;
+            margin-left: 14px;
+            border-left: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 2px;
+            margin-bottom: 6px;
+        }
+        .nav-sub-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-radius: 5px;
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            text-decoration: none;
+        }
+        .nav-sub-btn:hover { background: #1E293B; color: #FFFFFF; }
+        .nav-sub-btn.active { background: rgba(225, 29, 72, 0.2); color: #FDA4AF; font-weight: 700; }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #1E293B;
+            background: #0B1120;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #64748B;
+        }
+
+        /* Main Workspace */
+        .app-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            min-width: 0;
+            overflow: hidden;
+        }
+        .app-topbar {
+            height: var(--topbar-height);
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border-main);
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 90;
+        }
+        .topbar-left-zone { display: flex; align-items: center; gap: 14px; }
+        .sidebar-toggle-trigger {
+            background: #F8FAFC;
+            border: 1px solid var(--border-main);
+            color: var(--text-heading);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .page-badge {
+            background: var(--brand-subtle);
+            color: var(--brand-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #FECDD3;
+        }
+        .page-heading { font-size: 15px; font-weight: 800; color: var(--text-heading); }
+
+        .app-content-body {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 24px 32px 80px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        /* Screen Specification Grid */
+        .split-spec-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 28px;
+            width: 100%;
+            max-width: 1720px;
+            margin: 0 auto;
+            align-items: start;
+        }
+        
+        .canvas-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-main);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        .canvas-card-header {
+            padding: 14px 24px;
+            background: #F8FAFC;
+            border-bottom: 1px solid var(--border-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .canvas-card-title { font-size: 13px; font-weight: 800; color: #0F172A; display: flex; align-items: center; gap: 8px; }
+        .canvas-screen-tag { font-size: 11px; font-weight: 700; background: #EEF2F6; color: #475569; padding: 2px 8px; border-radius: 4px; font-family: 'JetBrains Mono'; }
+
+        /* Wireframe Elements */
+        .wf-header-bar {
+            background: #0B1120;
+            color: white;
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .wf-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+        .wf-logo span { color: var(--brand-primary); }
+        .wf-nav-links { display: flex; gap: 20px; font-size: 13px; font-weight: 700; color: #CBD5E1; }
+        .wf-nav-links a { color: inherit; text-decoration: none; }
+        .wf-nav-links a.active { color: #FFFFFF; font-weight: 800; }
+
+        .wf-breadcrumb {
+            background: #F1F5F9;
+            padding: 10px 28px;
+            font-size: 12px;
+            color: #64748B;
+            border-bottom: 1px solid var(--border-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .wf-cs-body {
+            padding: 32px 36px;
+            background: #FFFFFF;
+        }
+
+        /* 3 CS Navigation Sub Tabs */
+        .wf-cs-nav-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .wf-cs-tab-card {
+            flex: 1;
+            border: 1.5px solid var(--border-main);
+            border-radius: 10px;
+            padding: 16px 18px;
+            background: #F8FAFC;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .wf-cs-tab-card.active {
+            border-color: var(--brand-primary);
+            background: #FFF1F2;
+        }
+        .wf-cs-tab-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .wf-cs-tab-card.active .wf-cs-tab-icon {
+            background: var(--brand-primary);
+            color: white;
+        }
+
+        /* Form Group */
+        .wf-form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+        .wf-form-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .wf-form-label em { color: var(--brand-primary); font-style: normal; }
+        .wf-input, .wf-select, .wf-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-main);
+            border-radius: 8px;
+            font-size: 13px;
+            color: #0F172A;
+            background: #FFFFFF;
+            font-family: inherit;
+        }
+        .wf-textarea { height: 120px; resize: vertical; }
+
+        /* FAQ Accordion Items */
+        .wf-faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+        .wf-faq-item {
+            border: 1px solid var(--border-main);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #FFFFFF;
+        }
+        .wf-faq-q {
+            padding: 14px 18px;
+            background: #F8FAFC;
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #0F172A;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .wf-faq-q-left { display: flex; align-items: center; gap: 10px; }
+        .wf-faq-q-badge { background: #2563EB; color: white; font-size: 11px; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
+        .wf-faq-a {
+            padding: 16px 18px;
+            font-size: 12.5px;
+            color: #475569;
+            line-height: 1.6;
+            border-top: 1px solid var(--border-main);
+            background: #FFFFFF;
+        }
+
+        /* File Upload Dropzone */
+        .wf-upload-box {
+            border: 2px dashed #CBD5E1;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            background: #F8FAFC;
+            cursor: pointer;
+            color: #64748B;
+            font-size: 12px;
+        }
+
+        .wf-btn-submit {
+            width: 100%;
+            background: var(--brand-primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+        }
+
+        /* Right Specification Panel */
+        .spec-side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+        }
+        .spec-item-box {
+            background: #FFFFFF;
+            border: 1px solid var(--border-main);
+            border-radius: 12px;
+            padding: 18px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+        .spec-item-box.highlighted {
+            border-color: var(--pin-bg);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.25);
+            background: #FAF5FF;
+        }
+        .spec-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .spec-pin-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .spec-tag-type {
+            font-size: 10.5px;
+            font-weight: 800;
+            background: #F1F5F9;
+            color: #475569;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .spec-bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12px;
+            color: #334155;
+            line-height: 1.55;
+        }
+        .spec-bullet-list li strong { color: #0F172A; }
+
+        /* Interactive PINs */
+        .pin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--pin-bg);
+            color: var(--pin-text);
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.4);
+            transition: transform 0.15s ease;
+        }
+        .pin:hover { transform: scale(1.15); }
+        .pin-abs { position: absolute; z-index: 20; }
+
+        .wf-footer {
+            background: #0B1120;
+            color: #94A3B8;
+            padding: 24px 28px;
+            font-size: 11px;
+            border-top: 1px solid #1E293B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Left Sidebar Navigation -->
+    <aside class="app-sidebar" id="app-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-content">
+                <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+                <div class="brand-text">
+                    <h1>GGV (GNJOY.HK)</h1>
+                    <p>포털 웹 기획서 v2.0</p>
+                </div>
+            </div>
+            <button class="sidebar-collapse-btn" onclick="toggleSidebar()"><i class="fa-solid fa-angles-left"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div>
+                <div class="nav-group-title">DOCUMENT INFO</div>
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-item-btn "><div class="nav-item-left"><span>00. 표지 &amp; 개정이력</span></div></a></li>
+                    <li><a href="sitemap.html" class="nav-item-btn "><div class="nav-item-left"><span>01. IA</span></div></a></li>
+                    <li><a href="benchmark.html" class="nav-item-btn "><div class="nav-item-left"><span>02. 중화권 시장 분석 &amp; 벤치마킹</span></div></a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="nav-group-title">SCREEN STORYBOARD</div>
+                <ul class="nav-list">
+                    <!-- 메인 페이지 -->
+                    <li>
+                        <a href="gnjoy_main_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>메인 페이지</span></div>
+                        </a>
+                        
+                    </li>
+
+                    <!-- 캐시충전 -->
+                    <li>
+                        <a href="gnjoy_billing_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>캐시충전</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_billing_specification.html#billing01" class="nav-sub-btn "><span>온라인 캐시 충전</span></a></li>
+                            <li><a href="gnjoy_billing_specification.html#billing02" class="nav-sub-btn "><span>거래 및 결제내역</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 새소식 -->
+                    <li>
+                        <a href="gnjoy_news_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>새소식</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_news_specification.html#news01" class="nav-sub-btn "><span>공지사항 &amp; 이벤트</span></a></li>
+                            <li><a href="gnjoy_news_specification.html#news02" class="nav-sub-btn "><span>공지 상세</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 고객지원 -->
+                    <li>
+                        <a href="gnjoy_support_specification.html" class="nav-item-btn active">
+                            <div class="nav-item-left"><span>고객지원</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_support_specification.html#support01" class="nav-sub-btn active"><span>FAQ 자주 묻는 질문</span></a></li>
+                            <li><a href="gnjoy_support_specification.html#support02" class="nav-sub-btn "><span>1:1 온라인 문의</span></a></li>
+                            <li><a href="gnjoy_support_specification.html#support03" class="nav-sub-btn "><span>의견 피드백</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 로그인 회원가입 -->
+                    <li>
+                        <a href="gnjoy_member_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>로그인 회원가입</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_member_specification.html#login01" class="nav-sub-btn "><span>소셜 &amp; 일반 로그인</span></a></li>
+                            <li><a href="gnjoy_member_specification.html#login02" class="nav-sub-btn "><span>이용약관 동의</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 마이페이지 -->
+                    <li>
+                        <a href="gnjoy_mypage_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>마이페이지</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_mypage_specification.html#mypage01" class="nav-sub-btn "><span>회원정보 &amp; 계정관리</span></a></li>
+                            <li><a href="gnjoy_mypage_specification.html#mypage02" class="nav-sub-btn "><span>신원 본인인증 &amp; MID</span></a></li>
+                            <li><a href="gnjoy_mypage_specification.html#mypage03" class="nav-sub-btn "><span>SNS 계정 연동</span></a></li>
+                            <li><a href="gnjoy_mypage_specification.html#mypage04" class="nav-sub-btn "><span>개인 메시지함</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span>Status: 작성 완료</span>
+            <span style="background: #ECFDF5; color: #059669; font-weight: 800; padding: 2px 7px; border-radius: 4px; font-size: 10.5px;">v2.0.0</span>
+        </div>
+    </aside>
+
+    <!-- 2. Main Workspace -->
+    <main class="app-main">
+        <header class="app-topbar">
+            <div class="topbar-left-zone">
+                <button class="sidebar-toggle-trigger" id="sidebar-toggle-btn" title="메뉴 열기" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <span class="page-badge">SCR-CS-01</span>
+                <span class="page-heading">고객지원 기획서: FAQ · 1:1 온라인 문의 폼 · 피드백 (/Cs)</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div class="device-toggle-group">
+                    <button class="device-btn active" id="btn-pc"><i class="fa-solid fa-desktop"></i> PC View</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="app-content-body">
+            
+            <!-- CS Spec Grid -->
+            <div class="split-spec-container" id="support01">
+                
+                <!-- Left: Wireframe Canvas -->
+                <div class="canvas-card">
+                    <div class="canvas-card-header">
+                        <div class="canvas-card-title">
+                            <i class="fa-solid fa-headset" style="color: var(--brand-primary);"></i>
+                            <span>통합 고객지원 &amp; 1:1 온라인 문의 와이어프레임 (Customer Support Center)</span>
+                        </div>
+                        <span class="canvas-screen-tag">support01(L) &amp; support02(W)</span>
+                    </div>
+
+                    <!-- GNB Header -->
+                    <div class="wf-header-bar">
+                        <div class="wf-logo">GN<span>JOY</span>.HK</div>
+                        <div class="wf-nav-links">
+                            <a href="javascript:void(0)">遊戲中心 (Games)</a>
+                            <a href="javascript:void(0)">儲值專區 (Top-Up)</a>
+                            <a href="javascript:void(0)">訊息公告 (News)</a>
+                            <a href="javascript:void(0)" class="active">客服中心 (CS)</a>
+                        </div>
+                    </div>
+
+                    <!-- Breadcrumb -->
+                    <div class="wf-breadcrumb">
+                        <span>首頁</span> <span>&gt;</span> <span>客服中心</span> <span>&gt;</span> <strong>線上問題回報 (1:1 Inquiry)</strong>
+                    </div>
+
+                    <!-- CS Body Container -->
+                    <div class="wf-cs-body">
+                        
+                        <!-- [PIN 1] 3 Sub Tabs -->
+                        <div class="wf-cs-nav-tabs" style="position: relative;">
+                            <span class="pin pin-abs" style="top: -10px; left: -10px;" onclick="highlightSpec('pin1')">1</span>
+                            
+                            <div class="wf-cs-tab-card">
+                                <div class="wf-cs-tab-icon"><i class="fa-solid fa-circle-question" style="color: #2563EB;"></i></div>
+                                <div>
+                                    <div style="font-size: 13px; font-weight: 800; color: #0F172A;">常見問題 FAQ</div>
+                                    <div style="font-size: 11px; color: #64748B;">자주 묻는 질문 검색</div>
+                                </div>
+                            </div>
+
+                            <div class="wf-cs-tab-card active">
+                                <div class="wf-cs-tab-icon"><i class="fa-solid fa-envelope-open-text" style="color: white;"></i></div>
+                                <div>
+                                    <div style="font-size: 13px; font-weight: 800; color: #0F172A;">線上問題回報</div>
+                                    <div style="font-size: 11px; color: #64748B;">1:1 회원/비회원 문의 접수</div>
+                                </div>
+                            </div>
+
+                            <div class="wf-cs-tab-card">
+                                <div class="wf-cs-tab-icon"><i class="fa-solid fa-comment-dots" style="color: #059669;"></i></div>
+                                <div>
+                                    <div style="font-size: 13px; font-weight: 800; color: #0F172A;">意見回饋 (Feedback)</div>
+                                    <div style="font-size: 11px; color: #64748B;">서비스 제안 및 개선 의견</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 2] 1:1 Form Category & Character Select -->
+                        <div style="position: relative; margin-bottom: 24px;">
+                            <span class="pin pin-abs" style="top: 0; left: -10px;" onclick="highlightSpec('pin2')">2</span>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                                <div class="wf-form-row">
+                                    <label class="wf-form-label"><em>*</em> 選擇遊戲 (Game)：</label>
+                                    <select class="wf-select">
+                                        <option>RO仙境傳說：重生 (Ragnarok Rebirth)</option>
+                                        <option>RO仙境傳說：愛如初見 (Ragnarok Origin)</option>
+                                        <option>RO仙境傳說Online (PC)</option>
+                                    </select>
+                                </div>
+
+                                <div class="wf-form-row">
+                                    <label class="wf-form-label"><em>*</em> 選擇問題分類 (Category)：</label>
+                                    <div style="display: flex; gap: 8px;">
+                                        <select class="wf-select">
+                                            <option>帳號問題 (계정/로그인)</option>
+                                            <option>儲值問題 (결제/충전)</option>
+                                            <option>遊戲BUG (인게임 오류)</option>
+                                            <option>外掛檢舉 (불법프로그램 신고)</option>
+                                        </select>
+                                        <select class="wf-select">
+                                            <option>帳號遭盜用 (도용)</option>
+                                            <option>密碼重置 (비번재설정)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                                <div class="wf-form-row">
+                                    <label class="wf-form-label"><em>*</em> 伺服器 (Server)：</label>
+                                    <select class="wf-select">
+                                        <option>S1-普隆德拉 (Prontera)</option>
+                                    </select>
+                                </div>
+
+                                <div class="wf-form-row">
+                                    <label class="wf-form-label"><em>*</em> 角色名稱 (Character Name)：</label>
+                                    <input type="text" class="wf-input" placeholder="인게임 캐릭터명을 입력하세요" value="LordKnight_99">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 3] Contact Info & C-Code Bot Report -->
+                        <div style="position: relative; margin-bottom: 24px;">
+                            <span class="pin pin-abs" style="top: 0; left: -10px;" onclick="highlightSpec('pin3')">3</span>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                                <div class="wf-form-row">
+                                    <label class="wf-form-label"><em>*</em> 姓名 (Name)：</label>
+                                    <input type="text" class="wf-input" value="홍길동 (Player)">
+                                </div>
+                                <div class="wf-form-row">
+                                    <label class="wf-form-label"><em>*</em> EMail (Reply Address)：</label>
+                                    <input type="email" class="wf-input" value="player_zero2026@gnjoy.hk">
+                                </div>
+                                <div class="wf-form-row">
+                                    <label class="wf-form-label"><em>*</em> 手機號碼 (Phone)：</label>
+                                    <input type="text" class="wf-input" value="+886 0912-345-678">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 4] Inquiry Details & File Upload -->
+                        <div style="position: relative; margin-bottom: 24px;">
+                            <span class="pin pin-abs" style="top: 0; left: -10px;" onclick="highlightSpec('pin4')">4</span>
+                            
+                            <div class="wf-form-row">
+                                <label class="wf-form-label"><em>*</em> 問題詳細說明 (Detailed Description)：</label>
+                                <textarea class="wf-textarea" placeholder="발생 일시, 진행 퀘스트, 오류 현상 및 에러 메시지 내용을 구체적으로 작성해주세요."></textarea>
+                            </div>
+
+                            <div class="wf-form-row">
+                                <label class="wf-form-label">相關截圖或影片附件 (Attachment - Max 5 Files, 20MB)：</label>
+                                <div class="wf-upload-box">
+                                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 24px; color: var(--brand-primary); margin-bottom: 6px;"></i>
+                                    <div>클릭하거나 파일을 이곳에 드래그하여 업로드하세요 (JPG, PNG, MP4 지원)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 5] Cloudflare Turnstile & Submit -->
+                        <div style="position: relative;">
+                            <span class="pin pin-abs" style="top: -8px; left: -8px;" onclick="highlightSpec('pin5')">5</span>
+                            
+                            <div style="background: #F8FAFC; border: 1px solid var(--border-main); border-radius: 8px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                                <div style="display: flex; align-items: center; gap: 10px; font-size: 12px; color: #475569;">
+                                    <i class="fa-solid fa-shield-halved" style="color: #059669; font-size: 16px;"></i>
+                                    <span>Cloudflare Turnstile 봇 침입 방지 보안 검증 완료</span>
+                                </div>
+                                <span style="font-size: 11px; color: #059669; font-weight: 800;"><i class="fa-solid fa-circle-check"></i> Verified</span>
+                            </div>
+
+                            <button class="wf-btn-submit">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>確認送出問題回報 (Submit Inquiry)</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="wf-footer">
+                        <div>&copy; Gravity Communications Co., Ltd. All Rights Reserved.</div>
+                        <div>客服專線: (02) 2656-0377 | 服務時間: 09:00~18:00</div>
+                    </div>
+                </div>
+
+                <!-- Right: Specification Description Panel -->
+                <div class="spec-side-panel">
+                    
+                    <!-- PIN 1 SPEC -->
+                    <div class="spec-item-box" id="spec-pin1">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">1</span> <span>고객센터 3대 서비스 탭</span></div>
+                            <span class="spec-tag-type">Service Tabs</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>원스톱 고객지원 허브</strong>:
+                                    <br>• <strong>常見問題 (FAQ)</strong>: 키워드 검색 기반 5대 카테고리 즉시 해결
+                                    <br>• <strong>線上問題回報 (1:1)</strong>: 회원 및 로그인 불가자 대상 정밀 문의 접수
+                                    <br>• <strong>意見回饋 (Feedback)</strong>: 게임 기획 및 포털 UX 개선 피드백
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 2 SPEC -->
+                    <div class="spec-item-box" id="spec-pin2">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">2</span> <span>게임 및 2단계 문제 분류 체계</span></div>
+                            <span class="spec-tag-type">Categorization</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>1차 &amp; 2차 계층형 분류</strong>: 대분류(계정/결제/버그/신고) 선택 시 소분류 드롭다운이 즉시 연동 로드되어 CS 처리 티켓 자동 분배.</li>
+                                <li><strong>서버/캐릭터 자동 검증</strong>: 보유 계정의 캐릭터 목록을 연동하여 오탈자 없는 정확한 로그 추적 보장.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 3 SPEC -->
+                    <div class="spec-item-box" id="spec-pin3">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">3</span> <span>연락처 동기화 &amp; 불법 봇 신고</span></div>
+                            <span class="spec-tag-type">Contact &amp; Bot Guard</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>회원 정보 1-Click 불러오기</strong>: 로그인 상태인 경우 성명/이메일/휴대전화 자동 기입 및 답변 알림 수신 설정.</li>
+                                <li><strong>불법 봇 C-Code 전용 신고 모드</strong>: '외핵/매크로 신고' 선택 시 C-Code 다중 입력 텍스트에어리어 자동 활성화.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 4 SPEC -->
+                    <div class="spec-item-box" id="spec-pin4">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">4</span> <span>상세 서술 &amp; 20MB 멀티 파일 첨부</span></div>
+                            <span class="spec-tag-type">File Upload</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>드래그 앤 드롭 파일 첨부</strong>: 스크린샷(JPG/PNG) 및 덤프 로그, 동영상(MP4) 최대 5개(총 20MB) 업로드 지원.</li>
+                                <li><strong>개인정보 마스킹 안내</strong>: 신분증 등 민감 정보 첨부 시 주민번호 뒷자리 마스킹 필수 가이드라인 제공.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 5 SPEC -->
+                    <div class="spec-item-box" id="spec-pin5">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">5</span> <span>Turnstile 보안 검증 &amp; 티켓 발급</span></div>
+                            <span class="spec-tag-type">Security &amp; SLA</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>Cloudflare Turnstile 봇 방지</strong>: 악의적 CS 도배 및 자동화 봇 차단.</li>
+                                <li><strong>접수 번호 및 마이페이지 연동</strong>: 문의 접수 완료 즉시 티켓 번호(Inquiry ID) 발급 및 마이페이지 [개인 메시지함]에 자동 등록.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('app-sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            sidebar.classList.toggle('collapsed');
+            if (sidebar.classList.contains('collapsed')) {
+                toggleBtn.style.display = 'flex';
+            } else {
+                toggleBtn.style.display = 'none';
+            }
+        }
+
+        function highlightSpec(pinId) {
+            document.querySelectorAll('.spec-item-box').forEach(el => el.classList.remove('highlighted'));
+            const target = document.getElementById('spec-' + pinId);
+            if (target) {
+                target.classList.add('highlighted');
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCR-AUTH-01 로그인 &amp; 회원가입 화면 설계서 | GNJOY 포털 웹 기획서</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --topbar-height: 60px;
+            --spec-panel-width: 380px;
+            --canvas-bg: #F8FAFC;
+            --panel-bg: #FFFFFF;
+            --border-main: #E2E8F0;
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --brand-primary: #E11D48;
+            --brand-subtle: #FFF1F2;
+            --accent-blue: #2563EB;
+            --pin-bg: #7C3AED;
+            --pin-text: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--canvas-bg);
+            color: var(--text-body);
+            line-height: 1.5;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .app-sidebar {
+            width: var(--sidebar-width);
+            background: #0F172A;
+            color: #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid #1E293B;
+            user-select: none;
+            z-index: 100;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .app-sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-width)); opacity: 0; pointer-events: none; }
+        .sidebar-brand {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1E293B;
+            height: var(--topbar-height);
+        }
+        .brand-content { display: flex; align-items: center; gap: 12px; }
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--brand-primary), #BE123C);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+        }
+        .brand-text h1 { font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; }
+        .brand-text p { font-size: 11px; color: #94A3B8; }
+        .sidebar-collapse-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94A3B8;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .sidebar-collapse-btn:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+        .sidebar-nav {
+            flex: 1;
+            padding: 18px 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .nav-group-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 8px;
+            margin-bottom: 6px;
+        }
+        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        .nav-item-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        .nav-item-btn:hover { background: #1E293B; color: #F8FAFC; }
+        .nav-item-btn.active {
+            background: var(--brand-primary);
+            color: #FFFFFF;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
+        }
+        .nav-item-left { display: flex; align-items: center; gap: 8px; }
+        
+        .nav-sub-tree {
+            list-style: none;
+            padding-left: 12px;
+            margin-left: 14px;
+            border-left: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 2px;
+            margin-bottom: 6px;
+        }
+        .nav-sub-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-radius: 5px;
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            text-decoration: none;
+        }
+        .nav-sub-btn:hover { background: #1E293B; color: #FFFFFF; }
+        .nav-sub-btn.active { background: rgba(225, 29, 72, 0.2); color: #FDA4AF; font-weight: 700; }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #1E293B;
+            background: #0B1120;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #64748B;
+        }
+
+        /* Main Workspace */
+        .app-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            min-width: 0;
+            overflow: hidden;
+        }
+        .app-topbar {
+            height: var(--topbar-height);
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border-main);
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 90;
+        }
+        .topbar-left-zone { display: flex; align-items: center; gap: 14px; }
+        .sidebar-toggle-trigger {
+            background: #F8FAFC;
+            border: 1px solid var(--border-main);
+            color: var(--text-heading);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .page-badge {
+            background: var(--brand-subtle);
+            color: var(--brand-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #FECDD3;
+        }
+        .page-heading { font-size: 15px; font-weight: 800; color: var(--text-heading); }
+
+        .app-content-body {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 24px 32px 80px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        /* Screen Specification Grid */
+        .split-spec-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 28px;
+            width: 100%;
+            max-width: 1720px;
+            margin: 0 auto;
+            align-items: start;
+        }
+        
+        .canvas-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-main);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        .canvas-card-header {
+            padding: 14px 24px;
+            background: #F8FAFC;
+            border-bottom: 1px solid var(--border-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .canvas-card-title { font-size: 13px; font-weight: 800; color: #0F172A; display: flex; align-items: center; gap: 8px; }
+        .canvas-screen-tag { font-size: 11px; font-weight: 700; background: #EEF2F6; color: #475569; padding: 2px 8px; border-radius: 4px; font-family: 'JetBrains Mono'; }
+
+        /* Wireframe Elements */
+        .wf-header-bar {
+            background: #0B1120;
+            color: white;
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .wf-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+        .wf-logo span { color: var(--brand-primary); }
+
+        .wf-auth-body {
+            padding: 40px 36px;
+            background: #FFFFFF;
+            display: flex;
+            justify-content: center;
+        }
+        .wf-auth-card {
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid var(--border-main);
+            border-radius: 12px;
+            padding: 32px 36px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            background: #FFFFFF;
+        }
+
+        .wf-auth-title { font-size: 20px; font-weight: 900; color: #0F172A; text-align: center; margin-bottom: 24px; }
+        .wf-auth-title span { color: var(--brand-primary); }
+
+        /* Social Login Row */
+        .wf-social-login-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .wf-social-btn {
+            border: 1px solid var(--border-main);
+            border-radius: 8px;
+            padding: 10px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #334155;
+            cursor: pointer;
+            background: #F8FAFC;
+        }
+        .wf-social-btn:hover { background: #F1F5F9; border-color: #94A3B8; }
+
+        .wf-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: #94A3B8;
+            font-size: 11.5px;
+        }
+        .wf-divider::before, .wf-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .wf-divider span { padding: 0 10px; }
+
+        /* Input Controls */
+        .wf-input-wrap {
+            margin-bottom: 14px;
+        }
+        .wf-input-wrap input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-main);
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+        }
+        .wf-input-wrap input:focus { border-color: var(--brand-primary); }
+
+        /* Turnstile & Submit */
+        .wf-turnstile-box {
+            background: #F8FAFC;
+            border: 1px solid var(--border-main);
+            border-radius: 8px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            font-size: 12px;
+            color: #475569;
+        }
+
+        .wf-btn-login {
+            width: 100%;
+            background: var(--brand-primary);
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+        }
+
+        .wf-auth-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 18px;
+            font-size: 12px;
+            color: #64748B;
+        }
+        .wf-auth-links a { color: inherit; text-decoration: none; }
+        .wf-auth-links a:hover { color: var(--brand-primary); text-decoration: underline; }
+
+        /* Right Specification Panel */
+        .spec-side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+        }
+        .spec-item-box {
+            background: #FFFFFF;
+            border: 1px solid var(--border-main);
+            border-radius: 12px;
+            padding: 18px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+        .spec-item-box.highlighted {
+            border-color: var(--pin-bg);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.25);
+            background: #FAF5FF;
+        }
+        .spec-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .spec-pin-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .spec-tag-type {
+            font-size: 10.5px;
+            font-weight: 800;
+            background: #F1F5F9;
+            color: #475569;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .spec-bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12px;
+            color: #334155;
+            line-height: 1.55;
+        }
+        .spec-bullet-list li strong { color: #0F172A; }
+
+        /* Interactive PINs */
+        .pin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--pin-bg);
+            color: var(--pin-text);
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.4);
+            transition: transform 0.15s ease;
+        }
+        .pin:hover { transform: scale(1.15); }
+        .pin-abs { position: absolute; z-index: 20; }
+
+        .wf-footer {
+            background: #0B1120;
+            color: #94A3B8;
+            padding: 24px 28px;
+            font-size: 11px;
+            border-top: 1px solid #1E293B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Left Sidebar Navigation -->
+    <aside class="app-sidebar" id="app-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-content">
+                <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+                <div class="brand-text">
+                    <h1>GGV (GNJOY.HK)</h1>
+                    <p>포털 웹 기획서 v2.0</p>
+                </div>
+            </div>
+            <button class="sidebar-collapse-btn" onclick="toggleSidebar()"><i class="fa-solid fa-angles-left"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div>
+                <div class="nav-group-title">DOCUMENT INFO</div>
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-item-btn "><div class="nav-item-left"><span>00. 표지 &amp; 개정이력</span></div></a></li>
+                    <li><a href="sitemap.html" class="nav-item-btn "><div class="nav-item-left"><span>01. IA</span></div></a></li>
+                    <li><a href="benchmark.html" class="nav-item-btn "><div class="nav-item-left"><span>02. 중화권 시장 분석 &amp; 벤치마킹</span></div></a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="nav-group-title">SCREEN STORYBOARD</div>
+                <ul class="nav-list">
+                    <!-- 메인 페이지 -->
+                    <li>
+                        <a href="gnjoy_main_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>메인 페이지</span></div>
+                        </a>
+                        
+                    </li>
+
+                    <!-- 캐시충전 -->
+                    <li>
+                        <a href="gnjoy_billing_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>캐시충전</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_billing_specification.html#billing01" class="nav-sub-btn "><span>온라인 캐시 충전</span></a></li>
+                            <li><a href="gnjoy_billing_specification.html#billing02" class="nav-sub-btn "><span>거래 및 결제내역</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 새소식 -->
+                    <li>
+                        <a href="gnjoy_news_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>새소식</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_news_specification.html#news01" class="nav-sub-btn "><span>공지사항 &amp; 이벤트</span></a></li>
+                            <li><a href="gnjoy_news_specification.html#news02" class="nav-sub-btn "><span>공지 상세</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 고객지원 -->
+                    <li>
+                        <a href="gnjoy_support_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>고객지원</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_support_specification.html#support01" class="nav-sub-btn "><span>FAQ 자주 묻는 질문</span></a></li>
+                            <li><a href="gnjoy_support_specification.html#support02" class="nav-sub-btn "><span>1:1 온라인 문의</span></a></li>
+                            <li><a href="gnjoy_support_specification.html#support03" class="nav-sub-btn "><span>의견 피드백</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 로그인 회원가입 -->
+                    <li>
+                        <a href="gnjoy_member_specification.html" class="nav-item-btn active">
+                            <div class="nav-item-left"><span>로그인 회원가입</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_member_specification.html#login01" class="nav-sub-btn active"><span>소셜 &amp; 일반 로그인</span></a></li>
+                            <li><a href="gnjoy_member_specification.html#login02" class="nav-sub-btn "><span>이용약관 동의</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 마이페이지 -->
+                    <li>
+                        <a href="gnjoy_mypage_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>마이페이지</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_mypage_specification.html#mypage01" class="nav-sub-btn "><span>회원정보 &amp; 계정관리</span></a></li>
+                            <li><a href="gnjoy_mypage_specification.html#mypage02" class="nav-sub-btn "><span>신원 본인인증 &amp; MID</span></a></li>
+                            <li><a href="gnjoy_mypage_specification.html#mypage03" class="nav-sub-btn "><span>SNS 계정 연동</span></a></li>
+                            <li><a href="gnjoy_mypage_specification.html#mypage04" class="nav-sub-btn "><span>개인 메시지함</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span>Status: 작성 완료</span>
+            <span style="background: #ECFDF5; color: #059669; font-weight: 800; padding: 2px 7px; border-radius: 4px; font-size: 10.5px;">v2.0.0</span>
+        </div>
+    </aside>
+
+    <!-- 2. Main Workspace -->
+    <main class="app-main">
+        <header class="app-topbar">
+            <div class="topbar-left-zone">
+                <button class="sidebar-toggle-trigger" id="sidebar-toggle-btn" title="메뉴 열기" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <span class="page-badge">SCR-AUTH-01</span>
+                <span class="page-heading">회원 인증 기획서: 소셜 간편로그인 · 일반 로그인 · 약관동의 (/Member/Signin)</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div class="device-toggle-group">
+                    <button class="device-btn active" id="btn-pc"><i class="fa-solid fa-desktop"></i> PC View</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="app-content-body">
+            
+            <!-- Auth Spec Grid -->
+            <div class="split-spec-container" id="login01">
+                
+                <!-- Left: Wireframe Canvas -->
+                <div class="canvas-card">
+                    <div class="canvas-card-header">
+                        <div class="canvas-card-title">
+                            <i class="fa-solid fa-right-to-bracket" style="color: var(--brand-primary);"></i>
+                            <span>통합 로그인 &amp; 회원가입 와이어프레임 (Sign In &amp; Registration)</span>
+                        </div>
+                        <span class="canvas-screen-tag">login01(P)</span>
+                    </div>
+
+                    <!-- GNB Header -->
+                    <div class="wf-header-bar">
+                        <div class="wf-logo">GN<span>JOY</span>.HK</div>
+                    </div>
+
+                    <!-- Auth Body Container -->
+                    <div class="wf-auth-body">
+                        
+                        <div class="wf-auth-card">
+                            
+                            <div class="wf-auth-title">
+                                <span>GNJOY</span> 會員登入
+                            </div>
+
+                            <!-- [PIN 1] Social One-Click Login -->
+                            <div style="position: relative;">
+                                <span class="pin pin-abs" style="top: -10px; left: -10px;" onclick="highlightSpec('pin1')">1</span>
+                                <div style="font-size: 12px; font-weight: 800; color: #475569; margin-bottom: 8px;">使用其他帳號登入 / 註冊：</div>
+                                <div class="wf-social-login-grid">
+                                    <div class="wf-social-btn">
+                                        <i class="fa-brands fa-google" style="color: #EA4335; font-size: 18px;"></i>
+                                        <span>Google</span>
+                                    </div>
+                                    <div class="wf-social-btn">
+                                        <i class="fa-brands fa-apple" style="color: #000000; font-size: 18px;"></i>
+                                        <span>Apple ID</span>
+                                    </div>
+                                    <div class="wf-social-btn">
+                                        <i class="fa-brands fa-facebook" style="color: #1877F2; font-size: 18px;"></i>
+                                        <span>Facebook</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="wf-divider"><span>或使用平台帳號登入</span></div>
+
+                            <!-- [PIN 2] Standard Form -->
+                            <div style="position: relative;">
+                                <span class="pin pin-abs" style="top: -10px; left: -10px;" onclick="highlightSpec('pin2')">2</span>
+                                
+                                <div class="wf-input-wrap">
+                                    <input type="text" placeholder="平台帳號 (GNJOY ID / Email)">
+                                </div>
+                                <div class="wf-input-wrap">
+                                    <input type="password" placeholder="平台密碼 (Password 6~16자)">
+                                </div>
+                            </div>
+
+                            <!-- [PIN 3] Turnstile & Submit -->
+                            <div style="position: relative;">
+                                <span class="pin pin-abs" style="top: -8px; left: -8px;" onclick="highlightSpec('pin3')">3</span>
+                                
+                                <div class="wf-turnstile-box">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <i class="fa-solid fa-robot" style="color: #2563EB;"></i>
+                                        <span>我不是機器人 (Cloudflare Turnstile)</span>
+                                    </div>
+                                    <i class="fa-solid fa-circle-check" style="color: #059669; font-size: 16px;"></i>
+                                </div>
+
+                                <button class="wf-btn-login">
+                                    <span>登入會員 (Sign In)</span>
+                                </button>
+                            </div>
+
+                            <!-- [PIN 4] Quick Links -->
+                            <div class="wf-auth-links" style="position: relative;">
+                                <span class="pin pin-abs" style="top: -8px; left: -8px;" onclick="highlightSpec('pin4')">4</span>
+                                <a href="javascript:void(0)"><i class="fa-solid fa-key"></i> 忘記密碼 (비밀번호 찾기)</a>
+                                <a href="javascript:void(0)"><i class="fa-solid fa-user"></i> 忘記帳號 (아이디 찾기)</a>
+                                <a href="javascript:void(0)" style="color: var(--brand-primary); font-weight: 800;">註冊帳號 (회원가입) &rarr;</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="wf-footer">
+                        <div>&copy; Gravity Communications Co., Ltd. All Rights Reserved.</div>
+                        <div>隱私權政策 | 服務條款</div>
+                    </div>
+                </div>
+
+                <!-- Right: Specification Description Panel -->
+                <div class="spec-side-panel">
+                    
+                    <!-- PIN 1 SPEC -->
+                    <div class="spec-item-box" id="spec-pin1">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">1</span> <span>소셜 3대 간편 로그인</span></div>
+                            <span class="spec-tag-type">OAuth 2.0</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>Google, Apple, Facebook 지원</strong>: 중화권 및 글로벌 유저 비중이 높은 3대 OAuth 간편 로그인 지원.</li>
+                                <li><strong>모바일 게임 계정 동기화</strong>: 모바일 신작(RO仙境傳說：重生) 및 기존 앱에서 로그인한 소셜 계정과 포털 계정 자동 바인딩.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 2 SPEC -->
+                    <div class="spec-item-box" id="spec-pin2">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">2</span> <span>GNJOY 플랫폼 ID / PW 로그인</span></div>
+                            <span class="spec-tag-type">Native Auth</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>ID 및 비밀번호 유효성 검증</strong>: 영문/숫자 혼합 6~16자, 입력 오류 5회 초과 시 계정 임시 잠금 및 이메일/SMS OTP 본인인증 요구.</li>
+                                <li><strong>리턴 URL 자동 유지</strong>: 결제창(/Billing) 또는 1:1 문의창(/Question)에서 진입 시 로그인 후 기존 요청 페이지로 자동 리디렉트.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 3 SPEC -->
+                    <div class="spec-item-box" id="spec-pin3">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">3</span> <span>Cloudflare Turnstile 봇 방어</span></div>
+                            <span class="spec-tag-type">Bot Defense</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>스마트 무결성 캡차</strong>: 번거로운 이미지 맞추기 없이 브라우저 환경 및 토큰 검증으로 0.5초 내 자동 패스.</li>
+                                <li><strong>CSRF 방지 토큰</strong>: <code>__RequestVerificationToken</code> 무결성 동적 서명 검증.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 4 SPEC -->
+                    <div class="spec-item-box" id="spec-pin4">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">4</span> <span>계정 복구 및 신규 가입 유도</span></div>
+                            <span class="spec-tag-type">Account Recovery</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>휴대전화/이메일 기반 계정 찾기</strong>: 등록된 휴대폰 SMS 또는 이메일 인증을 통해 분실 계정/임시 비밀번호 발급.</li>
+                                <li><strong>원클릭 신규 회원가입 전환</strong>: 비회원 유저를 위한 간편 회원가입(/Member/Signup) 및 필수 이용약관 동의 화면(/Login/iAgree) 연동.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('app-sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            sidebar.classList.toggle('collapsed');
+            if (sidebar.classList.contains('collapsed')) {
+                toggleBtn.style.display = 'flex';
+            } else {
+                toggleBtn.style.display = 'none';
+            }
+        }
+
+        function highlightSpec(pinId) {
+            document.querySelectorAll('.spec-item-box').forEach(el => el.classList.remove('highlighted'));
+            const target = document.getElementById('spec-' + pinId);
+            if (target) {
+                target.classList.add('highlighted');
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    </script>
+</body>
+</html>

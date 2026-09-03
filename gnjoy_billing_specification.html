@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCR-BILL-01 캐시충전 화면 설계서 | GNJOY 포털 웹 기획서</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --topbar-height: 60px;
+            --spec-panel-width: 380px;
+            --canvas-bg: #F8FAFC;
+            --panel-bg: #FFFFFF;
+            --border-main: #E2E8F0;
+            --border-dark: #334155;
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --brand-primary: #E11D48;
+            --brand-subtle: #FFF1F2;
+            --accent-blue: #2563EB;
+            --pin-bg: #7C3AED;
+            --pin-text: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--canvas-bg);
+            color: var(--text-body);
+            line-height: 1.5;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .app-sidebar {
+            width: var(--sidebar-width);
+            background: #0F172A;
+            color: #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            border-right: 1px solid #1E293B;
+            user-select: none;
+            z-index: 100;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .app-sidebar.collapsed { margin-left: calc(-1 * var(--sidebar-width)); opacity: 0; pointer-events: none; }
+        .sidebar-brand {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1E293B;
+            height: var(--topbar-height);
+        }
+        .brand-content { display: flex; align-items: center; gap: 12px; }
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--brand-primary), #BE123C);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+        }
+        .brand-text h1 { font-size: 15px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.3px; }
+        .brand-text p { font-size: 11px; color: #94A3B8; }
+        .sidebar-collapse-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94A3B8;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .sidebar-collapse-btn:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+        .sidebar-nav {
+            flex: 1;
+            padding: 18px 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .nav-group-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 8px;
+            margin-bottom: 6px;
+        }
+        .nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        .nav-item-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        .nav-item-btn:hover { background: #1E293B; color: #F8FAFC; }
+        .nav-item-btn.active {
+            background: var(--brand-primary);
+            color: #FFFFFF;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.35);
+        }
+        .nav-item-left { display: flex; align-items: center; gap: 8px; }
+        
+        .nav-sub-tree {
+            list-style: none;
+            padding-left: 12px;
+            margin-left: 14px;
+            border-left: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 2px;
+            margin-bottom: 6px;
+        }
+        .nav-sub-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-radius: 5px;
+            background: transparent;
+            border: none;
+            color: #94A3B8;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            text-decoration: none;
+        }
+        .nav-sub-btn:hover { background: #1E293B; color: #FFFFFF; }
+        .nav-sub-btn.active { background: rgba(225, 29, 72, 0.2); color: #FDA4AF; font-weight: 700; }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #1E293B;
+            background: #0B1120;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #64748B;
+        }
+
+        /* Main Workspace */
+        .app-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            min-width: 0;
+            overflow: hidden;
+        }
+        .app-topbar {
+            height: var(--topbar-height);
+            background: var(--panel-bg);
+            border-bottom: 1px solid var(--border-main);
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 90;
+        }
+        .topbar-left-zone { display: flex; align-items: center; gap: 14px; }
+        .sidebar-toggle-trigger {
+            background: #F8FAFC;
+            border: 1px solid var(--border-main);
+            color: var(--text-heading);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .page-badge {
+            background: var(--brand-subtle);
+            color: var(--brand-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #FECDD3;
+        }
+        .page-heading { font-size: 15px; font-weight: 800; color: var(--text-heading); }
+
+        .device-toggle-group {
+            display: flex;
+            background: #F1F5F9;
+            padding: 4px;
+            border-radius: 8px;
+            gap: 4px;
+            border: 1px solid var(--border-main);
+        }
+        .device-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+        .device-btn.active {
+            background: #FFFFFF;
+            color: var(--brand-primary);
+            font-weight: 800;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .app-content-body {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 24px 32px 80px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        /* Screen Specification Grid */
+        .split-spec-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 28px;
+            width: 100%;
+            max-width: 1720px;
+            margin: 0 auto;
+            align-items: start;
+        }
+        
+        /* Wireframe Canvas Card */
+        .canvas-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-main);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        .canvas-card-header {
+            padding: 14px 24px;
+            background: #F8FAFC;
+            border-bottom: 1px solid var(--border-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .canvas-card-title { font-size: 13px; font-weight: 800; color: #0F172A; display: flex; align-items: center; gap: 8px; }
+        .canvas-screen-tag { font-size: 11px; font-weight: 700; background: #EEF2F6; color: #475569; padding: 2px 8px; border-radius: 4px; font-family: 'JetBrains Mono'; }
+
+        /* Wireframe Elements */
+        .wf-header-bar {
+            background: #0B1120;
+            color: white;
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .wf-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+        .wf-logo span { color: var(--brand-primary); }
+        .wf-nav-links { display: flex; gap: 20px; font-size: 13px; font-weight: 700; color: #CBD5E1; }
+        .wf-nav-links a { color: inherit; text-decoration: none; }
+        .wf-nav-links a.active { color: #FFFFFF; font-weight: 800; }
+
+        .wf-breadcrumb {
+            background: #F1F5F9;
+            padding: 10px 28px;
+            font-size: 12px;
+            color: #64748B;
+            border-bottom: 1px solid var(--border-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .wf-billing-body {
+            padding: 32px 36px;
+            background: #FFFFFF;
+        }
+
+        /* Account Status Bar */
+        .wf-account-bar {
+            background: #F8FAFC;
+            border: 1px solid var(--border-main);
+            border-radius: 10px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .wf-account-info { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+        .wf-status-badge {
+            background: #DCFCE7;
+            color: #15803D;
+            font-weight: 800;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* 3-Step Wizard */
+        .wf-wizard-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .wf-step-item {
+            background: #F8FAFC;
+            border: 1px solid var(--border-main);
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .wf-step-item.active {
+            background: #FFF1F2;
+            border-color: #FDA4AF;
+        }
+        .wf-step-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            color: #475569;
+            font-weight: 800;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .wf-step-item.active .wf-step-num {
+            background: var(--brand-primary);
+            color: white;
+        }
+        .wf-step-txt { font-size: 13px; font-weight: 800; color: #0F172A; }
+        .wf-step-sub { font-size: 11px; color: #64748B; }
+
+        /* Form Sections */
+        .wf-form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .wf-form-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0F172A;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .wf-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-main);
+            border-radius: 8px;
+            font-size: 13px;
+            color: #0F172A;
+            background: #FFFFFF;
+        }
+
+        /* Payment Channel Tabs */
+        .wf-payment-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .wf-pay-card {
+            border: 1.5px solid var(--border-main);
+            border-radius: 8px;
+            padding: 14px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #FFFFFF;
+        }
+        .wf-pay-card:hover { border-color: #94A3B8; }
+        .wf-pay-card.active {
+            border-color: var(--brand-primary);
+            background: #FFF1F2;
+            box-shadow: 0 0 0 1px var(--brand-primary);
+        }
+        .wf-pay-icon { font-size: 20px; margin-bottom: 6px; color: #0F172A; }
+        .wf-pay-name { font-size: 12px; font-weight: 800; color: #0F172A; }
+        .wf-pay-tag { font-size: 10px; color: #64748B; }
+
+        /* Amount Matrix */
+        .wf-amount-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .wf-amount-card {
+            border: 1px solid var(--border-main);
+            border-radius: 8px;
+            padding: 14px 12px;
+            text-align: center;
+            background: #FFFFFF;
+            cursor: pointer;
+        }
+        .wf-amount-card.active {
+            border-color: var(--accent-blue);
+            background: #EFF6FF;
+            box-shadow: 0 0 0 1px var(--accent-blue);
+        }
+        .wf-amount-val { font-size: 16px; font-weight: 900; color: #0F172A; }
+        .wf-amount-bonus { font-size: 11px; font-weight: 700; color: #2563EB; margin-top: 2px; }
+
+        /* Security / Warning Alert */
+        .wf-security-alert {
+            background: #FEF2F2;
+            border: 1px solid #FECDD3;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 12px;
+            color: #991B1B;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Action Buttons */
+        .wf-btn-submit {
+            width: 100%;
+            background: var(--brand-primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+        }
+
+        /* Right Specification Panel */
+        .spec-side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+        }
+        .spec-item-box {
+            background: #FFFFFF;
+            border: 1px solid var(--border-main);
+            border-radius: 12px;
+            padding: 18px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+        .spec-item-box.highlighted {
+            border-color: var(--pin-bg);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.25);
+            background: #FAF5FF;
+        }
+        .spec-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        .spec-pin-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .spec-tag-type {
+            font-size: 10.5px;
+            font-weight: 800;
+            background: #F1F5F9;
+            color: #475569;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .spec-bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12px;
+            color: #334155;
+            line-height: 1.55;
+        }
+        .spec-bullet-list li strong { color: #0F172A; }
+
+        /* Interactive PINs */
+        .pin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--pin-bg);
+            color: var(--pin-text);
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.4);
+            transition: transform 0.15s ease;
+        }
+        .pin:hover { transform: scale(1.15); }
+        .pin-abs { position: absolute; z-index: 20; }
+
+        /* Footer */
+        .wf-footer {
+            background: #0B1120;
+            color: #94A3B8;
+            padding: 24px 28px;
+            font-size: 11px;
+            border-top: 1px solid #1E293B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Left Sidebar Navigation -->
+    <aside class="app-sidebar" id="app-sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-content">
+                <div class="brand-icon"><i class="fa-solid fa-cube"></i></div>
+                <div class="brand-text">
+                    <h1>GGV (GNJOY.HK)</h1>
+                    <p>포털 웹 기획서 v2.0</p>
+                </div>
+            </div>
+            <button class="sidebar-collapse-btn" onclick="toggleSidebar()"><i class="fa-solid fa-angles-left"></i></button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div>
+                <div class="nav-group-title">DOCUMENT INFO</div>
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-item-btn "><div class="nav-item-left"><span>00. 표지 &amp; 개정이력</span></div></a></li>
+                    <li><a href="sitemap.html" class="nav-item-btn "><div class="nav-item-left"><span>01. IA</span></div></a></li>
+                    <li><a href="benchmark.html" class="nav-item-btn "><div class="nav-item-left"><span>02. 중화권 시장 분석 &amp; 벤치마킹</span></div></a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="nav-group-title">SCREEN STORYBOARD</div>
+                <ul class="nav-list">
+                    <!-- 메인 페이지 -->
+                    <li>
+                        <a href="gnjoy_main_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>메인 페이지</span></div>
+                        </a>
+                        
+                    </li>
+
+                    <!-- 캐시충전 -->
+                    <li>
+                        <a href="gnjoy_billing_specification.html" class="nav-item-btn active">
+                            <div class="nav-item-left"><span>캐시충전</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_billing_specification.html#billing01" class="nav-sub-btn active"><span>온라인 캐시 충전</span></a></li>
+                            <li><a href="gnjoy_billing_specification.html#billing02" class="nav-sub-btn "><span>거래 및 결제내역</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 새소식 -->
+                    <li>
+                        <a href="gnjoy_news_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>새소식</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_news_specification.html#news01" class="nav-sub-btn "><span>공지사항 &amp; 이벤트</span></a></li>
+                            <li><a href="gnjoy_news_specification.html#news02" class="nav-sub-btn "><span>공지 상세</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 고객지원 -->
+                    <li>
+                        <a href="gnjoy_support_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>고객지원</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_support_specification.html#support01" class="nav-sub-btn "><span>FAQ 자주 묻는 질문</span></a></li>
+                            <li><a href="gnjoy_support_specification.html#support02" class="nav-sub-btn "><span>1:1 온라인 문의</span></a></li>
+                            <li><a href="gnjoy_support_specification.html#support03" class="nav-sub-btn "><span>의견 피드백</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 로그인 회원가입 -->
+                    <li>
+                        <a href="gnjoy_member_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>로그인 회원가입</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_member_specification.html#login01" class="nav-sub-btn "><span>소셜 &amp; 일반 로그인</span></a></li>
+                            <li><a href="gnjoy_member_specification.html#login02" class="nav-sub-btn "><span>이용약관 동의</span></a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 마이페이지 -->
+                    <li>
+                        <a href="gnjoy_mypage_specification.html" class="nav-item-btn ">
+                            <div class="nav-item-left"><span>마이페이지</span></div>
+                        </a>
+                        <ul class="nav-sub-tree">
+                            <li><a href="gnjoy_mypage_specification.html#mypage01" class="nav-sub-btn "><span>회원정보 &amp; 계정관리</span></a></li>
+                            <li><a href="gnjoy_mypage_specification.html#mypage02" class="nav-sub-btn "><span>신원 본인인증 &amp; MID</span></a></li>
+                            <li><a href="gnjoy_mypage_specification.html#mypage03" class="nav-sub-btn "><span>SNS 계정 연동</span></a></li>
+                            <li><a href="gnjoy_mypage_specification.html#mypage04" class="nav-sub-btn "><span>개인 메시지함</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span>Status: 작성 완료</span>
+            <span style="background: #ECFDF5; color: #059669; font-weight: 800; padding: 2px 7px; border-radius: 4px; font-size: 10.5px;">v2.0.0</span>
+        </div>
+    </aside>
+
+    <!-- 2. Main Workspace -->
+    <main class="app-main">
+        <header class="app-topbar">
+            <div class="topbar-left-zone">
+                <button class="sidebar-toggle-trigger" id="sidebar-toggle-btn" title="메뉴 열기" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <span class="page-badge">SCR-BILL-01</span>
+                <span class="page-heading">캐시충전 기획서: 온라인 캐시 충전 &amp; 결제 거래내역 (/Billing)</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div class="device-toggle-group">
+                    <button class="device-btn active" id="btn-pc"><i class="fa-solid fa-desktop"></i> PC View</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="app-content-body">
+            
+            <!-- Billing Screen Spec Grid -->
+            <div class="split-spec-container" id="billing01">
+                
+                <!-- Left: Wireframe Canvas -->
+                <div class="canvas-card">
+                    <div class="canvas-card-header">
+                        <div class="canvas-card-title">
+                            <i class="fa-solid fa-credit-card" style="color: var(--brand-primary);"></i>
+                            <span>온라인 캐시 충전 화면 와이어프레임 (Online Top-Up Flow)</span>
+                        </div>
+                        <span class="canvas-screen-tag">billing01(W)</span>
+                    </div>
+
+                    <!-- GNB Header -->
+                    <div class="wf-header-bar">
+                        <div class="wf-logo">GN<span>JOY</span>.HK</div>
+                        <div class="wf-nav-links">
+                            <a href="javascript:void(0)">遊戲中心 (Games)</a>
+                            <a href="javascript:void(0)" class="active">儲值專區 (Top-Up)</a>
+                            <a href="javascript:void(0)">訊息公告 (News)</a>
+                            <a href="javascript:void(0)">客服中心 (CS)</a>
+                        </div>
+                    </div>
+
+                    <!-- Breadcrumb -->
+                    <div class="wf-breadcrumb">
+                        <span>首頁</span> <span>&gt;</span> <span>儲值專區</span> <span>&gt;</span> <strong>線上儲值購點</strong>
+                    </div>
+
+                    <!-- Billing Body Container -->
+                    <div class="wf-billing-body">
+                        
+                        <!-- [PIN 1] Account Bar & 3-Step Wizard -->
+                        <div style="position: relative;">
+                            <span class="pin pin-abs" style="top: -10px; left: -10px;" onclick="highlightSpec('pin1')">1</span>
+                            
+                            <div class="wf-account-bar">
+                                <div class="wf-account-info">
+                                    <i class="fa-solid fa-user-shield" style="color: #2563EB;"></i>
+                                    <span>GNJOY 平台帳號: <strong>player_zero2026@gnjoy.hk</strong></span>
+                                    <span class="wf-status-badge">帳號狀態: 正常</span>
+                                </div>
+                                <div style="font-size: 12px; color: #64748B;">보유 캐시: <strong style="color: #0F172A;">12,500 P</strong></div>
+                            </div>
+
+                            <div class="wf-wizard-steps">
+                                <div class="wf-step-item active">
+                                    <div class="wf-step-num">1</div>
+                                    <div>
+                                        <div class="wf-step-txt">填寫資料</div>
+                                        <div class="wf-step-sub">게임/결제수단 선택</div>
+                                    </div>
+                                </div>
+                                <div class="wf-step-item">
+                                    <div class="wf-step-num">2</div>
+                                    <div>
+                                        <div class="wf-step-txt">確認資料</div>
+                                        <div class="wf-step-sub">주문 내역 최종 확인</div>
+                                    </div>
+                                </div>
+                                <div class="wf-step-item">
+                                    <div class="wf-step-num">3</div>
+                                    <div>
+                                        <div class="wf-step-txt">交易結果</div>
+                                        <div class="wf-step-sub">결제 승인 및 지급 완료</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 2] Game / Server / Character Selection -->
+                        <div class="wf-form-group" style="position: relative;">
+                            <span class="pin pin-abs" style="top: 0; left: -10px;" onclick="highlightSpec('pin2')">2</span>
+                            <div class="wf-form-label"><i class="fa-solid fa-gamepad" style="color: var(--brand-primary);"></i> 1. 請選擇欲儲值的遊戲、伺服器與角色</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                                <div>
+                                    <label style="font-size: 11px; color: #64748B; font-weight: 700; margin-bottom: 4px; display: block;">選擇遊戲 (Game)</label>
+                                    <select class="wf-select">
+                                        <option>RO仙境傳說：重生 (Ragnarok Rebirth)</option>
+                                        <option>RO仙境傳說：愛如初見 (Ragnarok Origin)</option>
+                                        <option>RO仙境傳說：初心之戰</option>
+                                        <option>RO仙境傳說Online (PC)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="font-size: 11px; color: #64748B; font-weight: 700; margin-bottom: 4px; display: block;">選擇伺服器 (Server)</label>
+                                    <select class="wf-select">
+                                        <option>S1-普隆德拉 (Prontera)</option>
+                                        <option>S2-吉芬 (Geffen)</option>
+                                        <option>S3-斐揚 (Payon)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="font-size: 11px; color: #64748B; font-weight: 700; margin-bottom: 4px; display: block;">選擇角色 (Character)</label>
+                                    <select class="wf-select">
+                                        <option>LordKnight_99 (Lv.99 로드나이트)</option>
+                                        <option>HighPriest_88 (Lv.88 하이프리스트)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 3] 13 Payment Channels -->
+                        <div class="wf-form-group" style="position: relative;">
+                            <span class="pin pin-abs" style="top: 0; left: -10px;" onclick="highlightSpec('pin3')">3</span>
+                            <div class="wf-form-label"><i class="fa-solid fa-wallet" style="color: #2563EB;"></i> 2. 請選擇儲值管道 (Payment Channel)</div>
+                            <div class="wf-payment-grid">
+                                <div class="wf-pay-card active">
+                                    <div class="wf-pay-icon"><i class="fa-solid fa-ticket" style="color: var(--brand-primary);"></i></div>
+                                    <div class="wf-pay-name">MyCard 點數卡</div>
+                                    <div class="wf-pay-tag">핀번호 즉시 충전</div>
+                                </div>
+                                <div class="wf-pay-card">
+                                    <div class="wf-pay-icon"><i class="fa-solid fa-credit-card" style="color: #2563EB;"></i></div>
+                                    <div class="wf-pay-name">信用卡 (Visa/Master)</div>
+                                    <div class="wf-pay-tag">3D 인증 결제</div>
+                                </div>
+                                <div class="wf-pay-card">
+                                    <div class="wf-pay-icon"><i class="fa-solid fa-mobile-screen-button" style="color: #059669;"></i></div>
+                                    <div class="wf-pay-name">電信小額付費</div>
+                                    <div class="wf-pay-tag">중화전신/원전/대만대</div>
+                                </div>
+                                <div class="wf-pay-card">
+                                    <div class="wf-pay-icon"><i class="fa-solid fa-gem" style="color: #7C3AED;"></i></div>
+                                    <div class="wf-pay-name">GASH 錢包</div>
+                                    <div class="wf-pay-tag">대만/홍콩 공용</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 4] Amount & Bonus Matrix -->
+                        <div class="wf-form-group" style="position: relative;">
+                            <span class="pin pin-abs" style="top: 0; left: -10px;" onclick="highlightSpec('pin4')">4</span>
+                            <div class="wf-form-label"><i class="fa-solid fa-coins" style="color: #D97706;"></i> 3. 請選擇儲值面額 (Amount Selection)</div>
+                            <div class="wf-amount-grid">
+                                <div class="wf-amount-card">
+                                    <div class="wf-amount-val">NT$ 150 / HK$ 40</div>
+                                    <div class="wf-amount-bonus">150 P (+0 P)</div>
+                                </div>
+                                <div class="wf-amount-card">
+                                    <div class="wf-amount-val">NT$ 500 / HK$ 130</div>
+                                    <div class="wf-amount-bonus">500 P (+25 P 보너스)</div>
+                                </div>
+                                <div class="wf-amount-card active">
+                                    <div class="wf-amount-val">NT$ 1,000 / HK$ 260</div>
+                                    <div class="wf-amount-bonus">1,000 P (+80 P 보너스)</div>
+                                </div>
+                                <div class="wf-amount-card">
+                                    <div class="wf-amount-val">NT$ 3,000 / HK$ 780</div>
+                                    <div class="wf-amount-bonus">3,000 P (+300 P 보너스)</div>
+                                </div>
+                                <div class="wf-amount-card">
+                                    <div class="wf-amount-val">NT$ 5,000 / HK$ 1,300</div>
+                                    <div class="wf-amount-bonus">5,000 P (+600 P 보너스)</div>
+                                </div>
+                                <div class="wf-amount-card">
+                                    <div class="wf-amount-val">NT$ 10,000 / HK$ 2,600</div>
+                                    <div class="wf-amount-bonus">10,000 P (+1,500 P 보너스)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- [PIN 5] Security & Warning Notice -->
+                        <div class="wf-security-alert" style="position: relative;">
+                            <span class="pin pin-abs" style="top: -8px; left: -8px;" onclick="highlightSpec('pin5')">5</span>
+                            <i class="fa-solid fa-triangle-exclamation" style="font-size: 16px; margin-top: 2px;"></i>
+                            <div>
+                                <strong>안전 결제 및 계정보호 안내 (防詐騙宣導)</strong>: 勿聽信任何理由將帳號密碼交給他人，電信小額付費單筆滿 NT$3,000 以上需完成 MID 門號身分識別。
+                            </div>
+                        </div>
+
+                        <!-- Submit CTA -->
+                        <button class="wf-btn-submit">
+                            <i class="fa-solid fa-lock"></i>
+                            <span>確認送出並前往支付 (Proceed to Payment)</span>
+                        </button>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="wf-footer">
+                        <div>&copy; Gravity Communications Co., Ltd. All Rights Reserved.</div>
+                        <div>客服專線: (02) 2656-0377 | 服務時間: 09:00~18:00</div>
+                    </div>
+                </div>
+
+                <!-- Right: Specification Description Panel -->
+                <div class="spec-side-panel">
+                    
+                    <!-- PIN 1 SPEC -->
+                    <div class="spec-item-box" id="spec-pin1">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">1</span> <span>계정 상태 &amp; 3-Step 위저드</span></div>
+                            <span class="spec-tag-type">Flow Control</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>실시간 계정 상태 바인딩</strong>: 로그인된 플랫폼 ID, 계정 상태(정상/정지), 보유 캐시 잔액을 최상단에 상시 표출.</li>
+                                <li><strong>3단계 위저드 프로세스</strong>:
+                                    <br>• <strong>STEP 1 (填寫資料)</strong>: 게임/서버/캐릭터 및 결제수단/금액 선택
+                                    <br>• <strong>STEP 2 (確認資料)</strong>: 주문 내역 및 최종 청구금액 확인 모달
+                                    <br>• <strong>STEP 3 (交易結果)</strong>: PG 결제 승인 및 인게임 캐시 지급 결과 안내
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 2 SPEC -->
+                    <div class="spec-item-box" id="spec-pin2">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">2</span> <span>게임 · 서버 · 캐릭터 동적 선택</span></div>
+                            <span class="spec-tag-type">Dynamic Form</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>계층형 3단 연동 셀렉트</strong>: 게임 선택 시 해당 게임의 활성 서버 목록(xServerId)이 비동기 로드되고, 서버 선택 시 계정 내 보유 캐릭터(xPlayer) 자동 표출.</li>
+                                <li><strong>애플/페이스북 계정 바인딩 안내</strong>: 소셜 계정 이용자의 경우 충전 전 회원 전용 바인딩 완료 여부 자동 검증.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 3 SPEC -->
+                    <div class="spec-item-box" id="spec-pin3">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">3</span> <span>중화권 13대 결제수단 허브</span></div>
+                            <span class="spec-tag-type">Payment Gateway</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>중화권 핵심 PG 완벽 대응</strong>:
+                                    <br>• <strong>MyCard</strong>: 카드 핀번호(12자리 ID/PW) 직접 입력 및 회원 포인트 차감
+                                    <br>• <strong>GASH</strong>: 대만/홍콩 권역 분기 및 GASH 지갑 연동
+                                    <br>• <strong>신용카드</strong>: Visa, MasterCard 3D Secure 안심결제
+                                    <br>• <strong>통신사 소액결제</strong>: 중화전신, 원전전신, 대만대통신
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 4 SPEC -->
+                    <div class="spec-item-box" id="spec-pin4">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">4</span> <span>금액 및 보너스 마일리지 매트릭스</span></div>
+                            <span class="spec-tag-type">Pricing Matrix</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>통화별 듀얼 표기</strong>: 대만(NT$) 및 홍콩(HK$) 환율 기준 결제 금액 자동 환산 표기.</li>
+                                <li><strong>티어별 추가 보너스 리워드</strong>: 고액 충전 구간(3,000 P 이상) 선택 시 추가 마일리지/인게임 보너스 지급율 강조.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- PIN 5 SPEC -->
+                    <div class="spec-item-box" id="spec-pin5">
+                        <div class="spec-item-header">
+                            <div class="spec-pin-title"><span class="pin">5</span> <span>MID 인증 및 법정 보안 규제</span></div>
+                            <span class="spec-tag-type">Compliance &amp; Security</span>
+                        </div>
+                        <div class="spec-content">
+                            <ul class="spec-bullet-list">
+                                <li><strong>MID 통신사 본인인증 강제화</strong>: 통신사 소액결제 단일 3,000 NTD 이상 또는 월 누적 5,000 NTD 초과 시 MID 인증 필수 팝업 연동.</li>
+                                <li><strong>전기통신 사기 방지 문구</strong>: 대만 금융감독원/경찰청 법정 사기 방지 가이드라인 필수 고지.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('app-sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle-btn');
+            sidebar.classList.toggle('collapsed');
+            if (sidebar.classList.contains('collapsed')) {
+                toggleBtn.style.display = 'flex';
+            } else {
+                toggleBtn.style.display = 'none';
+            }
+        }
+
+        function highlightSpec(pinId) {
+            document.querySelectorAll('.spec-item-box').forEach(el => el.classList.remove('highlighted'));
+            const target = document.getElementById('spec-' + pinId);
+            if (target) {
+                target.classList.add('highlighted');
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    </script>
+</body>
+</html>
