@@ -538,7 +538,7 @@
             justify-content: space-between;
             margin-bottom: 20px;
         }
-        .hub-section-title { font-size: 17px; font-weight: 900; color: #0F172A; display: flex; align-items: center; gap: 8px; }
+        .hub-section-title { font-size: 17px; font-weight: 900; color: #0F172A; }
         .hub-filter-tabs { display: flex; background: #F1F5F9; padding: 3px; border-radius: 6px; gap: 3px; }
         .hub-filter-btn {
             background: transparent; border: none; padding: 6px 16px; border-radius: 4px;
@@ -567,11 +567,11 @@
             transform: translateY(-3px);
         }
 
-        /* Clickable Thumbnail with Hover Overlay */
+        /* Clickable Thumbnail (Height 160px) */
         .hub-thumb-link {
             position: relative;
             display: block;
-            height: 110px;
+            height: 160px;
             background: #0F172A;
             color: white;
             text-decoration: none;
@@ -584,7 +584,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 13px;
+            font-size: 14px;
             letter-spacing: -0.2px;
             transition: transform 0.25s ease;
         }
@@ -600,7 +600,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            font-size: 11.5px;
+            font-size: 12px;
             font-weight: 800;
             opacity: 0;
             transition: opacity 0.2s ease;
@@ -609,67 +609,96 @@
             opacity: 1;
         }
 
-        .hub-badge-platform {
+        /* Status Badges: OPEN, OBT, PRE-REG, HOT */
+        .hub-badge-status {
             position: absolute;
-            top: 8px;
-            left: 8px;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(4px);
+            top: 10px;
+            left: 10px;
             color: white;
             font-size: 9.5px;
-            font-weight: 800;
-            padding: 2px 7px;
+            font-weight: 900;
+            padding: 3px 8px;
             border-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.2);
+            letter-spacing: 0.5px;
             z-index: 5;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
-        .hub-badge-platform.pc { background: #2563EB; border-color: #3B82F6; }
-        .hub-badge-platform.mo { background: #7C3AED; border-color: #8B5CF6; }
+        .hub-badge-status.open { background: #059669; }
+        .hub-badge-status.obt { background: #2563EB; }
+        .hub-badge-status.prereg { background: #D97706; }
+        .hub-badge-status.hot { background: #DC2626; }
 
-        .hub-card-body { padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
-        .hub-card-title { font-size: 13px; font-weight: 800; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .hub-card-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+        .hub-card-title { font-size: 13.5px; font-weight: 800; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .hub-card-genre { font-size: 11px; color: #64748B; margin-bottom: 6px; }
 
-        /* Platform Download Button Group */
+        /* Platform Download Icons Row */
         .hub-platform-dl-row {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
+            gap: 6px;
             background: #F8FAFC;
-            padding: 6px 10px;
+            padding: 8px 10px;
             border-radius: 6px;
             border: 1px solid #EEF2F6;
             margin-top: auto;
         }
-        .hub-platform-dl-lbl { font-size: 10px; font-weight: 700; color: #64748B; }
-        .hub-platform-dl-icons { display: flex; gap: 4px; }
         .hub-dl-icon-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             border-radius: 4px;
             background: #FFFFFF;
             color: #334155;
-            font-size: 11px;
+            font-size: 11.5px;
             text-decoration: none;
             border: 1px solid #CBD5E1;
             transition: all 0.15s ease;
         }
         .hub-dl-icon-btn:hover { background: var(--brand-primary); color: #FFFFFF; border-color: var(--brand-primary); }
-        .hub-dl-icon-btn.pc-btn { width: auto; padding: 0 7px; font-size: 10px; font-weight: 800; gap: 3px; }
+        .hub-dl-icon-btn.pc-btn { width: auto; padding: 0 8px; font-size: 10.5px; font-weight: 800; gap: 4px; }
 
         .hub-card-footer {
-            margin-top: 8px;
-            padding-top: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
             border-top: 1px solid #F1F5F9;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 8px;
         }
-        .hub-btn-quick-play { font-size: 11px; font-weight: 800; color: var(--brand-primary); text-decoration: none; display: flex; align-items: center; gap: 3px; }
-        .hub-btn-quick-topup { font-size: 10.5px; font-weight: 700; background: #FFF1F2; color: var(--brand-primary); border: 1px solid #FECDD3; padding: 2px 8px; border-radius: 4px; text-decoration: none; }
+        .hub-btn-card-site {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #64748B;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.15s ease;
+        }
+        .hub-btn-card-site:hover { color: #0F172A; }
+        .hub-btn-card-pay {
+            font-size: 11.5px;
+            font-weight: 800;
+            background: var(--brand-primary);
+            color: #FFFFFF;
+            padding: 6px 14px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 6px rgba(225, 29, 72, 0.3);
+            transition: all 0.15s ease;
+        }
+        .hub-btn-card-pay:hover {
+            background: #BE123C;
+            transform: translateY(-1px);
+        }
 
         /* [PIN 5] News & Community Dual Feed */
         .hub-feed-grid {
@@ -1008,302 +1037,243 @@
                         <div class="hub-section">
                             <span class="pin pin-abs" style="top: 14px; left: 20px;" onclick="highlightSpec('pin4')">4</span>
                             <div class="hub-section-header">
-                                <div class="hub-section-title"><i class="fa-solid fa-gamepad" style="color: var(--brand-primary);"></i> GRAVITY GAME LIBRARY</div>
+                                <div class="hub-section-title">GRAVITY GAME LIBRARY</div>
                                 <div class="hub-filter-tabs">
                                     <button class="hub-filter-btn active">전체 (12)</button>
-                                    <button class="hub-filter-btn"><i class="fa-brands fa-windows"></i> PC 온라인 (5)</button>
-                                    <button class="hub-filter-btn"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-android"></i> 모바일 (7)</button>
+                                    <button class="hub-filter-btn">PC (5)</button>
+                                    <button class="hub-filter-btn">MO (7)</button>
                                 </div>
                             </div>
 
                             <div class="hub-game-grid">
-                                <!-- Card 1: RO Zero (PC) -->
+                                <!-- Card 1: Ragnarok Online Zero -->
                                 <div class="hub-game-card">
-                                    <a href="https://rozero.gnjoy.com.tw" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                    <a href="https://rozero.gnjoy.com.tw" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status open">OPEN</span>
                                         <div class="hub-thumb-img-box">RO ZERO</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">Ragnarok Online Zero</div>
                                         <div class="hub-card-genre">PC Classic MMORPG • Official Server</div>
                                         <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC 클라이언트 다운로드"><i class="fa-brands fa-windows"></i> PC</a>
-                                            </div>
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC 클라이언트 다운로드"><i class="fa-brands fa-windows"></i> PC 다운로드</a>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://rozero.gnjoy.com.tw" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">충전소</a>
+                                            <a href="https://rozero.gnjoy.com.tw" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Card 2: RO Origin (MO) -->
+                                <!-- Card 2: Ragnarok Origin -->
                                 <div class="hub-game-card">
-                                    <a href="https://roglobal.com" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
+                                    <a href="https://roglobal.com" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status hot">HOT</span>
                                         <div class="hub-thumb-img-box">RO ORIGIN</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">Ragnarok Origin</div>
                                         <div class="hub-card-genre">Open World 3D Mobile RPG</div>
                                         <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="공식 APK 직접 다운로드"><i class="fa-solid fa-android"></i></a>
-                                            </div>
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn" title="공식 APK 직접 다운로드"><i class="fa-solid fa-android"></i></a>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://roglobal.com" target="_blank" class="hub-btn-quick-play">스토어 이동 <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">웹스토어</a>
+                                            <a href="https://roglobal.com" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Card 3: RO Rebirth (MO) -->
+                                <!-- Card 3: RO仙境傳說：重生 -->
                                 <div class="hub-game-card">
-                                    <a href="https://rorebirth.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
+                                    <a href="https://rorebirth.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status obt">OBT</span>
                                         <div class="hub-thumb-img-box">RO 重生</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">RO仙境傳說：重生</div>
                                         <div class="hub-card-genre">3D MMORPG • New Gen Mobile</div>
                                         <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                            </div>
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://rorebirth.gnjoy.hk" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">공식몰</a>
+                                            <a href="https://rorebirth.gnjoy.hk" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Card 4: RO Landverse (PC) -->
+                                <!-- Card 4: Ragnarok Landverse -->
                                 <div class="hub-game-card">
-                                    <a href="https://landverse.maxion.gg/" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform pc"><i class="fa-brands fa-windows"></i> PC Web</span>
+                                    <a href="https://landverse.maxion.gg/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status open">OPEN</span>
                                         <div class="hub-thumb-img-box">LANDVERSE</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">Ragnarok Landverse</div>
-                                        <div class="hub-card-genre">Maxion Blockchain Web3 Classic</div>
+                                        <div class="hub-card-genre">Web3 MMORPG • Global PC</div>
                                         <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
-                                            </div>
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC 클라이언트 다운로드"><i class="fa-brands fa-windows"></i> PC 다운로드</a>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://landverse.maxion.gg/" target="_blank" class="hub-btn-quick-play">Web3 Play <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">Market</a>
+                                            <a href="https://landverse.maxion.gg/" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Card 5: RO 初心之戰 (MO) -->
+                                <!-- Card 5: Ragnarok M: Eternal Love -->
                                 <div class="hub-game-card">
-                                    <a href="https://roorigin.gnjoy.com.tw" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
-                                        <div class="hub-thumb-img-box">初心之戰</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
-                                    </a>
-                                    <div class="hub-card-body">
-                                        <div class="hub-card-title">RO仙境傳說：初心之戰</div>
-                                        <div class="hub-card-genre">Classic Mobile RPG</div>
-                                        <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="공식 APK 직접 다운로드"><i class="fa-solid fa-android"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="hub-card-footer">
-                                            <a href="https://roorigin.gnjoy.com.tw" target="_blank" class="hub-btn-quick-play">스토어 이동 <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">웹스토어</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Card 6: RO 曙光 (MO) -->
-                                <div class="hub-game-card">
-                                    <a href="https://www.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
-                                        <div class="hub-thumb-img-box">曙光</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
-                                    </a>
-                                    <div class="hub-card-body">
-                                        <div class="hub-card-title">RO仙境傳說：曙光</div>
-                                        <div class="hub-card-genre">MMORPG • New Arrival</div>
-                                        <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="hub-card-footer">
-                                            <a href="https://www.gnjoy.hk" target="_blank" class="hub-btn-quick-play">사전예약 <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">공식몰</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Card 7: RO 2 (PC) -->
-                                <div class="hub-game-card">
-                                    <a href="https://ro2.gnjoy.com" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform pc"><i class="fa-brands fa-windows"></i> PC</span>
-                                        <div class="hub-thumb-img-box">RO 2 ONLINE</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
-                                    </a>
-                                    <div class="hub-card-body">
-                                        <div class="hub-card-title">Ragnarok Online 2</div>
-                                        <div class="hub-card-genre">PC 3D MMORPG • Global Server</div>
-                                        <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
-                                            </div>
-                                        </div>
-                                        <div class="hub-card-footer">
-                                            <a href="https://ro2.gnjoy.com" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">충전소</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Card 8: RO M (MO & PC) -->
-                                <div class="hub-game-card">
-                                    <a href="https://rom.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
+                                    <a href="https://rom.gnjoy.hk/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status open">OPEN</span>
                                         <div class="hub-thumb-img-box">RO M</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">Ragnarok M: Eternal Love</div>
-                                        <div class="hub-card-genre">Mobile MMORPG • Global</div>
+                                        <div class="hub-card-genre">Classic 3D Mobile MMORPG</div>
                                         <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="PC Client"><i class="fa-brands fa-windows"></i> PC</a>
-                                            </div>
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="PC Client"><i class="fa-brands fa-windows"></i> PC</a>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://rom.gnjoy.hk" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">웹스토어</a>
+                                            <a href="https://rom.gnjoy.hk/" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Card 9: ROX (MO & PC) -->
+                                <!-- Card 6: Ragnarok X: Next Generation -->
                                 <div class="hub-game-card">
-                                    <a href="https://rox.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
+                                    <a href="https://rox.gnjoy.hk/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status open">OPEN</span>
                                         <div class="hub-thumb-img-box">ROX</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">Ragnarok X: Next Generation</div>
-                                        <div class="hub-card-genre">3D Mobile MMORPG</div>
+                                        <div class="hub-card-genre">3D Next-Gen Adventure RPG</div>
                                         <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="PC Client"><i class="fa-brands fa-windows"></i> PC</a>
-                                            </div>
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="PC Client"><i class="fa-brands fa-windows"></i> PC</a>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://rox.gnjoy.hk" target="_blank" class="hub-btn-quick-play">스토어 이동 <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">공식몰</a>
+                                            <a href="https://rox.gnjoy.hk/" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Card 10: Ragnarok Crush (MO) -->
+                                <!-- Card 7: RO仙境傳說：初心之戰 -->
                                 <div class="hub-game-card">
-                                    <a href="https://www.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform mo"><i class="fa-brands fa-apple"></i> <i class="fa-brands fa-google-play"></i> MO</span>
+                                    <a href="https://roorigin.gnjoy.com.tw/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status open">OPEN</span>
+                                        <div class="hub-thumb-img-box">初心之戰</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
+                                    </a>
+                                    <div class="hub-card-body">
+                                        <div class="hub-card-title">RO仙境傳說：初心之戰</div>
+                                        <div class="hub-card-genre">Authentic Mobile Classic MMORPG</div>
+                                        <div class="hub-platform-dl-row">
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn" title="공식 APK 직접 다운로드"><i class="fa-solid fa-android"></i></a>
+                                        </div>
+                                        <div class="hub-card-footer">
+                                            <a href="https://roorigin.gnjoy.com.tw/" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card 8: RO仙境傳說：曙光 -->
+                                <div class="hub-game-card">
+                                    <a href="https://www.gnjoy.hk/" target="_blank" class="hub-thumb-link" title="사전예약 새창 이동">
+                                        <span class="hub-badge-status prereg">PRE-REG</span>
+                                        <div class="hub-thumb-img-box">RO 曙光</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 사전예약</div>
+                                    </a>
+                                    <div class="hub-card-body">
+                                        <div class="hub-card-title">RO仙境傳說：曙光</div>
+                                        <div class="hub-card-genre">Strategic RPG • Coming Soon</div>
+                                        <div class="hub-platform-dl-row">
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
+                                        </div>
+                                        <div class="hub-card-footer">
+                                            <a href="https://www.gnjoy.hk/" target="_blank" class="hub-btn-card-site">사전예약 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card 9: Ragnarok Crush -->
+                                <div class="hub-game-card">
+                                    <a href="https://www.gnjoy.hk/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status open">OPEN</span>
                                         <div class="hub-thumb-img-box">RO CRUSH</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">Ragnarok Crush</div>
-                                        <div class="hub-card-genre">Casual Match-3 Puzzle RPG</div>
+                                        <div class="hub-card-genre">Match-3 Puzzle & Adventure RPG</div>
                                         <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a>
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
-                                            </div>
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Apple App Store"><i class="fa-brands fa-apple"></i></a> <a href="javascript:void(0)" class="hub-dl-icon-btn" title="Google Play Store"><i class="fa-brands fa-google-play"></i></a>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://www.gnjoy.hk" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">충전소</a>
+                                            <a href="https://www.gnjoy.hk/" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Card 11: Gunbound (PC) -->
+                                <!-- Card 10: Ragnarok Online 2 -->
                                 <div class="hub-game-card">
-                                    <a href="https://gunbound.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                    <a href="https://ro2.gnjoy.com/" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status open">OPEN</span>
+                                        <div class="hub-thumb-img-box">RO 2</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
+                                    </a>
+                                    <div class="hub-card-body">
+                                        <div class="hub-card-title">Ragnarok Online 2</div>
+                                        <div class="hub-card-genre">Full 3D Action MMORPG</div>
+                                        <div class="hub-platform-dl-row">
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC 클라이언트 다운로드"><i class="fa-brands fa-windows"></i> PC 다운로드</a>
+                                        </div>
+                                        <div class="hub-card-footer">
+                                            <a href="https://ro2.gnjoy.com/" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card 11: GUNBOUND -->
+                                <div class="hub-game-card">
+                                    <a href="https://gunbound.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status open">OPEN</span>
                                         <div class="hub-thumb-img-box">GUNBOUND</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">GUNBOUND</div>
                                         <div class="hub-card-genre">Turn-Based Artillery Shooter</div>
                                         <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
-                                            </div>
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC 클라이언트 다운로드"><i class="fa-brands fa-windows"></i> PC 다운로드</a>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://gunbound.gnjoy.hk" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">충전소</a>
+                                            <a href="https://gunbound.gnjoy.hk" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Card 12: Dragonica (PC) -->
+                                <!-- Card 12: Dragonica (드라고니카) -->
                                 <div class="hub-game-card">
-                                    <a href="https://dragonica.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 홈페이지 새창 이동">
-                                        <span class="hub-badge-platform pc"><i class="fa-brands fa-windows"></i> PC</span>
+                                    <a href="https://dragonica.gnjoy.hk" target="_blank" class="hub-thumb-link" title="공식 사이트 새창 이동">
+                                        <span class="hub-badge-status open">OPEN</span>
                                         <div class="hub-thumb-img-box">DRAGONICA</div>
-                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 홈페이지</div>
+                                        <div class="hub-thumb-hover-badge"><i class="fa-solid fa-arrow-up-right-from-square"></i> 공식 사이트</div>
                                     </a>
                                     <div class="hub-card-body">
                                         <div class="hub-card-title">Dragonica (드라고니카)</div>
                                         <div class="hub-card-genre">3D Side-Scrolling Action RPG</div>
                                         <div class="hub-platform-dl-row">
-                                            <span class="hub-platform-dl-lbl">다운로드</span>
-                                            <div class="hub-platform-dl-icons">
-                                                <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC Client"><i class="fa-brands fa-windows"></i> PC</a>
-                                            </div>
+                                            <a href="javascript:void(0)" class="hub-dl-icon-btn pc-btn" title="Windows PC 클라이언트 다운로드"><i class="fa-brands fa-windows"></i> PC 다운로드</a>
                                         </div>
                                         <div class="hub-card-footer">
-                                            <a href="https://dragonica.gnjoy.hk" target="_blank" class="hub-btn-quick-play">Play Now <i class="fa-solid fa-arrow-right" style="font-size: 9px;"></i></a>
-                                            <a href="javascript:void(0)" class="hub-btn-quick-topup">충전소</a>
+                                            <a href="https://dragonica.gnjoy.hk" target="_blank" class="hub-btn-card-site">공식 사이트 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></a>
+                                            <a href="javascript:void(0)" class="hub-btn-card-pay"><i class="fa-solid fa-credit-card"></i> 결제하기</a>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
@@ -1450,15 +1420,15 @@
                     <!-- PIN 4 SPEC -->
                     <div class="spec-item-box" id="spec-pin4">
                         <div class="spec-item-header">
-                            <div class="spec-pin-title"><span class="pin">4</span> <span>PC / MO 게임 라이브러리</span></div>
+                            <div class="spec-pin-title"><span class="pin">4</span> <span>PC / MO 게임 라이브러리 (12종)</span></div>
                             <span class="spec-tag-type">Game Library</span>
                         </div>
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
-                                <li><strong>PC / MO 플랫폼 탭 분리</strong>: <code>[전체]</code>, <code>[PC 온라인 (5종)]</code>, <code>[모바일 (7종)]</code>으로 탭 분기.</li>
-                                <li><strong>썸네일 클릭 시 공식홈페이지 이동</strong>: 썸네일 호버 시 <code>[공식 홈페이지 바로가기]</code> 오버레이 표시 및 클릭 시 공식 사이트 새창(<code>target="_blank"</code>) 연결.</li>
-                                <li><strong>플랫폼별 다운로드 아이콘</strong>: 각 게임이 지원하는 플랫폼에 맞추어 <code>Apple (iOS)</code>, <code>Google Play (AOS)</code>, <code>APK 직접 다운로드</code>, <code>Windows PC 클라이언트</code> 아이콘 버튼 제공.</li>
-                                <li><strong>충전소 직결 듀얼 버튼</strong>: 카드 하단에 <code>Play Now</code>와 <code>충전소/웹스토어</code> 링크를 동시에 제공.</li>
+                                <li><strong>타이틀 &amp; 심플 텍스트 탭</strong>: <code>GRAVITY GAME LIBRARY</code> 및 <code>[전체 (12)]</code>, <code>[PC (5)]</code>, <code>[MO (7)]</code> 직관적 텍스트 필터 탭 적용.</li>
+                                <li><strong>160px 대형 썸네일 &amp; 상태 뱃지</strong>: 썸네일 높이를 160px로 확대하고 좌상단에 서비스 상태(<code>OPEN</code>, <code>OBT</code>, <code>PRE-REG</code>, <code>HOT</code>) 뱃지 표출.</li>
+                                <li><strong>플랫폼 다운로드 아이콘 배치</strong>: "다운로드" 텍스트 레이블을 제거하고 지원 플랫폼(<code>Apple</code>, <code>Google Play</code>, <code>APK</code>, <code>PC</code>) 아이콘 버튼을 깔끔하게 정돈.</li>
+                                <li><strong>공식 사이트 &amp; 결제하기 버튼</strong>: 카드 하단에 <code>[공식 사이트 ↗]</code> 링크와 <code>[결제하기]</code> 단일 액션 버튼을 배치하여 과도한 버튼 중복을 정리하고 결제 전환율 강화.</li>
                             </ul>
                         </div>
                     </div>
