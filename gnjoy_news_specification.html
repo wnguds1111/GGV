@@ -261,19 +261,12 @@
         .canvas-screen-tag { font-size: 11px; font-weight: 700; background: #EEF2F6; color: #475569; padding: 2px 8px; border-radius: 4px; font-family: 'JetBrains Mono'; }
 
         /* Wireframe Elements */
-        .wf-header-bar {
-            background: #0B1120;
-            color: white;
-            padding: 14px 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .wf-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
-        .wf-logo span { color: var(--brand-primary); }
-        .wf-nav-links { display: flex; gap: 20px; font-size: 13px; font-weight: 700; color: #CBD5E1; }
-        .wf-nav-links a { color: inherit; text-decoration: none; }
-        .wf-nav-links a.active { color: #FFFFFF; font-weight: 800; }
+        
+        
+        
+        
+        
+        
 
         .wf-breadcrumb {
             background: #F1F5F9;
@@ -499,16 +492,86 @@
         .pin:hover { transform: scale(1.15); }
         .pin-abs { position: absolute; z-index: 20; }
 
-        .wf-footer {
+        
+    
+        /* Standard GNB & Footer (Shared with Main) */
+        .hub-gnb {
+            background: #0F172A;
+            color: white;
+            padding: 14px 40px;
+            position: relative;
+            border-bottom: 1px solid #1E293B;
+        }
+        .hub-gnb-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .hub-gnb-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .hub-logo { display: flex; align-items: center; gap: 10px; }
+        .hub-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-weight: 700;
+            font-size: 13.5px;
+        }
+        .hub-nav-item {
+            color: #94A3B8;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.15s;
+            font-weight: 700;
+            padding: 4px 0;
+        }
+        .hub-nav-item:hover { color: #FFFFFF; }
+        .hub-nav-item.active {
+            color: #FFFFFF;
+            font-weight: 800;
+            border-bottom: 2px solid #FFFFFF;
+        }
+        .hub-gnb-right { display: flex; align-items: center; gap: 10px; }
+        .hub-btn-auth {
+            font-size: 12px;
+            font-weight: 700;
+            color: #E2E8F0;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.15s ease;
+        }
+        .hub-btn-auth:hover { background: rgba(255, 255, 255, 0.18); color: #FFFFFF; }
+        .hub-btn-signup {
+            font-size: 12px;
+            font-weight: 800;
+            color: #FFFFFF;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 5px;
+            background: #1E293B;
+            border: 1px solid #334155;
+            transition: all 0.15s ease;
+        }
+        .hub-btn-signup:hover { background: #334155; }
+        .hub-hk-footer {
             background: #0B1120;
             color: #94A3B8;
-            padding: 24px 28px;
-            font-size: 11px;
+            padding: 28px 40px;
+            font-size: 11.5px;
+            position: relative;
+            text-align: left;
             border-top: 1px solid #1E293B;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
+
     </style>
 </head>
 <body>
@@ -646,20 +709,31 @@
                         <span class="canvas-screen-tag">news01(L)</span>
                     </div>
 
-                    <!-- GNB Header -->
-                    <div class="wf-header-bar">
-                        <div class="wf-logo">GN<span>JOY</span>.HK</div>
-                        <div class="wf-nav-links">
-                            <a href="javascript:void(0)">遊戲中心 (Games)</a>
-                            <a href="javascript:void(0)">儲值專區 (Top-Up)</a>
-                            <a href="javascript:void(0)" class="active">訊息公告 (News)</a>
-                            <a href="javascript:void(0)">客服中心 (CS)</a>
+                    <!-- GNB Header (Left-Attached Nav, Identical to Main) -->
+                    <div class="hub-gnb">
+                        <div class="hub-gnb-inner">
+                            <div class="hub-gnb-left">
+                                <div class="hub-logo">
+                                    <a href="gnjoy_main_specification.html"><img src="./gnjoy_logo_white.png" alt="GNJOY" style="height: 28px; object-fit: contain; vertical-align: middle;"></a>
+                                </div>
+                                <div class="hub-nav-links">
+                                    <a href="gnjoy_main_specification.html" class="hub-nav-item">홈</a>
+                                    <a href="gnjoy_main_specification.html#pin4" class="hub-nav-item">게임센터</a>
+                                    <a href="gnjoy_billing_specification.html" class="hub-nav-item ">캐시충전</a>
+                                    <a href="gnjoy_news_specification.html" class="hub-nav-item active">새소식</a>
+                                    <a href="gnjoy_support_specification.html" class="hub-nav-item ">고객지원</a>
+                                </div>
+                            </div>
+                            <div class="hub-gnb-right">
+                                <a href="gnjoy_member_specification.html" class="hub-btn-auth ">로그인</a>
+                                <a href="gnjoy_member_specification.html#login02" class="hub-btn-signup">회원가입</a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Breadcrumb -->
                     <div class="wf-breadcrumb">
-                        <span>首頁</span> <span>&gt;</span> <span>訊息公告</span> <span>&gt;</span> <strong>全部訊息</strong>
+                        <span>홈</span> <span>&gt;</span> <span>새소식</span> <span>&gt;</span> <strong>전체 소식</strong>
                     </div>
 
                     <!-- News Body Container -->
@@ -669,11 +743,11 @@
                         <div style="position: relative;">
                             <span class="pin pin-abs" style="top: -10px; left: -10px;" onclick="highlightSpec('pin1')">1</span>
                             <div class="wf-news-tabs">
-                                <button class="wf-news-tab-btn active">全部訊息 (All)</button>
-                                <button class="wf-news-tab-btn">重要公告 (Notice)</button>
-                                <button class="wf-news-tab-btn">活動情報 (Event)</button>
-                                <button class="wf-news-tab-btn">伺服器維護 (Maint)</button>
-                                <button class="wf-news-tab-btn">系統資訊 (System)</button>
+                                <button class="wf-news-tab-btn active">전체 소식 (All)</button>
+                                <button class="wf-news-tab-btn">중요 공지 (Notice)</button>
+                                <button class="wf-news-tab-btn">이벤트 정보 (Event)</button>
+                                <button class="wf-news-tab-btn">서버 점검 (Maint)</button>
+                                <button class="wf-news-tab-btn">시스템 안내 (System)</button>
                             </div>
                         </div>
 
@@ -681,13 +755,13 @@
                         <div class="wf-filter-bar" style="position: relative;">
                             <span class="pin pin-abs" style="top: -8px; left: -8px;" onclick="highlightSpec('pin2')">2</span>
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <label style="font-size: 12.5px; font-weight: 800; color: #0F172A;">訊息類別：</label>
+                                <label style="font-size: 12.5px; font-weight: 800; color: #0F172A;">게임 구분:</label>
                                 <select style="padding: 6px 12px; border: 1px solid var(--border-main); border-radius: 6px; font-size: 12px;">
-                                    <option>전체 게임 (All Games)</option>
-                                    <option>RO仙境傳說：重生</option>
-                                    <option>RO仙境傳說：愛如初見</option>
-                                    <option>RO仙境傳說：初心之戰</option>
-                                    <option>RO仙境傳說Online (PC)</option>
+                                    <option>전체 게임</option>
+                                    <option>라그나로크 : 중생</option>
+                                    <option>라그나로크 : 오리진</option>
+                                    <option>라그나로크 : 초심지전</option>
+                                    <option>라그나로크 온라인 (PC)</option>
                                 </select>
                                 <span style="font-size: 12px; color: #64748B;">검색 결과: <strong style="color: var(--brand-primary);">128</strong>건</span>
                             </div>
@@ -706,17 +780,17 @@
                             <div class="wf-news-item">
                                 <div class="wf-news-item-left">
                                     <div class="wf-news-item-tag-row">
-                                        <span class="wf-badge-event">活動情報</span>
-                                        <span style="font-size: 11px; font-weight: 700; color: #64748B;">RO仙境傳說：重生</span>
+                                        <span class="wf-badge-event">이벤트</span>
+                                        <span style="font-size: 11px; font-weight: 700; color: #64748B;">라그나로크 : 중생</span>
                                     </div>
-                                    <a href="javascript:void(0)" class="wf-news-item-title">《RO仙境傳說：重生》9/3 慶祝全平台正式開服！豪華登入禮與限定稱號發放公告</a>
-                                    <div class="wf-news-item-desc">全新 3D 橫豎切換 MMORPG 經典回歸，登入即送限量坐騎與 8,888 鑽石，連續簽到 7 日再抽 iPhone 16 Pro！</div>
+                                    <a href="javascript:void(0)" class="wf-news-item-title">《라그나로크 : 중생》9/3 慶祝全平台正式開服！豪華登入禮與限定稱號發放公告</a>
+                                    <div class="wf-news-item-desc">세로/가로 모드 완벽 지원 3D MMORPG 신작 출시! 접속 즉시 한정 탈것과 8,888 다이아몬드 지급, 7일 연속 출석 시 프리미엄 경품 응모권 제공.</div>
                                     <div class="wf-news-item-meta">
                                         <span><i class="fa-regular fa-clock"></i> 2026.09.03 10:00</span>
                                         <span><i class="fa-regular fa-eye"></i> 14,250 Views</span>
                                     </div>
                                 </div>
-                                <a href="javascript:void(0)" class="wf-btn-detail">看詳細 <i class="fa-solid fa-angle-right"></i></a>
+                                <a href="javascript:void(0)" class="wf-btn-detail">자세히 보기 <i class="fa-solid fa-angle-right"></i></a>
                             </div>
 
                             <!-- Item 2: Maintenance -->
@@ -733,14 +807,14 @@
                                         <span><i class="fa-regular fa-eye"></i> 8,920 Views</span>
                                     </div>
                                 </div>
-                                <a href="javascript:void(0)" class="wf-btn-detail">看詳細 <i class="fa-solid fa-angle-right"></i></a>
+                                <a href="javascript:void(0)" class="wf-btn-detail">자세히 보기 <i class="fa-solid fa-angle-right"></i></a>
                             </div>
 
                             <!-- Item 3: Notice -->
                             <div class="wf-news-item">
                                 <div class="wf-news-item-left">
                                     <div class="wf-news-item-tag-row">
-                                        <span class="wf-badge-notice">重要公告</span>
+                                        <span class="wf-badge-notice">공지사항</span>
                                         <span style="font-size: 11px; font-weight: 700; color: #64748B;">GNJOY 平台</span>
                                     </div>
                                     <a href="javascript:void(0)" class="wf-news-item-title">【防詐騙】GNJOY 遊戲平台官方防詐騙宣導與帳號安全維護指引</a>
@@ -750,7 +824,7 @@
                                         <span><i class="fa-regular fa-eye"></i> 23,410 Views</span>
                                     </div>
                                 </div>
-                                <a href="javascript:void(0)" class="wf-btn-detail">看詳細 <i class="fa-solid fa-angle-right"></i></a>
+                                <a href="javascript:void(0)" class="wf-btn-detail">자세히 보기 <i class="fa-solid fa-angle-right"></i></a>
                             </div>
 
                         </div>
@@ -771,10 +845,26 @@
 
                     </div>
 
-                    <!-- Footer -->
-                    <div class="wf-footer">
-                        <div>&copy; Gravity Communications Co., Ltd. All Rights Reserved.</div>
-                        <div>客服專線: (02) 2656-0377 | 服務時間: 09:00~18:00</div>
+                    <!-- Real gnjoy.hk Official Footer (Left-Aligned, Identical to Main) -->
+                    <div class="hub-hk-footer">
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;">
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 2px;">
+                                <img src="./gnjoy_logo_white.png" alt="GRAVITY" style="height: 22px; opacity: 0.9;">
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: flex-start; gap: 16px; font-weight: 700; color: #CBD5E1;">
+                                <a href="javascript:void(0)" style="color: #CBD5E1; text-decoration: none;">이용약관 (Terms of Service)</a>
+                                <span style="color: #475569; font-size: 10px;">|</span>
+                                <a href="javascript:void(0)" style="color: #CBD5E1; text-decoration: none;">개인정보 처리방침 (Privacy Policy)</a>
+                                <span style="color: #475569; font-size: 10px;">|</span>
+                                <a href="gnjoy_support_specification.html" style="color: #CBD5E1; text-decoration: none;">고객센터 (Support)</a>
+                                <span style="color: #475569; font-size: 10px;">|</span>
+                                <a href="javascript:void(0)" style="color: #CBD5E1; text-decoration: none;">운영정책</a>
+                            </div>
+                            <div style="font-size: 11px; color: #64748B; letter-spacing: -0.2px; text-align: left; line-height: 1.6;">
+                                Copyright © <span style="color: #E2E8F0; font-weight: 700;">GRAVITY</span> CO., Ltd. &amp; Lee MyoungJin(studio DTDS). ALL Rights Reserved.<br>
+                                <span style="color: #475569;">글로벌 그라비티 공식 게임 포털 서비스 (Taiwan, Hong Kong, Macau)</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -818,7 +908,7 @@
                         <div class="spec-content">
                             <ul class="spec-bullet-list">
                                 <li><strong>구조화된 카드 UI</strong>: 카테고리 컬러 뱃지, 대상 게임명, 굵은 제목, 2줄 요약 프리뷰, 등록일시, 조회수 표출.</li>
-                                <li><strong>원클릭 상세 이동</strong>: <code>[看詳細]</code> 버튼 및 제목 클릭 시 <code>/NewsDetail?rq_id={id}</code> 상세 페이지로 전환.</li>
+                                <li><strong>원클릭 상세 이동</strong>: <code>[자세히 보기]</code> 버튼 및 제목 클릭 시 <code>/NewsDetail?rq_id={id}</code> 상세 페이지로 전환.</li>
                             </ul>
                         </div>
                     </div>
